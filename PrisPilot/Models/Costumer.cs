@@ -14,7 +14,10 @@ namespace PrisPilot.Models
         public string Address { get; set; }
         public Image Logo { get; set; }
 
+        public Costumer()
+        {
+
+        }
     }
-    public class Costumer();
     
 }
