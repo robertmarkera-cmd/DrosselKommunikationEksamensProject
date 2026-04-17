@@ -9,9 +9,9 @@ namespace PrisPilot.Services
     public class NavigationService
     {
         private readonly NavigationStore _navigationStore;
-        private readonly Func<BaseViewModel> _viewModelFactory;
+        private readonly Func<SuperClassViewModel> _viewModelFactory;
 
-        public NavigationService(NavigationStore navigationStore, Func<BaseViewModel> viewModelFactory)
+        public NavigationService(NavigationStore navigationStore, Func<SuperClassViewModel> viewModelFactory)
         {
             _navigationStore = navigationStore;
             _viewModelFactory = viewModelFactory;
