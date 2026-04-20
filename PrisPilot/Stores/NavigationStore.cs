@@ -7,8 +7,8 @@ namespace PrisPilot.Stores
 {
     public class NavigationStore
     {
-        private BaseViewModel _currentViewModel;
-        public BaseViewModel CurrentViewModel
+        private SuperClassViewModel _currentViewModel;
+        public SuperClassViewModel CurrentViewModel
         {
             get => _currentViewModel;
             set

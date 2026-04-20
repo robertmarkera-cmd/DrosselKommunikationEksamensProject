@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace PrisPilot.ViewModels
 {
-    public class HomeViewModel : BaseViewModel
+    public class HomeViewModel : SuperClassViewModel
     {
         public ICommand NavigateToFirstViewCommand { get; }
         public ICommand NavigateToSecondViewCommand { get; }

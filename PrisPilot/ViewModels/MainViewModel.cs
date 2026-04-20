@@ -5,11 +5,11 @@ using System.Text;
 
 namespace PrisPilot.ViewModels
 {
-    public class MainViewModel : BaseViewModel
+    public class MainViewModel : SuperClassViewModel
     {
         private readonly NavigationStore _navigationStore;
 
-        public BaseViewModel CurrentViewModel
+        public SuperClassViewModel CurrentViewModel
         {
             get => _navigationStore.CurrentViewModel;
         }
