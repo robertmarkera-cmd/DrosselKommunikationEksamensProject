@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace PrisPilot.Views
 {
     /// <summary>
-    /// Interaction logic for FirstView.xaml
+    /// Interaction logic for AddCostumerPage.xaml
     /// </summary>
-    public partial class FirstView : UserControl
+    public partial class AddCostumerPage : UserControl
     {
-        public FirstView()
+        public AddCostumerPage()
         {
             InitializeComponent();
         }

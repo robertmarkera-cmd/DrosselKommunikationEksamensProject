@@ -17,8 +17,8 @@
                 <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
                     <views:HomeView />
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type viewmodels:FirstViewModel}">
-                    <views:FirstView />
+                <DataTemplate DataType="{x:Type viewmodels:AddCostumerViewModel}">
+                    <views:AddCostumerPage />
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type viewmodels:SecondViewModel}">
                     <views:SecondView />
