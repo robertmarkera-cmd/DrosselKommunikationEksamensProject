@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Assets\" />
+  </ItemGroup>
+
 </Project>

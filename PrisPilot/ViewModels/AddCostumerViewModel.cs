@@ -13,10 +13,20 @@ namespace PrisPilot.ViewModels
     {
         private readonly IFileDialogService _fileDialogService;
 
+        private string _selectedFilePath = string.Empty;
+        public string SelectedFilePath
+        {
+            get => _selectedFilePath;
+            set
+            {
+                if (_selectedFilePath == value) return;
+                _selectedFilePath = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand NavigateToHomeViewCommand { get; }
         public ICommand OpenFileForAddCustomerCommand { get; }
-
-        public string SelectedFilePath { get; set; } = string.Empty;
 
         public AddCostumerViewModel(IFileDialogService fileDialogService)
         {
