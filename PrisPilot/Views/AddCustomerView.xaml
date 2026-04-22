@@ -43,7 +43,7 @@
     <!--#region Grid-->
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="20" />
             <RowDefinition Height="4*" />
             <RowDefinition Height="*" />
@@ -198,57 +198,7 @@
             BorderThickness="2" />
         <!--#endregion-->
 
-        <!--#region Header-->
-        <Image
-            Grid.Column="1"
-            Width="300"
-            HorizontalAlignment="Right"
-            Source="pack://application:,,,/Assets/Drossel_Logo.png" />
 
-        <StackPanel
-            Grid.Row="0"
-            Grid.Column="1"
-            Orientation="Horizontal">
-            <Button
-                Grid.Row="0"
-                Grid.Column="1"
-                MaxHeight="50"
-                Margin="0,0,30,0"
-                Padding="20,2"
-                HorizontalAlignment="Left"
-                Background="{StaticResource WarmBackgroundBrush}"
-                Content="Opret Kunde" />
-            <Button
-                Grid.Row="0"
-                Grid.Column="1"
-                MaxHeight="50"
-                Margin="0,0,30,0"
-                Padding="20,2"
-                HorizontalAlignment="Left"
-                Background="{StaticResource WarmBackgroundBrush}"
-                Command="{Binding NavigateToFirstViewCommand}"
-                Content="Nyt tilbud" />
-            <Button
-                Grid.Row="0"
-                Grid.Column="1"
-                MaxHeight="50"
-                Margin="0,0,30,0"
-                Padding="20,2"
-                HorizontalAlignment="Left"
-                Background="{StaticResource WarmBackgroundBrush}"
-                Command="{Binding NavigateToSecondViewCommand}"
-                Content="Forhåndsvisning" />
-            <Button
-                Grid.Row="0"
-                Grid.Column="1"
-                MaxHeight="50"
-                Margin="0,0,30,0"
-                Padding="20,2"
-                HorizontalAlignment="Left"
-                Background="{StaticResource WarmBackgroundBrush}"
-                Content="Kundeoversigt" />
-        </StackPanel>
-        <!--#endregion-->
     </Grid>
     <!--#endregion Grid-->
 </UserControl>
