@@ -14,9 +14,9 @@ namespace PrisPilot.ViewModels
 
         public SecondViewModel(NavigationStore navigationStore)
         {
-            NavigationService navigationServiceHomeView = new NavigationService(navigationStore, () => new HomeViewModel(navigationStore));
+            //NavigationService navigationServiceHomeView = new NavigationService(navigationStore, () => new HomeViewModel(navigationStore));
 
-            NavigateToHomeViewCommand = new NavigateCommand(navigationServiceHomeView);
+            //NavigateToHomeViewCommand = new NavigateCommand(navigationServiceHomeView);
         }
     }
 }
