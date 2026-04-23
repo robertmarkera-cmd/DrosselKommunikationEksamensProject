@@ -8,12 +8,17 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
 
         <TextBlock
             Grid.Row="0"
@@ -27,5 +32,18 @@
             HorizontalAlignment="Left"
             Command="{Binding NavigateToHomeViewCommand}"
             Content="Gå tilbage til hjem" />
+        <StackPanel Grid.Row="2" Grid.Column="1">
+            <Button
+                Height="25"
+                Content="Hent logo"
+                Command="{Binding NavigateToHomeViewCommand}" />
+            <Image
+                x:Name="Logo_Image"
+                Height="100"
+                Margin="105,94,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                IsEnabled="False" />
+        </StackPanel>
     </Grid>
 </UserControl>

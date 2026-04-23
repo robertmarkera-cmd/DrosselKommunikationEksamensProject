@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PrisPilot
+namespace PrisPilot.Views.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -19,6 +19,7 @@ namespace PrisPilot
         public MainWindow()
         {
             InitializeComponent();
+            Main.Content = new AddCustomerView();
         }
     }
 }

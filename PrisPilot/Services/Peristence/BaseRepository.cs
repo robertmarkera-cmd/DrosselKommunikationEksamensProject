@@ -24,7 +24,7 @@ namespace PrisPilot.Services.Peristence
             return new SqlConnection(ConnectionString);
         }
 
-        public abstract void Add(TEntity entity);
+        //public abstract void Add(TEntity entity);
 
         public abstract List<TEntity> GetAll();
     }
