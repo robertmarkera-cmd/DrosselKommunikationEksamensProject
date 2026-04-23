@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PrisPilot.Models
 {
-    public class Costumer
+    public class Customer
     {
         public string CompanyName { get; set; }
         public int Cvr { get; set; }
@@ -13,8 +13,10 @@ namespace PrisPilot.Models
         public int TelephoneNumber { get; set; }
         public string Address { get; set; }
         public Image Logo { get; set; }
-
-        public Costumer()
+        public string ContactPerson { get; set; }
+        public int HourlyCost { get; set; }
+        
+        public Customer()
         {
 
         }
