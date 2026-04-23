@@ -18,7 +18,7 @@ namespace PrisPilot.ViewModels
             NavigationService navigationServiceFirstView = new NavigationService(navigationStore, () => new FirstViewModel(navigationStore));
             NavigationService navigationServiceSecondView = new NavigationService(navigationStore, () => new SecondViewModel(navigationStore));
 
-            NavigationService navigationServiceAddCostumerView = new NavigationService(navigationStore, () => new AddCostumerViewModel(fileDialogService));
+            NavigationService navigationServiceAddCostumerView = new NavigationService(navigationStore, () => new AddCustomerViewModel(fileDialogService));
 
 
             // original navigate to first view

@@ -31,12 +31,21 @@ namespace PrisPilot.Commands
 
         public void Execute(object? parameter)
         {
-            if (parameter is AddCostumerViewModel ACM)
+            if (parameter is AddCustomerViewModel ACM)
             {
                 string file = _fileDialogService.OpenFileDialog();
                 if (!string.IsNullOrEmpty(file))
                 {
-                    ACM.SelectedFilePath = file;
+                    try
+                    {
+                        ACM.SelectedFilePath = file;
+                        ACM.SetCurrentCustomerLogo();
+
+                    }
+                    catch
+                    {
+                        throw new Exception("Failed to update CurrentCustomer.Logo to selected image");
+                    }
                 }
             }
             else

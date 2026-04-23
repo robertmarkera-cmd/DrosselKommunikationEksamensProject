@@ -7,9 +7,29 @@
     xmlns:views="clr-namespace:PrisPilot.Views"
     StartupUri="Views/Windows/MainWindow.xaml">
     <Application.Resources>
-        <DataTemplate DataType="{x:Type viewmodels:AddCostumerViewModel}">
+        <DataTemplate DataType="{x:Type viewmodels:AddCustomerViewModel}">
             <views:AddCustomerView />
         </DataTemplate>
+
+        <!--  Global stil til alle Buttons  -->
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="pack://application:,,,/Assets/Fonts/Libre_Baskerville/#LibreBaskerville-VariableFont_wght.ttf" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <!--  Global stil til alle TextBlocks  -->
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="pack://application:,,,/Assets/Fonts/Noticia_Text/#NoticiaText-Regular.ttf" />
+        </Style>
+
+        <!--  Global stil til alle TextBoxe  -->
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="pack://application:,,,/Assets/Noticia_Text/#NoticiaText-Regular.ttf" />
+        </Style>
 
     </Application.Resources>
 </Application>
