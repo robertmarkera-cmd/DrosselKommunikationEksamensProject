@@ -84,10 +84,12 @@
                 Foreground="{StaticResource PrimaryBrush}"
                 Text="Firmanavn:" />
             <TextBox
+                x:Name="CompanyName_TextBox"
                 Grid.Row="0"
                 Grid.Column="1"
                 Height="30"
-                Margin="0,0,150,16" />
+                Margin="0,0,150,16"
+                Text="{Binding CurrentCustomer.CompanyName, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
@@ -97,11 +99,12 @@
                 Foreground="{StaticResource PrimaryBrush}"
                 Text="Kontaktperson: " />
             <TextBox
+                x:Name="ContactPerson_TextBox"
                 Grid.Row="1"
                 Grid.Column="1"
                 Height="30"
-                Margin="0,0,150,16" />
-
+                Margin="0,0,150,16"
+                Text="{Binding CurrentCustomer.ContactPerson, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="0"
@@ -111,10 +114,12 @@
                 Foreground="{StaticResource PrimaryBrush}"
                 Text="CVR:" />
             <TextBox
+                x:Name="CVR_TextBox"
                 Grid.Row="2"
                 Grid.Column="1"
                 Height="30"
-                Margin="0,0,150,16" />
+                Margin="0,0,150,16"
+                Text="{Binding CurrentCustomer.Cvr, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="0"
@@ -124,10 +129,12 @@
                 Foreground="{StaticResource PrimaryBrush}"
                 Text="Email:" />
             <TextBox
+                x:Name="Email_TextBox"
                 Grid.Row="3"
                 Grid.Column="1"
                 Height="30"
-                Margin="0,0,150,16" />
+                Margin="0,0,150,16"
+                Text="{Binding CurrentCustomer.Email, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock
                 Grid.Row="4"
                 Grid.Column="0"
@@ -137,10 +144,12 @@
                 Foreground="{StaticResource PrimaryBrush}"
                 Text="Telefonnummer:" />
             <TextBox
+                x:Name="TelephoneNumber_TextBox"
                 Grid.Row="4"
                 Grid.Column="1"
                 Height="30"
-                Margin="0,0,150,16" />
+                Margin="0,0,150,16"
+                Text="{Binding CurrentCustomer.TelephoneNumber, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock
                 Grid.Row="5"
@@ -151,10 +160,12 @@
                 Foreground="{StaticResource PrimaryBrush}"
                 Text="Adresse:" />
             <TextBox
+                x:Name="Address_TextBox"
                 Grid.Row="5"
                 Grid.Column="1"
                 Height="30"
-                Margin="0,0,150,16" />
+                Margin="0,0,150,16"
+                Text="{Binding CurrentCustomer.Address, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock
                 Grid.Row="6"
                 Grid.Column="0"
@@ -164,24 +175,46 @@
                 Foreground="{StaticResource PrimaryBrush}"
                 Text="Timeløn:" />
             <TextBox
+                x:Name="HourlyCost_TextBox"
                 Grid.Row="6"
                 Grid.Column="1"
                 Height="30"
-                Margin="0,0,150,16" />
-            <Button
+                Margin="0,0,150,16"
+                Text="{Binding CurrentCustomer.HourlyCost, UpdateSourceTrigger=PropertyChanged}" />
+            <StackPanel Grid.Row="7" Orientation="Horizontal">
+                <Button
+                    x:Name="PickLogoButton"
+                    Height="25"
+                    Command="{Binding OpenFileForAddCustomerCommand}"
+                    CommandParameter="{Binding}"
+                    Content="Hent logo" />
+                <Button
+                    x:Name="AddCustomerButton"
+                    Height="25"
+                    Command="{Binding AddCustomerCommand}"
+                    CommandParameter="{Binding}"
+                    Content="Gem kunde" />
+            </StackPanel>
+            <StackPanel
                 Grid.Row="7"
-                Height="25"
-                Command="{Binding OpenFileForAddCustomerCommand}"
-                CommandParameter="{Binding}"
-                Content="Hent logo" />
-            <TextBlock
-                Grid.Row="7"
-                Grid.Column="2"
-                Margin="30,0,12,16"
-                VerticalAlignment="Center"
-                FontSize="25"
-                Foreground="{StaticResource PrimaryBrush}"
-                Text="{Binding SelectedFilePath, UpdateSourceTrigger=PropertyChanged}" />
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Orientation="Horizontal">
+                <TextBlock
+                    Margin="0,0,0,8"
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    Foreground="{StaticResource PrimaryBrush}"
+                    Text="{Binding SelectedFilePath, UpdateSourceTrigger=PropertyChanged}" />
+                <Image
+                    x:Name="Image_Logo"
+                    Width="150"
+                    Height="150"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Source="{Binding CurrentCustomer.PreviewImage, UpdateSourceTrigger=PropertyChanged}"
+                    Stretch="Uniform" />
+            </StackPanel>
         </Grid>
         <Border
             Grid.Row="1"
