@@ -7,5 +7,7 @@ CREATE TABLE Costumer (
   Email NVarChar(100) NOT NULL,
   PhoneNumber int,
   Address NVarChar(150),
-  Logo varbinary(max)
+  Logo varbinary(max),
+  ContactPerson NVarChar(100),
+  HourlyCost int
 );

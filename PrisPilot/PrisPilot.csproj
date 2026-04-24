@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\Drossel_Logo.png" />
+    <None Remove="Assets\Logo\Drossel_Logo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Resource Include="Assets\Logo\Drossel_Logo.png" />
+    <Resource Include="Assets\Fonts\**\*.ttf" />
   </ItemGroup>
 
 </Project>

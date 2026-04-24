@@ -1,4 +1,5 @@
 ﻿using PrisPilot.Models;
+using PrisPilot.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,6 +11,8 @@ namespace PrisPilot.ViewModels
 {
     public class CustomerViewModel : BaseViewModel<Customer>
     {
+
+        private ImageService _imageService;
         private Customer _customer;
 
         private string _companyName = string.Empty;
@@ -136,6 +139,38 @@ namespace PrisPilot.ViewModels
             this.HourlyCost = customer.HourlyCost;
         }
 
+
+        public bool IsCustomerValid()
+        {
+            bool result = true;
+
+            // CompanyName
+            if (string.IsNullOrWhiteSpace(CompanyName))
+            {
+                result = false;
+            }
+
+            // CVR
+            if (Cvr.ToString().Length != 8)
+            {
+                result = false;
+            }
+
+            // Email
+            if (string.IsNullOrWhiteSpace(Email))
+            {
+                result = false;
+            }
+
+            // ContactPerson
+            if (string.IsNullOrWhiteSpace(ContactPerson))
+            {
+                result = false;
+            }
+
+            return result;
+        }
+
         private void UpdatePreviewFromLogo()
         {
             // Check if logo exists, returns null if it doesn't
@@ -146,21 +181,8 @@ namespace PrisPilot.ViewModels
             }
 
             // Creating a BitmapImage from our bytearray
-            try
-            {
-                using MemoryStream ms = new MemoryStream(_logo);
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.StreamSource = ms;
-                bitmap.EndInit();
-                bitmap.Freeze();
-                PreviewImage = bitmap;
-            }
-            catch
-            {
-                PreviewImage = null;
-            }
+            _imageService = new();
+            PreviewImage = _imageService.ReencodeToBitmap(_logo);
         }
     }
 }
