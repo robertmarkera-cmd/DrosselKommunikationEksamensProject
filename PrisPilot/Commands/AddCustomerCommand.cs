@@ -31,7 +31,7 @@ namespace PrisPilot.Commands
         {
             if (parameter is AddCustomerViewModel ACM)
             {
-                var c = ACM.CurrentCustomer;
+                CustomerViewModel c = ACM.CurrentCustomer;
                 string message =
 
                     $"Er de indtastede oplysninger korrekte? {Environment.NewLine}{Environment.NewLine}" +
@@ -47,7 +47,7 @@ namespace PrisPilot.Commands
                 MessageBoxResult result = MessageBox.Show(message, "Indtastede oplysninger", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-
+                    ACM.AddToRepo();
                 }
             }
             else

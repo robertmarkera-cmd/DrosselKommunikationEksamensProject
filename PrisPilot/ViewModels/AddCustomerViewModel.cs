@@ -2,6 +2,7 @@
 using PrisPilot.Models;
 using PrisPilot.Services;
 using PrisPilot.Services.Interfaces;
+using PrisPilot.Services.Peristence;
 using PrisPilot.Stores;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,9 @@ namespace PrisPilot.ViewModels
 {
     public class AddCustomerViewModel : BaseViewModel<Customer>
     {
+
+        private CustomerRepository _customerRepo = new();
+
         private string _selectedFilePath = string.Empty;
         public string SelectedFilePath
         {
@@ -60,7 +64,16 @@ namespace PrisPilot.ViewModels
 
         public void AddToRepo()
         {
-
+            _customerRepo.Add(
+                 CurrentCustomer.Cvr,
+                 CurrentCustomer.CompanyName,
+                 CurrentCustomer.Email,
+                 CurrentCustomer.TelephoneNumber,
+                 CurrentCustomer.Address,
+                 CurrentCustomer.Logo,
+                 CurrentCustomer.ContactPerson,
+                 CurrentCustomer.HourlyCost
+             );
         }
 
     }

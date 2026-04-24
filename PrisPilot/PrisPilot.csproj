@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Resource Include="Assets\Drossel_Logo.png" />
+	<Resource Include="Assets\Fonts\**\*.ttf" />
   </ItemGroup>
 
 </Project>
