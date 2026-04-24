@@ -114,8 +114,8 @@ namespace PrisPilot.ViewModels
             }
         }
 
-        private int _hourlyCost = 0;
-        public int HourlyCost
+        private double _hourlyCost = 0;
+        public double HourlyCost
         {
             get => _hourlyCost;
             set
