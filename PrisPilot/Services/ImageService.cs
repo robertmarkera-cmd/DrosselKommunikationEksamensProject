@@ -12,17 +12,17 @@ namespace PrisPilot.Services
         public byte[] ReadFileBytes(string filePath) => File.ReadAllBytes(filePath);
 
         // ByteArray to image
-        public BitmapImage ReencodeToPng(byte[] array)
-        {
-            using (var ms = new MemoryStream(array))
-            {
-                var image = new BitmapImage();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.StreamSource = ms;
-                image.EndInit();
-                return image;
-            }
-        }
+        //public BitmapImage ReencodeToImage(byte[] array)
+        //{
+        //    using (var ms = new MemoryStream(array))
+        //    {
+        //        var image = new BitmapImage();
+        //        image.BeginInit();
+        //        image.CacheOption = BitmapCacheOption.OnLoad;
+        //        image.StreamSource = ms;
+        //        image.EndInit();
+        //        return image;
+        //    }
+        //}
     }
 }

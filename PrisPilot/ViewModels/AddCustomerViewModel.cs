@@ -58,6 +58,10 @@ namespace PrisPilot.ViewModels
             CurrentCustomer.Logo = bytes;
         }
 
+        public void AddToRepo()
+        {
+
+        }
 
     }
 }

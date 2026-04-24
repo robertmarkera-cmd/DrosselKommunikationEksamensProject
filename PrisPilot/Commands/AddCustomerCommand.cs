@@ -2,6 +2,7 @@
 using PrisPilot.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -32,6 +33,8 @@ namespace PrisPilot.Commands
             {
                 var c = ACM.CurrentCustomer;
                 string message =
+
+                    $"Er de indtastede oplysninger korrekte? {Environment.NewLine}{Environment.NewLine}" +
                     $"Firmanavn: {c.CompanyName}{Environment.NewLine}" +
                     $"CVR: {c.Cvr}{Environment.NewLine}" +
                     $"Email: {c.Email}{Environment.NewLine}" +
@@ -41,7 +44,11 @@ namespace PrisPilot.Commands
                     $"Timepris: {c.HourlyCost}{Environment.NewLine}" +
                     $"Logo: {ACM.SelectedFilePath}";
 
-                MessageBox.Show(message, "Indtastede oplysninger");
+                MessageBoxResult result = MessageBox.Show(message, "Indtastede oplysninger", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+
+                }
             }
             else
             {
