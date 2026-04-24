@@ -6,13 +6,13 @@ using System.Text;
 
 namespace PrisPilot.ViewModels
 {
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel<TEntity> : SuperClassViewModel
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public TEntity Entity { get; }
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        public BaseViewModel(TEntity entity)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            Entity = entity;
         }
     }
 }

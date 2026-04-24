@@ -2,6 +2,35 @@
     x:Class="PrisPilot.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:PrisPilot">
-    <Application.Resources />
+    xmlns:local="clr-namespace:PrisPilot"
+    xmlns:viewmodels="clr-namespace:PrisPilot.ViewModels"
+    xmlns:views="clr-namespace:PrisPilot.Views"
+    StartupUri="Views/Windows/MainWindow.xaml">
+    <Application.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:AddCustomerViewModel}">
+            <views:AddCustomerView />
+        </DataTemplate>
+
+        <!--  Global stil til alle Buttons  -->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="FontFamily" Value="pack://application:,,,/Assets/Fonts/Libre_Baskerville/#LibreBaskerville" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <!--  Global stil til alle TextBlocks  -->
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="pack://application:,,,/Assets/Fonts/Noticia_Text/#Noticia Text" />
+        </Style>
+
+        <!--  Global stil til alle TextBoxe  -->
+        <Style TargetType="{x:Type TextBox}">
+            <!-- Make sure the path includes /Fonts/ so it matches where the file actually is -->
+            <Setter Property="FontFamily" Value="pack://application:,,,/Assets/Fonts/Noticia_Text/#Noticia Text" />
+        </Style>
+
+    </Application.Resources>
 </Application>

@@ -8,17 +8,22 @@ using System.Windows.Input;
 
 namespace PrisPilot.ViewModels
 {
-    public class HomeViewModel : BaseViewModel
+    public class HomeViewModel : SuperClassViewModel
     {
         public ICommand NavigateToFirstViewCommand { get; }
         public ICommand NavigateToSecondViewCommand { get; }
 
-        public HomeViewModel(NavigationStore navigationStore)
+        public HomeViewModel(NavigationStore navigationStore, FileDialogService fileDialogService)
         {
             NavigationService navigationServiceFirstView = new NavigationService(navigationStore, () => new FirstViewModel(navigationStore));
             NavigationService navigationServiceSecondView = new NavigationService(navigationStore, () => new SecondViewModel(navigationStore));
 
-            NavigateToFirstViewCommand = new NavigateCommand(navigationServiceFirstView);
+            NavigationService navigationServiceAddCostumerView = new NavigationService(navigationStore, () => new AddCustomerViewModel(fileDialogService));
+
+
+            // original navigate to first view
+            //NavigateToFirstViewCommand = new NavigateCommand(navigationServiceFirstView);
+            NavigateToFirstViewCommand = new NavigateCommand(navigationServiceAddCostumerView);
             NavigateToSecondViewCommand = new NavigateCommand(navigationServiceSecondView);
         }
     }

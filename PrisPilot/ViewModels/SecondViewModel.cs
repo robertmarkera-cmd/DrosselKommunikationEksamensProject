@@ -8,15 +8,15 @@ using System.Windows.Input;
 
 namespace PrisPilot.ViewModels
 {
-    public class SecondViewModel : BaseViewModel
+    public class SecondViewModel : SuperClassViewModel
     {
         public ICommand NavigateToHomeViewCommand { get; }
 
         public SecondViewModel(NavigationStore navigationStore)
         {
-            NavigationService navigationServiceHomeView = new NavigationService(navigationStore, () => new HomeViewModel(navigationStore));
+            //NavigationService navigationServiceHomeView = new NavigationService(navigationStore, () => new HomeViewModel(navigationStore));
 
-            NavigateToHomeViewCommand = new NavigateCommand(navigationServiceHomeView);
+            //NavigateToHomeViewCommand = new NavigateCommand(navigationServiceHomeView);
         }
     }
 }
