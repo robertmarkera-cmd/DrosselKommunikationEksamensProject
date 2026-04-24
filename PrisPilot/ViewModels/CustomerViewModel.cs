@@ -27,8 +27,8 @@ namespace PrisPilot.ViewModels
             }
         }
 
-        private int _cvr = 0;
-        public int Cvr
+        private string _cvr = string.Empty;
+        public string Cvr
         {
             get => _cvr;
             set
@@ -51,8 +51,8 @@ namespace PrisPilot.ViewModels
             }
         }
 
-        private int _telephoneNumber = 0;
-        public int TelephoneNumber
+        private string _telephoneNumber = string.Empty;
+        public string TelephoneNumber
         {
             get => _telephoneNumber;
             set
@@ -114,8 +114,8 @@ namespace PrisPilot.ViewModels
             }
         }
 
-        private int _hourlyCost = 0;
-        public int HourlyCost
+        private double _hourlyCost = 0;
+        public double HourlyCost
         {
             get => _hourlyCost;
             set
@@ -151,10 +151,16 @@ namespace PrisPilot.ViewModels
             }
 
             // CVR
-            if (Cvr.ToString().Length != 8)
+            if (Cvr.Length == 8)
             {
-                result = false;
+                int tempCvrInt;
+                bool cvrIsNumber = int.TryParse(Cvr, out tempCvrInt);
+                if (cvrIsNumber == false) // Alternate: if (!cvrIsNumber)
+                {
+                    result = false;
+                }
             }
+            else result = false;
 
             // Email
             if (string.IsNullOrWhiteSpace(Email))
