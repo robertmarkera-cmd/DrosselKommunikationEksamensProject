@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Drossel_Logo.png" />
+    <Resource Include="Assets\Logo\Drossel_Logo.png" />
   </ItemGroup>
 
 </Project>
