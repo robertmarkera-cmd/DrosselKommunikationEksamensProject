@@ -27,7 +27,7 @@ namespace PrisPilot.Services.Peristence
                 insertCmd.Parameters.Add("@CompanyName", SqlDbType.NVarChar, 100).Value = companyName;
                 insertCmd.Parameters.Add("@Email", SqlDbType.NVarChar, 100).Value = email;
                 insertCmd.Parameters.Add("@PhoneNumber", SqlDbType.Int).Value = telephoneNumber;
-                insertCmd.Parameters.Add("@Address", SqlDbType.NVarChar, 150).Value = address;
+                insertCmd.Parameters.Add("@Address", SqlDbType.NVarChar, 150).Value = (object?)address ?? DBNull.Value;
                 insertCmd.Parameters.Add("@Logo", SqlDbType.VarBinary).Value = (object?)logoBytes ?? DBNull.Value;
                 insertCmd.Parameters.Add("@ContactPerson", SqlDbType.NVarChar, 100).Value = contactPerson;
                 insertCmd.Parameters.Add("@HourlyCost", SqlDbType.Int).Value = hourlyCost;

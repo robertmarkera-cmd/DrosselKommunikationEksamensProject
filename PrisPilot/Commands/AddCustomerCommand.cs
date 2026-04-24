@@ -24,7 +24,12 @@ namespace PrisPilot.Commands
 
         public bool CanExecute(object? parameter)
         {
-            return true;
+            bool result = false;
+            if (parameter is AddCustomerViewModel ACM)
+            {
+                result = ACM.CurrentCustomer.IsCustomerValid();
+            }
+            return result;
         }
 
         public void Execute(object? parameter)
