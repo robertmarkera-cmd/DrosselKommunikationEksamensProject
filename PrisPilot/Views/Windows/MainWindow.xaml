@@ -10,7 +10,7 @@
     Title="MainWindow"
     Width="1080"
     Height="1920"
-    Background="White"
+    Background="#FBF8F4"
     WindowState="Maximized"
     mc:Ignorable="d">
     <Grid>
