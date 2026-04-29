@@ -39,6 +39,27 @@ namespace PrisPilot.Services.Peristence
         public override List<Customer> GetAll()
         {
             List<Customer> customers = new List<Customer>();
+            using (SqlConnection con = CreateConnection())
+            {
+                con.Open();
+                using SqlCommand cmd = new SqlCommand("SELECT Cvr, CompanyName, Email, PhoneNumber, Address, Logo, ContactPerson, HourlyCost FROM dbo.CUSTOMER", con);
+                using SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var customer = new Customer
+                    {
+                        Cvr = reader["Cvr"] != DBNull.Value ? reader["Cvr"].ToString()! : string.Empty,
+                        CompanyName = reader["CompanyName"] != DBNull.Value ? reader["CompanyName"].ToString()! : string.Empty,
+                        Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString()! : string.Empty,
+                        TelephoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString()! : string.Empty,
+                        Address = reader["Address"] != DBNull.Value ? reader["Address"].ToString()! : string.Empty,
+                        Logo = reader["Logo"] != DBNull.Value ? (byte[])reader["Logo"] : null,
+                        ContactPerson = reader["ContactPerson"] != DBNull.Value ? reader["ContactPerson"].ToString()! : string.Empty,
+                        HourlyCost = reader["HourlyCost"] != DBNull.Value ? Convert.ToDouble(reader["HourlyCost"]) : 0
+                    };
+                    customers.Add(customer);
+                }
+            }
             return customers;
         }
     }
