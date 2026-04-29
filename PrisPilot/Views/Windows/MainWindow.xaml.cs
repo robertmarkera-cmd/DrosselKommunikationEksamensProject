@@ -21,5 +21,7 @@ namespace PrisPilot.Views.Windows
             InitializeComponent();
             Main.Content = new AddCustomerView();
         }
+
+        
     }
 }
