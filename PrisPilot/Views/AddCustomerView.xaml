@@ -8,39 +8,10 @@
     d:DesignHeight="1080"
     d:DesignWidth="1920"
     mc:Ignorable="d">
-    <!--#region Resources and style-->
-    <UserControl.Resources>
-        <Style TargetType="Button">
-            <Style.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5" />
-                </Style>
-            </Style.Resources>
-        </Style>
-        <SolidColorBrush x:Key="PrimaryBrush" Color="#172E79" />
-        <SolidColorBrush x:Key="AccentBrush" Color="#EF8802" />
-        <SolidColorBrush x:Key="WarmBackgroundBrush" Color="#FBF8F4" />
-        <SolidColorBrush x:Key="SoftBorderBrush" Color="#D1D5DB" />
-        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
-        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="Margin" Value="0,0,0,8" />
-        </Style>
-
-        <Style x:Key="CardGroupBoxStyle" TargetType="GroupBox">
-            <Setter Property="Margin" Value="0,0,16,16" />
-            <Setter Property="Padding" Value="10" />
-            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
-            <Setter Property="BorderThickness" Value="2" />
-            <Setter Property="Background" Value="White" />
-        </Style>
-    </UserControl.Resources>
-    <!--#endregion-->
 
     <!--#region Grid-->
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -184,13 +155,23 @@
             <StackPanel Grid.Row="7" Orientation="Horizontal">
                 <Button
                     x:Name="PickLogoButton"
-                    Height="25"
+                    Width="70"
+                    Height="40"
+                    Margin="10,0,0,0"
+                    Background="{StaticResource WarmBackgroundBrush}"
+                    BorderBrush="{StaticResource AccentBrush}"
+                    BorderThickness="1.5"
                     Command="{Binding OpenFileForAddCustomerCommand}"
                     CommandParameter="{Binding}"
                     Content="Hent logo" />
                 <Button
-                    x:Name="AddCustomerButton"
-                    Height="25"
+                    x:Name="SaveCustomerButton"
+                    Width="70"
+                    Height="40"
+                    Margin="10,0,0,0"
+                    Background="{StaticResource WarmBackgroundBrush}"
+                    BorderBrush="{StaticResource AccentBrush}"
+                    BorderThickness="1.5"
                     Command="{Binding AddCustomerCommand}"
                     CommandParameter="{Binding}"
                     Content="Gem kunde" />
@@ -233,5 +214,6 @@
 
 
     </Grid>
+    
     <!--#endregion Grid-->
 </UserControl>
