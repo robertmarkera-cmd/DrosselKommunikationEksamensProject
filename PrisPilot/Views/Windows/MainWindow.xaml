@@ -8,8 +8,8 @@
     xmlns:viewmodels="clr-namespace:PrisPilot.ViewModels"
     xmlns:views="clr-namespace:PrisPilot.Views"
     Title="MainWindow"
-    Width="1080"
-    Height="1920"
+    Width="1920"
+    Height="1080"
     Background="#FBF8F4"
     WindowState="Maximized"
     mc:Ignorable="d">
@@ -54,7 +54,7 @@
                 Background="{StaticResource WarmBackgroundBrush}"
                 BorderBrush="{StaticResource AccentBrush}"
                 BorderThickness="1.5"
-                Command="{Binding NavigateToFirstViewCommand}"
+                Click="New_Quote_Button_Click"
                 Content="Nyt tilbud" />
             <Button
                 x:Name="Preview_Button"

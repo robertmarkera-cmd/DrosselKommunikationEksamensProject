@@ -38,6 +38,9 @@
                 <ComboBox
                     Height="32"
                     DisplayMemberPath="CompanyName"
+                    Background="{StaticResource WarmBackgroundBrush}"
+                    Foreground="Black"
+                    BorderBrush="{StaticResource AccentBrush}"
                     ItemsSource="{Binding Customers}"
                     SelectedItem="{Binding SelectedCustomer}" />
             </StackPanel>
@@ -179,7 +182,7 @@
                             Margin="8,0"
                             HorizontalAlignment="Right"
                             FontWeight="Regular"
-                            Text="17.000 kr./md" />
+                            Text="16.500 kr./md" />
                         <TextBox
                             Grid.Column="2"
                             Height="26"

@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PrisPilot.Views;
 
 namespace PrisPilot.Views.Windows
 {
@@ -22,6 +23,10 @@ namespace PrisPilot.Views.Windows
             Main.Content = new AddCustomerView();
         }
 
+        private void New_Quote_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new AddQuoteView();
+        }
         
     }
 }
