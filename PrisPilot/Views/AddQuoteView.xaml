@@ -7,203 +7,285 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="1080"
     d:DesignWidth="1920"
+    Background="{StaticResource WarmBackgroundBrush}"
     mc:Ignorable="d">
-   
+
 
     <!--#region Grid-->
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="20" />
-            <RowDefinition Height="4*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
-            <ColumnDefinition />
-            <ColumnDefinition Width="100" />
-        </Grid.ColumnDefinitions>
-
-
-        <!--#region Content box-->
-
-        <Grid Grid.Row="2" Grid.Column="1">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Grid Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-
-            </Grid.RowDefinitions>
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="0"
-                Margin="30,0,12,16"
-                VerticalAlignment="Center"
-                FontSize="25"
-                Foreground="{StaticResource PrimaryBrush}"
-                Text="Firmanavn:" />
-            <TextBox
-                x:Name="CompanyName_TextBox"
-                Grid.Row="0"
-                Grid.Column="1"
-                Height="30"
-                Margin="0,0,150,16"
-                Text="{Binding CurrentCustomer.CompanyName, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="0"
-                Margin="30,0,12,16"
-                VerticalAlignment="Center"
-                FontSize="25"
-                Foreground="{StaticResource PrimaryBrush}"
-                Text="Kontaktperson: " />
-            <TextBox
-                x:Name="ContactPerson_TextBox"
-                Grid.Row="1"
-                Grid.Column="1"
-                Height="30"
-                Margin="0,0,150,16"
-                Text="{Binding CurrentCustomer.ContactPerson, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="0"
-                Margin="30,0,12,16"
-                VerticalAlignment="Center"
-                FontSize="25"
-                Foreground="{StaticResource PrimaryBrush}"
-                Text="CVR:" />
-            <TextBox
-                x:Name="CVR_TextBox"
-                Grid.Row="2"
-                Grid.Column="1"
-                Height="30"
-                Margin="0,0,150,16"
-                Text="{Binding CurrentCustomer.Cvr, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock
-                Grid.Row="3"
-                Grid.Column="0"
-                Margin="30,0,12,16"
-                VerticalAlignment="Center"
-                FontSize="25"
-                Foreground="{StaticResource PrimaryBrush}"
-                Text="Email:" />
-            <TextBox
-                x:Name="Email_TextBox"
-                Grid.Row="3"
-                Grid.Column="1"
-                Height="30"
-                Margin="0,0,150,16"
-                Text="{Binding CurrentCustomer.Email, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock
-                Grid.Row="4"
-                Grid.Column="0"
-                Margin="30,0,12,16"
-                VerticalAlignment="Center"
-                FontSize="25"
-                Foreground="{StaticResource PrimaryBrush}"
-                Text="Telefonnummer:" />
-            <TextBox
-                x:Name="TelephoneNumber_TextBox"
-                Grid.Row="4"
-                Grid.Column="1"
-                Height="30"
-                Margin="0,0,150,16"
-                Text="{Binding CurrentCustomer.TelephoneNumber, UpdateSourceTrigger=PropertyChanged}" />
-
-            <TextBlock
-                Grid.Row="5"
-                Grid.Column="0"
-                Margin="30,0,12,16"
-                VerticalAlignment="Center"
-                FontSize="25"
-                Foreground="{StaticResource PrimaryBrush}"
-                Text="Adresse:" />
-            <TextBox
-                x:Name="Address_TextBox"
-                Grid.Row="5"
-                Grid.Column="1"
-                Height="30"
-                Margin="0,0,150,16"
-                Text="{Binding CurrentCustomer.Address, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock
-                Grid.Row="6"
-                Grid.Column="0"
-                Margin="30,0,12,16"
-                VerticalAlignment="Center"
-                FontSize="25"
-                Foreground="{StaticResource PrimaryBrush}"
-                Text="Timeløn:" />
-            <TextBox
-                x:Name="HourlyCost_TextBox"
-                Grid.Row="6"
-                Grid.Column="1"
-                Height="30"
-                Margin="0,0,150,16"
-                Text="{Binding CurrentCustomer.HourlyCost, UpdateSourceTrigger=PropertyChanged}" />
-            <StackPanel Grid.Row="7" Orientation="Horizontal">
-                <Button
-                    x:Name="PickLogoButton"
-                    Height="25"
-                    Command="{Binding OpenFileForAddCustomerCommand}"
-                    CommandParameter="{Binding}"
-                    Content="Hent logo" />
-                <Button
-                    x:Name="AddCustomerButton"
-                    Height="25"
-                    Command="{Binding AddCustomerCommand}"
-                    CommandParameter="{Binding}"
-                    Content="Gem kunde" />
-            </StackPanel>
             <StackPanel
-                Grid.Row="7"
-                Grid.Column="1"
-                Margin="10,0,0,0"
-                Orientation="Horizontal">
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="1"
+                Margin="0,0,12,16">
                 <TextBlock
-                    Margin="0,0,0,8"
-                    VerticalAlignment="Center"
-                    FontSize="14"
-                    Foreground="{StaticResource PrimaryBrush}"
-                    Text="{Binding SelectedFilePath, UpdateSourceTrigger=PropertyChanged}" />
-                <Image
-                    x:Name="Image_Logo"
-                    Width="150"
-                    Height="150"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Source="{Binding CurrentCustomer.PreviewImage, UpdateSourceTrigger=PropertyChanged}"
-                    Stretch="Uniform" />
+                    Margin="0,0,0,4"
+                    FontWeight="SemiBold"
+                    Text="Vælg Kunde" />
+                <ComboBox
+                    Height="32"
+                    DisplayMemberPath="CompanyName"
+                    Background="{StaticResource WarmBackgroundBrush}"
+                    Foreground="Black"
+                    BorderBrush="{StaticResource AccentBrush}"
+                    ItemsSource="{Binding Customers}"
+                    SelectedItem="{Binding SelectedCustomer}" />
             </StackPanel>
+
+            <GroupBox
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="0,0,12,16"
+                FontWeight="SemiBold"
+                Header="Indledning"
+                Style="{StaticResource CardGroupBoxStyle}">
+                <TextBox
+                    MinHeight="160"
+                    AcceptsReturn="True"
+                    BorderBrush="{StaticResource AccentBrush}"
+                    FontWeight="Regular"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto" />
+            </GroupBox>
+            <GroupBox
+                Grid.Row="3"
+                Grid.Column="0"
+                Margin="0,0,12,16"
+                FontWeight="SemiBold"
+                Header="LinkedIn - Fast varetagelse"
+                Style="{StaticResource CardGroupBoxStyle}">
+                <StackPanel>
+                    <Grid Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox
+                            Grid.Column="0"
+                            Content="1 opslag om ugen"
+                            FontWeight="Regular" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="8,0"
+                            HorizontalAlignment="Right"
+                            FontWeight="Regular"
+                            Text="7.500 kr./md" />
+                        <TextBox
+                            Grid.Column="2"
+                            Height="26"
+                            Margin="8,0,0,0" />
+
+                    </Grid>
+                    <Grid Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox
+                            Grid.Column="0"
+                            Content="2 opslag om ugen"
+                            FontWeight="Regular" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="8,0"
+                            HorizontalAlignment="Right"
+                            FontWeight="Regular"
+                            Text="10.500 kr./md" />
+                        <TextBox
+                            Grid.Column="2"
+                            Height="26"
+                            Margin="8,0,0,0" />
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="12,0,0,16"
+                FontWeight="SemiBold"
+                Header="Fastvaretagelse af kommunikation"
+                Style="{StaticResource CardGroupBoxStyle}">
+                <StackPanel>
+                    <Grid Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox
+                            Grid.Column="0"
+                            Content="10 timer om ugen"
+                            FontWeight="Regular" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="8,0"
+                            HorizontalAlignment="Right"
+                            FontWeight="Regular"
+                            Text="8.500 kr./md" />
+                        <TextBox
+                            Grid.Column="2"
+                            Height="26"
+                            Margin="8,0,0,0"
+                            FontWeight="Regular" />
+
+                    </Grid>
+                    <Grid Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox
+                            Grid.Column="0"
+                            Content="15 timer om ugen"
+                            FontWeight="Regular" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="8,0"
+                            HorizontalAlignment="Right"
+                            FontWeight="Regular"
+                            Text="12.500 kr./md" />
+                        <TextBox
+                            Grid.Column="2"
+                            Height="26"
+                            Margin="8,0,0,0"
+                            FontWeight="Regular" />
+
+                    </Grid>
+                    <Grid Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox
+                            Grid.Column="0"
+                            Content="20 timer om ugen"
+                            FontWeight="Regular" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="8,0"
+                            HorizontalAlignment="Right"
+                            FontWeight="Regular"
+                            Text="16.500 kr./md" />
+                        <TextBox
+                            Grid.Column="2"
+                            Height="26"
+                            Margin="8,0,0,0"
+                            FontWeight="Regular" />
+
+                    </Grid>
+                    <Grid Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox
+                            Grid.Column="0"
+                            Content="25 timer om ugen"
+                            FontWeight="Regular" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="8,0"
+                            HorizontalAlignment="Right"
+                            FontWeight="Regular"
+                            Text="20.500 kr./md" />
+                        <TextBox
+                            Grid.Column="2"
+                            Height="26"
+                            Margin="8,0,0,0"
+                            FontWeight="Regular" />
+
+                    </Grid>
+                    <Grid Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox
+                            Grid.Column="0"
+                            Content="30 timer om ugen"
+                            FontWeight="Regular" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="8,0"
+                            HorizontalAlignment="Right"
+                            FontWeight="Regular"
+                            Text="24.500 kr./md" />
+                        <TextBox
+                            Grid.Column="2"
+                            Height="26"
+                            Margin="8,0,0,0"
+                            FontWeight="Regular" />
+
+                    </Grid>
+                </StackPanel>
+
+            </GroupBox>
+            <GroupBox
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0,0,0,16"
+                FontWeight="SemiBold"
+                Header="Yderligere tilføjelser"
+                Style="{StaticResource CardGroupBoxStyle}">
+                <StackPanel>
+                    <Grid Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Margin="4,0,24,0" Content="Tidsplan"  FontWeight="Regular" />
+                        <CheckBox Margin="164,0,34,0" Content="Om Drossel Kommunikation"  FontWeight="Regular" />
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+
+
+
+            <!--#region Content box-->
+
+
+            <Border
+                Grid.Row="0"
+                Grid.Column="1"
+                Height="2"
+                Margin="0,0,0,10"
+                Background="{StaticResource AccentBrush}"
+                CornerRadius="0" />
+            <Border
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="0,0,0,10"
+                BorderBrush="{StaticResource AccentBrush}"
+                BorderThickness="1"
+                CornerRadius="0" />
+
+
+
+            <!--#endregion-->
+
+
         </Grid>
-    <Border
-            Grid.Row="1"
-            Grid.Column="1"
-            Height="2"
-            Margin="0,0,0,10"
-            Background="{StaticResource AccentBrush}" />
-
-
-        <Border
-            Grid.Row="2"
-            Grid.Column="1"
-            BorderBrush="{StaticResource PrimaryBrush}"
-            BorderThickness="2" />
-        <!--#endregion-->
-
-
-    </Grid>
     </ScrollViewer>
     <!--#endregion Grid-->
 </UserControl>
