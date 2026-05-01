@@ -70,8 +70,7 @@ namespace PrisPilot.ViewModels
                  CurrentCustomer.TelephoneNumber,
                  CurrentCustomer.Address,
                  CurrentCustomer.Logo,
-                 CurrentCustomer.ContactPerson,
-                 CurrentCustomer.HourlyCost
+                 CurrentCustomer.ContactPerson
              );
         }
 

@@ -114,18 +114,6 @@ namespace PrisPilot.ViewModels
             }
         }
 
-        private double _hourlyCost = 0;
-        public double HourlyCost
-        {
-            get => _hourlyCost;
-            set
-            {
-                if (_hourlyCost == value) return;
-                _hourlyCost = value;
-                OnPropertyChanged();
-            }
-        }
-
         public CustomerViewModel(Customer customer) : base(customer)
         {
             this._customer = customer;
@@ -136,7 +124,6 @@ namespace PrisPilot.ViewModels
             this.Address = customer.Address;
             this.Logo = customer.Logo;
             this.ContactPerson = customer.ContactPerson;
-            this.HourlyCost = customer.HourlyCost;
         }
 
 

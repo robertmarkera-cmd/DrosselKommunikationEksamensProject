@@ -7,10 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:PrisPilot.ViewModels"
     xmlns:views="clr-namespace:PrisPilot.Views"
-    Title="MainWindow"
-    Width="1080"
-    Height="1920"
-    Background="White"
+    Title="PrisPilot"
+    Width="1920"
+    Height="1080"
+    Background="#FBF8F4"
     WindowState="Maximized"
     mc:Ignorable="d">
     <Grid>
@@ -32,38 +32,53 @@
             HorizontalAlignment="Left"
             Orientation="Horizontal">
             <Button
+                x:Name="Add_Customer_Button"
                 Grid.Row="0"
                 Grid.Column="1"
-                MaxHeight="50"
+                Height="148"
+                MaxHeight="30"
                 Margin="0,0,30,0"
                 Padding="20,2"
-                Background="#FBF8F4"
-                Content="Opret Kunde" />
+                Background="{StaticResource WarmBackgroundBrush}"
+                BorderBrush="{StaticResource AccentBrush}"
+                BorderThickness="1.5"
+                Click="Add_Customer_Button_Click"
+                Content="Opret Kunde"
+                Foreground="Black" />
             <Button
+                x:Name="New_Quote_Button"
                 Grid.Row="0"
                 Grid.Column="1"
-                MaxHeight="50"
+                MaxHeight="30"
                 Margin="0,0,30,0"
                 Padding="20,2"
-                Background="#FBF8F4"
-                Command="{Binding NavigateToFirstViewCommand}"
+                Background="{StaticResource WarmBackgroundBrush}"
+                BorderBrush="{StaticResource AccentBrush}"
+                BorderThickness="1.5"
+                Click="New_Quote_Button_Click"
                 Content="Nyt tilbud" />
             <Button
+                x:Name="Preview_Button"
                 Grid.Row="0"
                 Grid.Column="1"
-                MaxHeight="50"
+                MaxHeight="30"
                 Margin="0,0,30,0"
                 Padding="20,2"
-                Background="#FBF8F4"
+                Background="{StaticResource WarmBackgroundBrush}"
+                BorderBrush="{StaticResource AccentBrush}"
+                BorderThickness="1.5"
                 Command="{Binding NavigateToSecondViewCommand}"
                 Content="Forhåndsvisning" />
             <Button
+                x:Name="Customer_Overview_Button"
                 Grid.Row="0"
                 Grid.Column="1"
-                MaxHeight="50"
+                MaxHeight="30"
                 Margin="0,0,30,0"
                 Padding="20,2"
-                Background="#FBF8F4"
+                Background="{StaticResource WarmBackgroundBrush}"
+                BorderBrush="{StaticResource AccentBrush}"
+                BorderThickness="1.5"
                 Content="Kundeoversigt" />
 
 
