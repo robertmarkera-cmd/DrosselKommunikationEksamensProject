@@ -27,6 +27,10 @@ namespace PrisPilot.Views.Windows
         {
             Main.Content = new AddQuoteView();
         }
-        
+
+        private void Add_Customer_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new AddCustomerView();
+        }
     }
 }

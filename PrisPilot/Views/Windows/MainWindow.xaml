@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:PrisPilot.ViewModels"
     xmlns:views="clr-namespace:PrisPilot.Views"
-    Title="MainWindow"
+    Title="PrisPilot"
     Width="1920"
     Height="1080"
     Background="#FBF8F4"
@@ -42,6 +42,7 @@
                 Background="{StaticResource WarmBackgroundBrush}"
                 BorderBrush="{StaticResource AccentBrush}"
                 BorderThickness="1.5"
+                Click="Add_Customer_Button_Click"
                 Content="Opret Kunde"
                 Foreground="Black" />
             <Button

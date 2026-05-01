@@ -13,15 +13,15 @@ namespace PrisPilot.Services.Peristence
         {
         }
 
-        public void Add(string cvr, string companyName, string email, string telephoneNumber, string address, byte[]? logoBytes, string contactPerson, double hourlyCost)
+        public void Add(string cvr, string companyName, string email, string telephoneNumber, string address, byte[]? logoBytes, string contactPerson)
         {
             using (SqlConnection con = CreateConnection())
             {
                 con.Open();
 
                 using SqlCommand insertCmd = new SqlCommand(@"
-                            INSERT INTO dbo.CUSTOMER (Cvr, CompanyName, Email, PhoneNumber, Address, Logo, ContactPerson, HourlyCost)
-                            VALUES (@Cvr, @CompanyName, @Email, @PhoneNumber, @Address, @Logo, @ContactPerson, @HourlyCost)", con);
+                            INSERT INTO dbo.CUSTOMER (Cvr, CompanyName, Email, PhoneNumber, Address, Logo, ContactPerson)
+                            VALUES (@Cvr, @CompanyName, @Email, @PhoneNumber, @Address, @Logo, @ContactPerson)", con);
 
                 insertCmd.Parameters.Add("@Cvr", SqlDbType.NVarChar, 8).Value = cvr;
                 insertCmd.Parameters.Add("@CompanyName", SqlDbType.NVarChar, 100).Value = companyName;
@@ -30,7 +30,6 @@ namespace PrisPilot.Services.Peristence
                 insertCmd.Parameters.Add("@Address", SqlDbType.NVarChar, 150).Value = (object?)address ?? DBNull.Value;
                 insertCmd.Parameters.Add("@Logo", SqlDbType.VarBinary).Value = (object?)logoBytes ?? DBNull.Value;
                 insertCmd.Parameters.Add("@ContactPerson", SqlDbType.NVarChar, 100).Value = contactPerson;
-                insertCmd.Parameters.Add("@HourlyCost", SqlDbType.Float).Value = hourlyCost;
 
                 insertCmd.ExecuteNonQuery();
             }
@@ -42,7 +41,7 @@ namespace PrisPilot.Services.Peristence
             using (SqlConnection con = CreateConnection())
             {
                 con.Open();
-                using SqlCommand cmd = new SqlCommand("SELECT Cvr, CompanyName, Email, PhoneNumber, Address, Logo, ContactPerson, HourlyCost FROM dbo.CUSTOMER", con);
+                using SqlCommand cmd = new SqlCommand("SELECT Cvr, CompanyName, Email, PhoneNumber, Address, Logo, ContactPerson FROM dbo.CUSTOMER", con);
                 using SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -54,8 +53,7 @@ namespace PrisPilot.Services.Peristence
                         TelephoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString()! : string.Empty,
                         Address = reader["Address"] != DBNull.Value ? reader["Address"].ToString()! : string.Empty,
                         Logo = reader["Logo"] != DBNull.Value ? (byte[])reader["Logo"] : null,
-                        ContactPerson = reader["ContactPerson"] != DBNull.Value ? reader["ContactPerson"].ToString()! : string.Empty,
-                        HourlyCost = reader["HourlyCost"] != DBNull.Value ? Convert.ToDouble(reader["HourlyCost"]) : 0
+                        ContactPerson = reader["ContactPerson"] != DBNull.Value ? reader["ContactPerson"].ToString()! : string.Empty
                     };
                     customers.Add(customer);
                 }

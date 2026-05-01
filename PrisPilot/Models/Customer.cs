@@ -16,7 +16,6 @@ namespace PrisPilot.Models
         // We're also going to add it to our database as a bytearray anyways
         public byte[]? Logo { get; set; } = null;
         public string ContactPerson { get; set; } = string.Empty;
-        public double HourlyCost { get; set; } = 0;
         
         public Customer()
         {

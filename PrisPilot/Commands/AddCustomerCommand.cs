@@ -46,7 +46,6 @@ namespace PrisPilot.Commands
                     $"Telefonnummer: {c.TelephoneNumber}{Environment.NewLine}" +
                     $"adresse: {c.Address}{Environment.NewLine}" +
                     $"Kontaktperson: {c.ContactPerson}{Environment.NewLine}" +
-                    $"Timepris: {c.HourlyCost}{Environment.NewLine}" +
                     $"Logo: {ACM.SelectedFilePath}";
 
                 MessageBoxResult result = MessageBox.Show(message, "Indtastede oplysninger", MessageBoxButton.YesNo);
