@@ -20,6 +20,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -37,10 +38,10 @@
                     Text="Vælg Kunde" />
                 <ComboBox
                     Height="32"
-                    DisplayMemberPath="CompanyName"
                     Background="{StaticResource WarmBackgroundBrush}"
-                    Foreground="Black"
                     BorderBrush="{StaticResource AccentBrush}"
+                    DisplayMemberPath="CompanyName"
+                    Foreground="Black"
                     ItemsSource="{Binding Customers}"
                     SelectedItem="{Binding SelectedCustomer}" />
             </StackPanel>
@@ -240,6 +241,79 @@
 
             </GroupBox>
             <GroupBox
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="0,0,12,16"
+                FontWeight="SemiBold"
+                Header="Salgs- og præsentationmateriale"
+                Style="{StaticResource CardGroupBoxStyle}">
+                <StackPanel>
+                    <Grid Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox
+                            Grid.Column="0"
+                            Content="Brochure"
+                            FontWeight="Regular" />
+                        <CheckBox
+                            Grid.Column="1"
+                            Content="Roll up"
+                            FontWeight="Regular" />
+                    </Grid>
+                    <Grid Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox
+                            Grid.Column="0"
+                            Content="Præsentation"
+                            FontWeight="Regular" />
+                        <CheckBox
+                            Grid.Column="1"
+                            Content="Pressemeddelelse"
+                            FontWeight="Regular" />
+
+                    </Grid>
+                    <Grid Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox
+                            Grid.Column="0"
+                            Content="Pressemeddelelse"
+                            FontWeight="Regular" />
+                        <CheckBox
+                            Grid.Column="1"
+                            Content="Pressemeddelelse"
+                            FontWeight="Regular" />
+                    </Grid>
+                    <Grid Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="130" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox
+                            Grid.Column="1"
+                            Content="2 Case til hjemmeside"
+                            FontWeight="Regular" />
+                        <CheckBox
+                            Grid.Column="0"
+                            Content="1 Case til hjemmeside"
+                            FontWeight="Regular" />
+
+                    </Grid>
+
+                </StackPanel>
+            </GroupBox>
+            <GroupBox
                 Grid.Row="4"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
@@ -254,13 +328,88 @@
                             <ColumnDefinition Width="170" />
                             <ColumnDefinition Width="130" />
                         </Grid.ColumnDefinitions>
-                        <CheckBox Margin="4,0,24,0" Content="Tidsplan"  FontWeight="Regular" />
-                        <CheckBox Margin="164,0,34,0" Content="Om Drossel Kommunikation"  FontWeight="Regular" />
+                        <CheckBox
+                            Margin="4,0,24,0"
+                            Content="Tidsplan"
+                            FontWeight="Regular" />
+                        <CheckBox
+                            Margin="164,0,34,0"
+                            Content="Om Drossel Kommunikation"
+                            FontWeight="Regular" />
                     </Grid>
                 </StackPanel>
             </GroupBox>
+            <Border
+                Grid.Row="5"
+                Grid.ColumnSpan="2"
+                Margin="0,16,0,16"
+                Padding="16"
+                Background="White"
+                BorderBrush="{StaticResource AccentBrush}"
+                BorderThickness="2">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource HeaderTextStyle}" Text="Løbende prisoversigt" />
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="180" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="8,0"
+                            HorizontalAlignment="Right" />
+                        <TextBlock
+                            Grid.Column="2"
+                            Margin="8,0"
+                            HorizontalAlignment="Right" />
+                        <TextBlock
+                            Grid.Column="3"
+                            HorizontalAlignment="Right"
+                            FontWeight="SemiBold" />
+                    </Grid>
 
 
+                    <Border
+                        Height="2"
+                        Margin="0,12,0,12"
+                        Background="{StaticResource PrimaryBrush}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="220" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="0,0,0,6"
+                            Text="Subtotal før rabatter:" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="0,0,0,6"
+                            HorizontalAlignment="Right" />
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="0,24,0,6"
+                            Text="Samlet rabat:" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="0,24,0,6"
+                            HorizontalAlignment="Right" />
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="0,48,0,0"
+                            FontWeight="SemiBold"
+                            Text="Samlet pris:" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="0,48,0,0"
+                            HorizontalAlignment="Right"
+                            FontWeight="SemiBold" />
+                    </Grid>
+                </StackPanel>
+            </Border>
 
             <!--#region Content box-->
 
