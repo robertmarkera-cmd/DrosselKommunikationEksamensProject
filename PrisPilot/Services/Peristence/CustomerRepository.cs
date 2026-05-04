@@ -20,7 +20,7 @@ namespace PrisPilot.Services.Peristence
                 con.Open();
 
                 using SqlCommand insertCmd = new SqlCommand(@"
-                            INSERT INTO dbo.CUSTOMER (Cvr, CompanyName, Email, PhoneNumber, Address, Logo, ContactPerson)
+                            INSERT INTO CUSTOMER (Cvr, CompanyName, Email, PhoneNumber, Address, Logo, ContactPerson)
                             VALUES (@Cvr, @CompanyName, @Email, @PhoneNumber, @Address, @Logo, @ContactPerson)", con);
 
                 insertCmd.Parameters.Add("@Cvr", SqlDbType.NVarChar, 8).Value = customer.Cvr;
@@ -41,7 +41,7 @@ namespace PrisPilot.Services.Peristence
             using (SqlConnection con = CreateConnection())
             {
                 con.Open();
-                using SqlCommand cmd = new SqlCommand("SELECT Cvr, CompanyName, Email, PhoneNumber, Address, Logo, ContactPerson FROM dbo.CUSTOMER", con);
+                using SqlCommand cmd = new SqlCommand("SELECT Cvr, CompanyName, Email, PhoneNumber, Address, Logo, ContactPerson FROM CUSTOMER", con);
                 using SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {

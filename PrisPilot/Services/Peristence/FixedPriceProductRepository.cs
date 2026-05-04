@@ -20,15 +20,15 @@ namespace PrisPilot.Services.Peristence
             {
                 con.Open();
 
-                using SqlCommand insertCmd = new SqlCommand(@"
-                            INSERT INTO dbo.CUSTOMER (Name, Description, Price, Frequency)
+                using SqlCommand cmd = new SqlCommand(@"
+                            INSERT INTO CUSTOMER (Name, Description, Price, Frequency)
                             VALUES (@Name, @Description, @Price, @Frequency)" + "SELECT @@IDENTITY", con);
 
-                insertCmd.Parameters.Add("@Name", SqlDbType.NVarChar, 80).Value = fixedPriceProduct.Name;
-                insertCmd.Parameters.Add("@Description", SqlDbType.NVarChar, 1200).Value = fixedPriceProduct.Description;
-                insertCmd.Parameters.Add("@Price", SqlDbType.Int).Value = fixedPriceProduct.Price;
-                insertCmd.Parameters.Add("@Frequency", SqlDbType.Int).Value = fixedPriceProduct.Frequency;
-                fixedPriceProduct.FixedPriceProductID = Convert.ToInt32(insertCmd.ExecuteScalar());
+                cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 80).Value = fixedPriceProduct.Name;
+                cmd.Parameters.Add("@Description", SqlDbType.NVarChar, 1200).Value = fixedPriceProduct.Description;
+                cmd.Parameters.Add("@Price", SqlDbType.Int).Value = fixedPriceProduct.Price;
+                cmd.Parameters.Add("@Frequency", SqlDbType.Int).Value = fixedPriceProduct.Frequency;
+                fixedPriceProduct.FixedPriceProductID = Convert.ToInt32(cmd.ExecuteScalar());
             }
             return fixedPriceProduct;
         }
