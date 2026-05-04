@@ -1,0 +1,18 @@
+﻿<UserControl
+    x:Class="PrisPilot.Views.PreviewView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:PrisPilot.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="1080"
+    d:DesignWidth="960"
+    Background="AliceBlue"
+    mc:Ignorable="d">
+    <Grid>
+
+        <Rectangle Grid.Row="0" Grid.Column="0" />
+
+
+    </Grid>
+</UserControl>
