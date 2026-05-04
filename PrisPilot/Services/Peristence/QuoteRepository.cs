@@ -27,8 +27,9 @@ namespace PrisPilot.Services.Peristence
                 insertCmd.Parameters.Add("@HourlyCost", SqlDbType.Int).Value = quote.HourlyCost;
                 insertCmd.Parameters.Add("@TotalPrice", SqlDbType.Float).Value = quote.TotalPrice;
                 quote.QuoteID = Convert.ToInt32(insertCmd.ExecuteScalar());
-                insertCmd.ExecuteNonQuery();
+                                
             }
+            return quote;
         }
         public override List<Quote> GetAll()
         {
