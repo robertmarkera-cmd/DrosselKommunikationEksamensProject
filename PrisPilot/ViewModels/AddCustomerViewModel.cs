@@ -63,15 +63,7 @@ namespace PrisPilot.ViewModels
 
         public void AddToRepo()
         {
-            _customerRepo.Add(
-                 CurrentCustomer.Cvr,
-                 CurrentCustomer.CompanyName,
-                 CurrentCustomer.Email,
-                 CurrentCustomer.TelephoneNumber,
-                 CurrentCustomer.Address,
-                 CurrentCustomer.Logo,
-                 CurrentCustomer.ContactPerson
-             );
+            _customerRepo.Add(CurrentCustomer.ToModel());
         }
 
     }
