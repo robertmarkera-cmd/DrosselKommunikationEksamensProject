@@ -1,5 +1,8 @@
---CREATE DATABASE [DrosselDB];
---USE DrosselDB;
+CREATE DATABASE DrosselDB;
+GO
+
+USE DrosselDB;
+GO
 
 
 CREATE TABLE CUSTOMER
@@ -15,7 +18,7 @@ ContactPerson NvarChar(100) NOT NULL
 
 CREATE TABLE TEMPLATE
 (
-TemplateID Int PRIMARY KEY,
+TemplateID Int IDENTITY(1,1) PRIMARY KEY,
 Introduction NvarChar(2000) NOT NULL,
 TimeTable NvarChar(2000) NOT NULL,
 AboutUs Bit NOT NULL,
@@ -27,7 +30,7 @@ DrosselLogo VarBinary(max) NOT NULL
 
 CREATE TABLE QUOTE
 (
-QuoteID Int PRIMARY KEY,
+QuoteID Int IDENTITY(1,1) PRIMARY KEY,
 Date DateTime2 NOT NULL,
 HourlyCost Int NOT NULL,
 TotalPrice Float NOT NULL
@@ -35,7 +38,7 @@ TotalPrice Float NOT NULL
 
 CREATE TABLE FIXEDPRICEPRODUCT
 (
-FixedPriceProductID Int PRIMARY KEY,
+FixedPriceProductID Int IDENTITY(1,1) PRIMARY KEY,
 Name NvarChar(80),
 Description NvarChar(1200),
 Price Int,
@@ -58,7 +61,7 @@ CONSTRAINT FK_FixedPriceProductQuote_Quote
 
 CREATE TABLE VARIABLEPRICEPRODUCT
 (
-VariablePriceProductID Int PRIMARY KEY,
+VariablePriceProductID Int IDENTITY(1,1) PRIMARY KEY,
 Name NVarChar(80) NOT NULL,
 Description NVarChar(1200) NOT NULL
 );

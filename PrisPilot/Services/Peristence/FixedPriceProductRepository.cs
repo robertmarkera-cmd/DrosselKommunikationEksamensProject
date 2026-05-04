@@ -7,13 +7,13 @@ using System.Text;
 
 namespace PrisPilot.Services.Peristence
 {
-    public class CustomerRepository : BaseRepository<Customer>
+    public class FixedPriceProductRepository : BaseRepository<FixedPriceProduct>
     {
-        public CustomerRepository() : base()
+        public FixedPriceProductRepository() : base()
         {
         }
 
-        public override Customer Add(Customer customer)
+        public void Add()
         {
             using (SqlConnection con = CreateConnection())
             {
@@ -21,23 +21,23 @@ namespace PrisPilot.Services.Peristence
 
                 using SqlCommand insertCmd = new SqlCommand(@"
                             INSERT INTO dbo.CUSTOMER (Cvr, CompanyName, Email, PhoneNumber, Address, Logo, ContactPerson)
-                            VALUES (@Cvr, @CompanyName, @Email, @PhoneNumber, @Address, @Logo, @ContactPerson)", con);
+                            VALUES (@Cvr, @CompanyName, @Email, @PhoneNumber, @Address, @Logo, @ContactPerson)" + "SELECT @@IDENTITY", con);
 
-                insertCmd.Parameters.Add("@Cvr", SqlDbType.NVarChar, 8).Value = customer.Cvr;
-                insertCmd.Parameters.Add("@CompanyName", SqlDbType.NVarChar, 100).Value = customer.CompanyName;
-                insertCmd.Parameters.Add("@Email", SqlDbType.NVarChar, 100).Value = customer.Email;
-                insertCmd.Parameters.Add("@PhoneNumber", SqlDbType.NVarChar, 20).Value = customer.TelephoneNumber;
-                insertCmd.Parameters.Add("@Address", SqlDbType.NVarChar, 150).Value = (object?)customer.Address ?? DBNull.Value;
-                insertCmd.Parameters.Add("@Logo", SqlDbType.VarBinary).Value = (object?)customer.Logo ?? DBNull.Value;
-                insertCmd.Parameters.Add("@ContactPerson", SqlDbType.NVarChar, 100).Value = customer.ContactPerson;
+                insertCmd.Parameters.Add("@Cvr", SqlDbType.NVarChar, 8).Value = cvr;
+                insertCmd.Parameters.Add("@CompanyName", SqlDbType.NVarChar, 100).Value = companyName;
+                insertCmd.Parameters.Add("@Email", SqlDbType.NVarChar, 100).Value = email;
+                insertCmd.Parameters.Add("@PhoneNumber", SqlDbType.NVarChar, 20).Value = telephoneNumber;
+                insertCmd.Parameters.Add("@Address", SqlDbType.NVarChar, 150).Value = (object?)address ?? DBNull.Value;
+                insertCmd.Parameters.Add("@Logo", SqlDbType.VarBinary).Value = (object?)logoBytes ?? DBNull.Value;
+                insertCmd.Parameters.Add("@ContactPerson", SqlDbType.NVarChar, 100).Value = contactPerson;
+
                 insertCmd.ExecuteNonQuery();
             }
-            return customer;
         }
 
-        public override List<Customer> GetAll()
+        public override List<FixedPriceProduct> GetAll()
         {
-            List<Customer> customers = new List<Customer>();
+            List<FixedPriceProduct> fixedPriceProducts = new List<FixedPriceProduct>();
             using (SqlConnection con = CreateConnection())
             {
                 con.Open();
@@ -45,7 +45,7 @@ namespace PrisPilot.Services.Peristence
                 using SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    var customer = new Customer
+                    FixedPriceProduct fixedPriceProduct = new FixedPriceProduct
                     {
                         Cvr = reader["Cvr"] != DBNull.Value ? reader["Cvr"].ToString()! : string.Empty,
                         CompanyName = reader["CompanyName"] != DBNull.Value ? reader["CompanyName"].ToString()! : string.Empty,
@@ -55,10 +55,10 @@ namespace PrisPilot.Services.Peristence
                         Logo = reader["Logo"] != DBNull.Value ? (byte[])reader["Logo"] : null,
                         ContactPerson = reader["ContactPerson"] != DBNull.Value ? reader["ContactPerson"].ToString()! : string.Empty
                     };
-                    customers.Add(customer);
+                    fixedPriceProducts.Add(fixedPriceProduct);
                 }
             }
-            return customers;
+            return fixedPriceProducts;
         }
     }
 }
