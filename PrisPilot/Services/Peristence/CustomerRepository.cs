@@ -45,7 +45,7 @@ namespace PrisPilot.Services.Peristence
                 using SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    var customer = new Customer
+                    Customer customer = new Customer
                     {
                         Cvr = reader["Cvr"] != DBNull.Value ? reader["Cvr"].ToString()! : string.Empty,
                         CompanyName = reader["CompanyName"] != DBNull.Value ? reader["CompanyName"].ToString()! : string.Empty,
