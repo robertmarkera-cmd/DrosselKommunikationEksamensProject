@@ -11,5 +11,7 @@ namespace PrisPilot.Models
         public int HourlyCost { get; set; }
 
         public double TotalPrice { get; set; }
+
+        public int QuoteID { get; set; }
     }
 }
