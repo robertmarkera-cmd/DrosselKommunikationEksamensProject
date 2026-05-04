@@ -62,7 +62,8 @@ namespace PrisPilot.Services.Peristence
             {
                 con.Open();
                 using SqlCommand cmd = new SqlCommand(
-                    "SELECT QuoteID, VariablePriceProductID, HoursUsed FROM TIMESPENT WHERE QuoteID = @QuoteID", con);
+                    "SELECT QuoteID, VariablePriceProductID, HoursUsed FROM TIMESPENT WHERE" +
+                    "QuoteID = @QuoteID", con);
                 cmd.Parameters.Add("@QuoteID", SqlDbType.Int).Value = quoteId;
                 using SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -86,7 +87,8 @@ namespace PrisPilot.Services.Peristence
             {
                 con.Open();
                 using SqlCommand cmd = new SqlCommand(
-                    "SELECT QuoteID, VariablePriceProductID, HoursUsed FROM TIMESPENT WHERE VariablePriceProductID = @VariablePriceProductID", con);
+                    "SELECT QuoteID, VariablePriceProductID, HoursUsed FROM TIMESPENT WHERE" +
+                    "VariablePriceProductID = @VariablePriceProductID", con);
                 cmd.Parameters.Add("@VariablePriceProductID", SqlDbType.Int).Value = variablePriceProductId;
                 using SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -109,7 +111,8 @@ namespace PrisPilot.Services.Peristence
             {
                 con.Open();
                 using SqlCommand cmd = new SqlCommand(
-                    "UPDATE TIMESPENT SET HoursUsed = @HoursUsed WHERE QuoteID = @QuoteID AND VariablePriceProductID = @VariablePriceProductID", con);
+                    "UPDATE TIMESPENT SET HoursUsed = @HoursUsed WHERE" +
+                    "QuoteID = @QuoteID AND VariablePriceProductID = @VariablePriceProductID", con);
                 cmd.Parameters.Add("@HoursUsed", SqlDbType.Int).Value = timeSpent.HoursUsed;
                 cmd.Parameters.Add("@QuoteID", SqlDbType.Int).Value = timeSpent.QuoteID;
                 cmd.Parameters.Add("@VariablePriceProductID", SqlDbType.Int).Value = timeSpent.VariablePriceProductID;
@@ -124,7 +127,8 @@ namespace PrisPilot.Services.Peristence
             {
                 con.Open();
                 using SqlCommand cmd = new SqlCommand(
-                    "DELETE FROM TIMESPENT WHERE QuoteID = @QuoteID AND VariablePriceProductID = @VariablePriceProductID", con);
+                    "DELETE FROM TIMESPENT WHERE" +
+                    "QuoteID = @QuoteID AND VariablePriceProductID = @VariablePriceProductID", con);
                 cmd.Parameters.Add("@QuoteID", SqlDbType.Int).Value = quoteId;
                 cmd.Parameters.Add("@VariablePriceProductID", SqlDbType.Int).Value = variablePriceProductId;
                 cmd.ExecuteNonQuery();
