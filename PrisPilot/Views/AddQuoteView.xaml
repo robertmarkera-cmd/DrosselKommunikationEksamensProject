@@ -52,7 +52,7 @@
                         BorderBrush="{StaticResource AccentBrush}"
                         DisplayMemberPath="CompanyName"
                         Foreground="Black"
-                        ItemsSource="{Binding Customers}"
+                        ItemsSource="{Binding CustomerVMCollection}"
                         SelectedItem="{Binding SelectedCustomer}" />
                 </StackPanel>
 
