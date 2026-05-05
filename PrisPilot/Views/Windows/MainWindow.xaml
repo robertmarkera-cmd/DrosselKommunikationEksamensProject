@@ -15,7 +15,7 @@
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="150" />
+            <RowDefinition Height="50" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <!--#region Header-->
