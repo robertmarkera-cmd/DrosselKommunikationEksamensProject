@@ -13,7 +13,7 @@ namespace PrisPilot.Models
         public string Title { get; set; }
         public string DrosselMail { get; set; }
         public string DrosselPhoneNumber { get; set; }
-        public byte[] DrosselLogo { get; set; }
+        public byte[]? DrosselLogo { get; set; }
 
 
     }

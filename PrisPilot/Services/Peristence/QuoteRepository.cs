@@ -11,7 +11,6 @@ namespace PrisPilot.Services.Peristence
     {
         public QuoteRepository() : base()
         {
-
         }
         public override Quote Add(Quote quote)
         {
@@ -28,7 +27,7 @@ namespace PrisPilot.Services.Peristence
                 Cmd.Parameters.Add("@HourlyCost", SqlDbType.Int).Value = quote.HourlyCost;
                 Cmd.Parameters.Add("@TotalPrice", SqlDbType.Float).Value = quote.TotalPrice;
                 quote.QuoteID = Convert.ToInt32(Cmd.ExecuteScalar());
-                                
+
             }
             return quote;
         }
@@ -47,9 +46,9 @@ namespace PrisPilot.Services.Peristence
                     Quote quote = new Quote
                     {
                         QuoteID = reader.GetInt32(0),
-                        Date = (DateTime)reader["Date"],
-                        HourlyCost = (int)reader["HourlyCost"],
-                        TotalPrice = (Double)reader["TotalPrice"],
+                        Date = reader["Date"] as DateTime? ?? DateTime.MinValue,
+                        HourlyCost = reader["HourlyCost"] as int? ?? 0,
+                        TotalPrice = reader["TotalPrice"] as double? ?? 0.0,
                     };
 
                     quotes.Add(quote);
@@ -108,10 +107,10 @@ namespace PrisPilot.Services.Peristence
                     FixedPriceProduct fp = new FixedPriceProduct
                     {
                         FixedPriceProductID = reader.GetInt32(0),
-                        Name = reader["Name"] != DBNull.Value ? reader["Name"].ToString()! : string.Empty,
-                        Description = reader["Description"] != DBNull.Value ? reader["Description"].ToString()! : string.Empty,
-                        Price = reader["Price"] != DBNull.Value ? Convert.ToInt32(reader["Price"]) : 0,
-                        Frequency = reader["Frequency"] != DBNull.Value ? Convert.ToInt32(reader["Frequency"]) : 0
+                        Name = reader["Name"] as string ?? string.Empty,
+                        Description = reader["Description"] as string ?? string.Empty,
+                        Price = reader["Price"] as int? ?? 0,
+                        Frequency = reader["Frequency"] as int? ?? 0
                     };
                     results.Add(fp);
                 }
@@ -121,5 +120,4 @@ namespace PrisPilot.Services.Peristence
 
     }
 }
-    
 

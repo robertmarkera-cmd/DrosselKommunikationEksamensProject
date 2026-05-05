@@ -55,13 +55,13 @@ namespace PrisPilot.Services.Peristence
                     Template template = new Template
                     {
                         TemplateID = reader.GetInt32(0),
-                        Introduction = (string)reader["Introduction"],
-                        TimeTable = (string)reader["TimeTable"],
-                        AboutUs = (bool)reader["AboutUs"],
-                        Title = (string)reader["Title"],
-                        DrosselMail = (string)reader["DrosselMail"],
-                        DrosselPhoneNumber = (string)reader["DrosselPhoneNumber"],
-                        DrosselLogo = (byte[])reader["DrosselLogo"]
+                        Introduction = reader["Introduction"] as string ?? string.Empty,
+                        TimeTable = reader["TimeTable"] as string ?? string.Empty,
+                        AboutUs = reader["AboutUs"] as bool? ?? false,
+                        Title = reader["Title"] as string ?? string.Empty,
+                        DrosselMail = reader["DrosselMail"] as string ?? string.Empty,
+                        DrosselPhoneNumber = reader["DrosselPhoneNumber"] as string ?? string.Empty,
+                        DrosselLogo = reader["DrosselLogo"] as byte[] ?? null
                     };
 
                     templates.Add(template);
