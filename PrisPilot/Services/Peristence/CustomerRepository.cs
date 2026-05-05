@@ -47,13 +47,13 @@ namespace PrisPilot.Services.Peristence
                 {
                     Customer customer = new Customer
                     {
-                        Cvr = reader["Cvr"] != DBNull.Value ? reader["Cvr"].ToString()! : string.Empty,
-                        CompanyName = reader["CompanyName"] != DBNull.Value ? reader["CompanyName"].ToString()! : string.Empty,
-                        Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString()! : string.Empty,
-                        TelephoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader["PhoneNumber"].ToString()! : string.Empty,
-                        Address = reader["Address"] != DBNull.Value ? reader["Address"].ToString()! : string.Empty,
-                        Logo = reader["Logo"] != DBNull.Value ? (byte[])reader["Logo"] : null,
-                        ContactPerson = reader["ContactPerson"] != DBNull.Value ? reader["ContactPerson"].ToString()! : string.Empty
+                        Cvr = reader["Cvr"] as string ?? string.Empty,
+                        CompanyName = reader["CompanyName"] as string ?? string.Empty,
+                        Email = reader["Email"] as string ?? string.Empty,
+                        TelephoneNumber = reader["PhoneNumber"] as string ?? string.Empty,
+                        Address = reader["Address"] as string ?? string.Empty,
+                        Logo = reader["Logo"] as byte[] ?? null,
+                        ContactPerson = reader["ContactPerson"] as string ?? string.Empty
                     };
                     customers.Add(customer);
                 }

@@ -46,10 +46,10 @@ namespace PrisPilot.Services.Peristence
                     FixedPriceProduct fixedPriceProduct = new FixedPriceProduct
                     {
                         FixedPriceProductID = reader.GetInt32(0),
-                        Name = reader["Name"] != DBNull.Value ? reader["Name"].ToString()! : string.Empty,
-                        Description = reader["Description"] != DBNull.Value ? reader["Description"].ToString()! : string.Empty,
-                        Price = reader["Price"] != DBNull.Value ? Convert.ToInt32(reader["Price"]) : 0,
-                        Frequency = reader["Frequency"] != DBNull.Value ? Convert.ToInt32(reader["Frequency"]) : 0
+                        Name = reader["Name"] as string ?? string.Empty,
+                        Description = reader["Description"] as string ?? string.Empty,
+                        Price = reader["Price"] as int? ?? 0,
+                        Frequency = reader["Frequency"] as int? ?? 0
                     };
                     fixedPriceProducts.Add(fixedPriceProduct);
                 }
