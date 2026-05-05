@@ -45,9 +45,9 @@ namespace PrisPilot.Services.Peristence
                 {
                     list.Add(new TimeSpent
                     {
-                        QuoteID = reader["QuoteID"] != DBNull.Value ? Convert.ToInt32(reader["QuoteID"]) : 0,
-                        VariablePriceProductID = reader["VariablePriceProductID"] != DBNull.Value ? Convert.ToInt32(reader["VariablePriceProductID"]) : 0,
-                        HoursUsed = reader["HoursUsed"] != DBNull.Value ? Convert.ToInt32(reader["HoursUsed"]) : 0
+                        QuoteID = reader["QuoteID"] as int? ?? 0,
+                        VariablePriceProductID = reader["VariablePriceProductID"] as int? ?? 0,
+                        HoursUsed = reader["HoursUsed"] as int? ?? 0
                     });
                 }
             }
@@ -70,9 +70,9 @@ namespace PrisPilot.Services.Peristence
                 {
                     list.Add(new TimeSpent
                     {
-                        QuoteID = Convert.ToInt32(reader["QuoteID"]),
-                        VariablePriceProductID = Convert.ToInt32(reader["VariablePriceProductID"]),
-                        HoursUsed = reader["HoursUsed"] != DBNull.Value ? Convert.ToInt32(reader["HoursUsed"]) : 0
+                        QuoteID = reader["QuoteID"] as int? ?? 0,
+                        VariablePriceProductID = reader["VariablePriceProductID"] as int? ?? 0,
+                        HoursUsed = reader["HoursUsed"] as int? ?? 0
                     });
                 }
             }
@@ -95,9 +95,9 @@ namespace PrisPilot.Services.Peristence
                 {
                     list.Add(new TimeSpent
                     {
-                        QuoteID = Convert.ToInt32(reader["QuoteID"]),
-                        VariablePriceProductID = Convert.ToInt32(reader["VariablePriceProductID"]),
-                        HoursUsed = reader["HoursUsed"] != DBNull.Value ? Convert.ToInt32(reader["HoursUsed"]) : 0
+                        QuoteID = reader["QuoteID"] as int? ?? 0,
+                        VariablePriceProductID = reader["VariablePriceProductID"] as int? ?? 0,
+                        HoursUsed = reader["HoursUsed"] as int? ?? 0
                     });
                 }
             }

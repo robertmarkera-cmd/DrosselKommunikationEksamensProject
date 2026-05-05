@@ -39,13 +39,13 @@ namespace PrisPilot.Commands
                 CustomerViewModel c = ACM.CurrentCustomer;
                 string message =
 
-                    $"Er de indtastede oplysninger korrekte? {Environment.NewLine}{Environment.NewLine}" +
-                    $"Firmanavn: {c.CompanyName}{Environment.NewLine}" +
-                    $"CVR: {c.Cvr}{Environment.NewLine}" +
-                    $"Email: {c.Email}{Environment.NewLine}" +
-                    $"Telefonnummer: {c.TelephoneNumber}{Environment.NewLine}" +
-                    $"adresse: {c.Address}{Environment.NewLine}" +
-                    $"Kontaktperson: {c.ContactPerson}{Environment.NewLine}" +
+                    "Er de indtastede oplysninger korrekte?\n\n" +
+                    $"Firmanavn: {c.CompanyName}\n" +
+                    $"CVR: {c.Cvr}\n" +
+                    $"Email: {c.Email}\n" +
+                    $"Telefonnummer: {c.TelephoneNumber}\n" +
+                    $"adresse: {c.Address}\n" +
+                    $"Kontaktperson: {c.ContactPerson}\n" +
                     $"Logo: {ACM.SelectedFilePath}";
 
                 MessageBoxResult result = MessageBox.Show(message, "Indtastede oplysninger", MessageBoxButton.YesNo);
