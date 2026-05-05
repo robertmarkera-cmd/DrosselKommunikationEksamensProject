@@ -14,7 +14,7 @@
       <HashCode>AAAAAAAAAAACAAQAAEAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
       <FileName>Commands\OpenFileForAddCustomerCommand.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="PrisPilot.Models.Customer" Collapsed="true">
     <Position X="15" Y="1.5" Width="1.5" />
@@ -113,7 +113,7 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Services\FileDialogService.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="PrisPilot.Services.ImageService" Collapsed="true">
     <Position X="20.25" Y="1.5" Width="1.5" />
@@ -164,7 +164,7 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAABAA=</HashCode>
       <FileName>Views\Windows\MainWindow.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.242" Collapsed="true" />
+    <Lollipop Position="0.242" />
   </Class>
   <Class Name="PrisPilot.Views.AddCustomerView" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="16.75" Y="0.5" Width="1.5" />
@@ -188,7 +188,7 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\PreviewView.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="PrisPilot.App" Collapsed="true">
     <Position X="20.25" Y="0.5" Width="1.5" />
