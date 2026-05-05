@@ -12,8 +12,9 @@ namespace PrisPilot.ViewModels
     {
         private readonly CustomerRepository _customerRepository;
         private readonly QuoteRepository _quoteRepository;
+        private readonly TemplateRepository _templateRepository;
 
-        public ObservableCollection<Customer> Customers { get; set; }
+        public ObservableCollection<CustomerViewModel> CustomerVMCollection { get; set; }
 
         public QuoteDraft Draft { get; } = new();
 
@@ -28,14 +29,38 @@ namespace PrisPilot.ViewModels
             }
         }
 
-        private Customer? _selectedCustomer;
-        public Customer? SelectedCustomer
+        private QuoteViewModel _currentQuote;
+        public QuoteViewModel CurrentQuote
+        {
+            get => _currentQuote;
+            set
+            {
+                _currentQuote = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TemplateViewModel _currentTemplate;
+        public TemplateViewModel CurrentTemplate
+        {
+            get => _currentTemplate;
+            set
+            {
+                _currentTemplate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private CustomerViewModel _selectedCustomer;
+        public CustomerViewModel SelectedCustomer
         {
             get => _selectedCustomer;
             set
             {
+                if (_selectedCustomer == value) return;
                 _selectedCustomer = value;
-                Draft.Customer = value;
+                _currentQuote.Cvr = _selectedCustomer.Cvr;
+                Draft.Customer = value?.ToModel();
                 OnPropertyChanged();
                 RegeneratePreview();
             }
@@ -45,13 +70,24 @@ namespace PrisPilot.ViewModels
         {
             _customerRepository = new CustomerRepository();
             _quoteRepository = new QuoteRepository();
-            LoadCustomers();
+            _templateRepository = new TemplateRepository();
+
+            // Initialize CurrentQuote and CurrentTemplate
+            CurrentQuote = new(new Quote());
+            CurrentTemplate = new(new Template());
+
+            // Initialize the ObservableCollection CustomerVMCollection
+            CustomerVMCollection = new ObservableCollection<CustomerViewModel>();
+            InitializeCustomerCollection();
         }
 
-        private void LoadCustomers()
+        private void InitializeCustomerCollection()
         {
-            Customers = new ObservableCollection<Customer>(
-                _customerRepository.GetAll());
+            foreach (Customer customer in _customerRepository.GetAll())
+            {
+                CustomerViewModel cw = new(customer);
+                CustomerVMCollection.Add(cw);
+            }
         }
 
         private void RegeneratePreview()
