@@ -56,6 +56,74 @@
                         SelectedItem="{Binding SelectedCustomer}" />
                 </StackPanel>
 
+                <!-- Product type dropdown (multi-select via checkboxes) -->
+                <StackPanel Grid.Row="1" Margin="0,0,12,16">
+                    <TextBlock
+                        Margin="0,0,0,4"
+                        FontWeight="SemiBold"
+                        Text="Vælg produkttyper" />
+
+                    <ComboBox
+                        x:Name="ProductTypesComboBox"
+                        Height="32"
+                        Background="{StaticResource WarmBackgroundBrush}"
+                        BorderBrush="{StaticResource AccentBrush}"
+                        Foreground="Black"
+                        IsEditable="True"
+                        IsReadOnly="True"
+                        IsTextSearchEnabled="False"
+                        StaysOpenOnEdit="True"
+                        HorizontalContentAlignment="Stretch"
+                        Text="{Binding SelectedProductTypesText, Mode=OneWay}">
+
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+
+                        <ComboBoxItem>
+                            <CheckBox
+                                Content="LinkedIn - Fast varetagelse"
+                                FontWeight="Regular"
+                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
+                                Padding="6,2"
+                                IsChecked="{Binding ElementName=ProductTypesComboBox, Path=DataContext.ShowLinkedInFastVaretagelse, Mode=TwoWay}" />
+                        </ComboBoxItem>
+
+                        <ComboBoxItem>
+                            <CheckBox
+                                Content="Fastvaretagelse af kommunikation"
+                                FontWeight="Regular"
+                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
+                                Padding="6,2"
+                                IsChecked="{Binding ElementName=ProductTypesComboBox, Path=DataContext.ShowFastvaretagelseKommunikation, Mode=TwoWay}" />
+                        </ComboBoxItem>
+
+                        <ComboBoxItem>
+                            <CheckBox
+                                Content="Salgs- og præsentationmateriale"
+                                FontWeight="Regular"
+                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
+                                Padding="6,2"
+                                IsChecked="{Binding ElementName=ProductTypesComboBox, Path=DataContext.ShowSalgsOgPraesentationMateriale, Mode=TwoWay}" />
+                        </ComboBoxItem>
+
+                        <ComboBoxItem>
+                            <CheckBox
+                                Content="Yderligere tilføjelser"
+                                FontWeight="Regular"
+                                HorizontalAlignment="Stretch"
+                                Background="Transparent"
+                                Padding="6,2"
+                                IsChecked="{Binding ElementName=ProductTypesComboBox, Path=DataContext.ShowYderligereTilfoejelser, Mode=TwoWay}" />
+                        </ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
                 <GroupBox
                     Grid.Row="2"
                     Margin="0,0,12,16"
@@ -70,12 +138,14 @@
                         TextWrapping="Wrap"
                         VerticalScrollBarVisibility="Auto" />
                 </GroupBox>
+
                 <GroupBox
                     Grid.Row="3"
                     Margin="0,0,12,16"
                     FontWeight="SemiBold"
                     Header="LinkedIn - Fast varetagelse"
-                    Style="{StaticResource CardGroupBoxStyle}">
+                    Style="{StaticResource CardGroupBoxStyle}"
+                    Visibility="{Binding ShowLinkedInFastVaretagelse, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel>
                         <Grid Margin="0,4">
                             <Grid.ColumnDefinitions>
@@ -122,12 +192,14 @@
                         </Grid>
                     </StackPanel>
                 </GroupBox>
+
                 <GroupBox
                     Grid.Row="4"
                     Margin="0,0,12,16"
                     FontWeight="SemiBold"
                     Header="Fastvaretagelse af kommunikation"
-                    Style="{StaticResource CardGroupBoxStyle}">
+                    Style="{StaticResource CardGroupBoxStyle}"
+                    Visibility="{Binding ShowFastvaretagelseKommunikation, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel>
                         <Grid Margin="0,4">
                             <Grid.ColumnDefinitions>
@@ -249,12 +321,14 @@
                     </StackPanel>
 
                 </GroupBox>
+
                 <GroupBox
                     Grid.Row="5"
                     Margin="0,0,12,16"
                     FontWeight="SemiBold"
                     Header="Salgs- og præsentationmateriale"
-                    Style="{StaticResource CardGroupBoxStyle}">
+                    Style="{StaticResource CardGroupBoxStyle}"
+                    Visibility="{Binding ShowSalgsOgPraesentationMateriale, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel>
                         <Grid Margin="0,4">
                             <Grid.ColumnDefinitions>
@@ -285,6 +359,7 @@
                                 Grid.Column="1"
                                 Content="Pressemeddelelse"
                                 FontWeight="Regular" />
+
 
                         </Grid>
                         <Grid Margin="0,4">
@@ -321,13 +396,15 @@
 
                     </StackPanel>
                 </GroupBox>
+
                 <GroupBox
                     Grid.Row="6"
                     Grid.ColumnSpan="1"
                     Margin="0,0,12,16"
                     FontWeight="SemiBold"
                     Header="Yderligere tilføjelser"
-                    Style="{StaticResource CardGroupBoxStyle}">
+                    Style="{StaticResource CardGroupBoxStyle}"
+                    Visibility="{Binding ShowYderligereTilfoejelser, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel>
                         <Grid Margin="0,4">
                             <Grid.ColumnDefinitions>
@@ -346,6 +423,7 @@
                         </Grid>
                     </StackPanel>
                 </GroupBox>
+
                 <Border
                     Grid.Row="7"
                     Margin="0,0,12,16"
@@ -437,9 +515,6 @@
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             Source="PreviewView.xaml" />
     </Grid>
-
-
-
 
     <!--#endregion Grid-->
 </UserControl>
