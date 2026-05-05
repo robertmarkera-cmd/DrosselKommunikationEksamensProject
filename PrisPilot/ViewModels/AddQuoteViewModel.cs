@@ -22,12 +22,24 @@ namespace PrisPilot.ViewModels
             }
         }
 
-        private Customer? _selectedCustomer;
-        public Customer? SelectedCustomer
+        private Quote _currentQuote;
+        public Quote CurrentQuote
+        {
+            get => _currentQuote;
+            set
+            {
+                _currentQuote = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private CustomerViewModel _selectedCustomer;
+        public CustomerViewModel CurrentCustomer
         {
             get => _selectedCustomer;
             set
             {
+                if (_selectedCustomer == value) return;
                 _selectedCustomer = value;
                 OnPropertyChanged();
             }
@@ -41,7 +53,7 @@ namespace PrisPilot.ViewModels
 
         private void LoadCustomers()
         {
-            var customers = _customerRepository.GetAll();
+            List<Customer> customers = _customerRepository.GetAll();
             Customers = new ObservableCollection<Customer>(customers);
         }
     }

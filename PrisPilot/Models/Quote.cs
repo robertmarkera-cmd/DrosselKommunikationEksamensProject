@@ -13,5 +13,10 @@ namespace PrisPilot.Models
         public double TotalPrice { get; set; }
 
         public int QuoteID { get; set; }
+
+        public string Cvr { get; set; }
+
+        public int TemplateID { get; set; }
+
     }
 }
