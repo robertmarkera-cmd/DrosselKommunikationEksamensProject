@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using PrisPilot.Models;
+﻿using PrisPilot.Models;
+using PrisPilot.Services;
 using PrisPilot.Services.Peristence;
+using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 
 namespace PrisPilot.ViewModels
 {
@@ -14,7 +15,19 @@ namespace PrisPilot.ViewModels
         private readonly TemplateRepository _templateRepository;
 
         public ObservableCollection<CustomerViewModel> CustomerVMCollection { get; set; }
-        
+
+        public QuoteDraft Draft { get; } = new();
+
+        private Uri? _pdfPreviewUri;
+        public Uri? PdfPreviewUri
+        {
+            get => _pdfPreviewUri;
+            set
+            {
+                _pdfPreviewUri = value;
+                OnPropertyChanged();
+            }
+        }
 
         private QuoteViewModel _currentQuote;
         public QuoteViewModel CurrentQuote
@@ -47,7 +60,9 @@ namespace PrisPilot.ViewModels
                 if (_selectedCustomer == value) return;
                 _selectedCustomer = value;
                 _currentQuote.Cvr = _selectedCustomer.Cvr;
+                Draft.Customer = value?.ToModel();
                 OnPropertyChanged();
+                RegeneratePreview();
             }
         }
 
@@ -73,6 +88,42 @@ namespace PrisPilot.ViewModels
                 CustomerViewModel cw = new(customer);
                 CustomerVMCollection.Add(cw);
             }
+        }
+
+        private void RegeneratePreview()
+        {
+            Debug.WriteLine("REGENERATE PREVIEW CALLED " + DateTime.Now);
+            Draft.Subtotal = Draft.FixedPriceProducts.Sum(p => p.Price);
+
+            string path = Path.Combine(
+                Path.GetTempPath(),
+                "quote_preview.pdf");
+
+            QuotePdfGenerator.GeneratePreview(path, Draft);
+            PdfPreviewUri = new Uri(path);
+        }
+
+        public void SaveQuote()
+        {
+            var quote = new Quote
+            {
+                Date = DateTime.Now,
+                TotalPrice = Draft.Total
+            };
+
+            quote = _quoteRepository.Add(quote);
+
+            foreach (var product in Draft.FixedPriceProducts)
+            {
+                _quoteRepository.AddFixedPriceProductToQuote(
+                    quote.QuoteID,
+                    product.FixedPriceProductID);
+            }
+
+            var finalPath =
+                $@"C:\Tilbud\Tilbud_{quote.QuoteID}.pdf";
+
+            QuotePdfGenerator.GenerateFinal(finalPath, Draft, quote);
         }
     }
 }

@@ -5,14 +5,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:PrisPilot.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     d:DesignHeight="1080"
     d:DesignWidth="960"
-    Background="AliceBlue"
     mc:Ignorable="d">
     <Grid>
 
-        <Rectangle Grid.Row="0" Grid.Column="0" />
-
+        <wv2:WebView2
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Source="{Binding PdfPreviewUri}" />
 
     </Grid>
 </UserControl>

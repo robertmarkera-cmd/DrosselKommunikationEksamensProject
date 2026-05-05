@@ -126,10 +126,10 @@ namespace PrisPilot.Services.Peristence
                 con.Open();
 
                 // Call stored procedure 
-                using SqlCommand cmd = new SqlCommand("GetRecentHourlyCostFromCustomer", con);
+                using SqlCommand cmd = new SqlCommand("GetLatestHourlyCostByCvr", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@Cvr", System.Data.SqlDbType.NVarChar, 8).Value = cvr;
-                result = cmd.ExecuteScalar().ToString(); // .Trim() was here in previous project, is it needed here?
+                result = cmd.ExecuteScalar()?.ToString() ?? result;
             }
             return result;
         }
