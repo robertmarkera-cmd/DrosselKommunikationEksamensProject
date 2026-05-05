@@ -44,5 +44,7 @@ namespace PrisPilot.ViewModels
             var customers = _customerRepository.GetAll();
             Customers = new ObservableCollection<Customer>(customers);
         }
+
+
     }
 }
