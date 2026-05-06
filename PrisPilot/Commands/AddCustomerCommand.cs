@@ -52,6 +52,7 @@ namespace PrisPilot.Commands
                 if (result == MessageBoxResult.Yes)
                 {
                     ACM.AddToRepo();
+                    ACM.CurrentCustomer = new(new Models.Customer());
                 }
             }
             else

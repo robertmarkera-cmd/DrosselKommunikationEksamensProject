@@ -10,11 +10,15 @@ namespace PrisPilot.ViewModels
 {
     public class AddQuoteViewModel : SuperClassViewModel
     {
+
+
         private readonly CustomerRepository _customerRepository;
         private readonly QuoteRepository _quoteRepository;
         private readonly TemplateRepository _templateRepository;
         private readonly FixedPriceProductRepository _fixedRepo;
         private readonly VariablePriceProductRepository _variableRepo;
+        private readonly TimeSpentRepository _timeSpentRepo;
+
         private readonly QuotePdfService _quotePdfService;
 
         public ObservableCollection<CustomerViewModel> CustomerVMCollection { get; set; }
@@ -79,6 +83,8 @@ namespace PrisPilot.ViewModels
             _templateRepository = new TemplateRepository();
             _fixedRepo = new FixedPriceProductRepository();
             _variableRepo = new VariablePriceProductRepository();
+            _timeSpentRepo = new TimeSpentRepository();
+
             _quotePdfService = new QuotePdfService();
 
             // Initialize CurrentQuote and CurrentTemplate
