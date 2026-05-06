@@ -56,8 +56,31 @@
                         ItemsSource="{Binding CustomerVMCollection}"
                         SelectedItem="{Binding SelectedCustomer}" />
                 </StackPanel>
+                <GroupBox
+                    Grid.Row="1"
+                    Header="Timepris"
+                    Style="{StaticResource CardGroupBoxStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            Margin="0,0,10,0"
+                            FontWeight="SemiBold"
+                            Text="Timepris på tilbud" />
+                        <TextBox
+                            Width="100"
+                            HorizontalAlignment="Left"
+                            Text="{Binding CurrentQuote.HourlyCost, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock
+                            Margin="20,0,10,0"
+                            FontWeight="SemiBold"
+                            Text="Timepris fra sidste tilbud" />
+                        <TextBlock
+                            Width="100"
+                            HorizontalAlignment="Left"
+                            Text="{Binding CurrentQuote.RecentCost, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </GroupBox>
 
-                <StackPanel Grid.Row="1" Margin="0,0,12,16">
+                <StackPanel Grid.Row="2" Margin="0,0,12,16">
                     <TextBlock
                         Margin="0,0,0,4"
                         FontWeight="SemiBold"
@@ -96,7 +119,7 @@
 
                 <!--  This ItemsControl shows different templates based on chosen Product  -->
                 <ItemsControl
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Margin="0,0,12,16"
                     ItemsSource="{Binding SelectedProducts}">
                     <ItemsControl.ItemTemplate>

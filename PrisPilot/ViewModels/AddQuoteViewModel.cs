@@ -69,6 +69,9 @@ namespace PrisPilot.ViewModels
                 _selectedCustomer = value;
                 _currentQuote.Cvr = _selectedCustomer.Cvr;
                 Draft.Customer = value?.ToModel();
+                // Update recent cost
+                _currentQuote.RecentCost = _quoteRepository.GetRecentHourlyCostForCustomer(_selectedCustomer.Cvr);
+
                 OnPropertyChanged();
                 RegeneratePreview();
             }
