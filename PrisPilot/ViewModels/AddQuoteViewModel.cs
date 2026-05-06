@@ -77,6 +77,21 @@ namespace PrisPilot.ViewModels
             }
         }
 
+        public string SelectedProductTypesText
+        {
+            get
+            {
+                List<string> selected = new List<string>();
+
+                foreach (ProductViewModel p in SelectedProducts)
+                {
+                    selected.Add(p.Name);
+                }
+
+                return selected.Count == 0 ? "Vælg produkttyper..." : string.Join(", ", selected);
+            }
+        }
+
         public AddQuoteViewModel()
         {
             // Initialize repositories

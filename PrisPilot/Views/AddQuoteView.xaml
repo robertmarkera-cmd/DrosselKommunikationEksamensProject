@@ -98,7 +98,8 @@
                         IsReadOnly="True"
                         IsTextSearchEnabled="False"
                         ItemsSource="{Binding Path=Products}"
-                        StaysOpenOnEdit="True">
+                        StaysOpenOnEdit="True"
+                        Text="{Binding SelectedProductTypesText, Mode=OneWay}">
 
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
