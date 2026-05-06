@@ -14,7 +14,7 @@
         <wv2:WebView2
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            Source="{Binding PdfPreviewUri}" />
+            Source="{Binding PdfPreviewUri, UpdateSourceTrigger=PropertyChanged}" />
 
     </Grid>
 </UserControl>

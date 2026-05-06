@@ -1,18 +1,28 @@
-﻿using QuestPDF.Fluent;
+﻿using PrisPilot.Models;
+using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-using PrisPilot.Models;
+using System.Diagnostics;
+using System.IO;
 
 namespace PrisPilot.Services
 {
-    public static class QuotePdfGenerator
+    public class QuotePdfService
     {
-        public static void GeneratePreview(string path, QuoteDraft draft)
+        public Uri GeneratePreview(QuoteDraft draft)
         {
+            CleanupOldPreviewFiles();
+
+            string path = Path.Combine(
+                Path.GetTempPath(),
+                $"quote_preview_{DateTime.UtcNow.Ticks}.pdf");
+
             Generate(path, draft, null);
+
+            return new Uri(path);
         }
 
-        public static void GenerateFinal(
+        public void GenerateFinal(
             string path,
             QuoteDraft draft,
             Quote quote)
@@ -20,7 +30,33 @@ namespace PrisPilot.Services
             Generate(path, draft, quote);
         }
 
-        private static void Generate(
+        private void CleanupOldPreviewFiles()
+        {
+            try
+            {
+                foreach (string file in Directory.EnumerateFiles(
+                             Path.GetTempPath(),
+                             "quote_preview_*.pdf"))
+                {
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch
+                    {
+                        // File may still be locked by WebView2, in that case we just ignore.
+                        Debug.WriteLine("File is still locked; failed cleaning up file at " + DateTime.Now);
+                    }
+                }
+            }
+            catch
+            {
+                // In this case we ignore any cleanup failures.
+                Debug.WriteLine("Failed cleaning up file at " + DateTime.Now);
+            }
+        }
+
+        private void Generate(
             string path,
             QuoteDraft draft,
             Quote? quote)
@@ -66,12 +102,12 @@ namespace PrisPilot.Services
                                 h.Cell().AlignRight().Text("Pris").Bold();
                             });
 
-                            foreach (var p in draft.FixedPriceProducts)
-                            {
-                                table.Cell().Text(p.Name);
-                                table.Cell().AlignRight()
-                                    .Text($"{p.Price:n0} kr.");
-                            }
+                            //foreach (var p in draft.Products)
+                            //{
+                            //    table.Cell().Text(p.Name);
+                            //    table.Cell().AlignRight()
+                            //        .Text($"{p.Price:n0} kr.");
+                            //}
                         });
 
                         col.Item().PaddingTop(20).AlignRight().Column(price =>

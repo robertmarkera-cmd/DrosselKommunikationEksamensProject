@@ -98,6 +98,7 @@
                         AcceptsReturn="True"
                         BorderBrush="{StaticResource AccentBrush}"
                         FontWeight="Regular"
+                        Text="{Binding CurrentTemplate.Introduction, UpdateSourceTrigger=PropertyChanged}"
                         TextWrapping="Wrap"
                         VerticalScrollBarVisibility="Auto" />
                 </GroupBox>
