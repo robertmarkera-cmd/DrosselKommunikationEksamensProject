@@ -10,8 +10,6 @@ namespace PrisPilot.ViewModels
 {
     public class AddQuoteViewModel : SuperClassViewModel
     {
-
-
         private readonly CustomerRepository _customerRepository;
         private readonly QuoteRepository _quoteRepository;
         private readonly TemplateRepository _templateRepository;
@@ -23,8 +21,8 @@ namespace PrisPilot.ViewModels
 
         public ObservableCollection<CustomerViewModel> CustomerVMCollection { get; set; }
 
-        public ObservableCollection<IProduct> Products { get; }
-        public ObservableCollection<IProduct> SelectedProducts { get; set; }
+        public ObservableCollection<ProductViewModel> Products { get; }
+        public ObservableCollection<ProductViewModel> SelectedProducts { get; set; }
 
         public QuoteDraft Draft { get; } = new();
 
@@ -78,6 +76,7 @@ namespace PrisPilot.ViewModels
 
         public AddQuoteViewModel()
         {
+            // Initialize repositories
             _customerRepository = new CustomerRepository();
             _quoteRepository = new QuoteRepository();
             _templateRepository = new TemplateRepository();
@@ -85,6 +84,7 @@ namespace PrisPilot.ViewModels
             _variableRepo = new VariablePriceProductRepository();
             _timeSpentRepo = new TimeSpentRepository();
 
+            // Initialize the pdf service
             _quotePdfService = new QuotePdfService();
 
             // Initialize CurrentQuote and CurrentTemplate
@@ -96,8 +96,8 @@ namespace PrisPilot.ViewModels
             InitializeCustomerCollection();
 
             // Initialize the product vm
-            Products = new ObservableCollection<IProduct>();
-            SelectedProducts = new ObservableCollection<IProduct>();
+            Products = new ObservableCollection<ProductViewModel>();
+            SelectedProducts = new ObservableCollection<ProductViewModel>();
             LoadProductCollections();
         }
 
@@ -115,21 +115,40 @@ namespace PrisPilot.ViewModels
             List<FixedPriceProduct> fixedItems = _fixedRepo.GetAll();
             List<VariablePriceProduct> variableItems = _variableRepo.GetAll();
 
-            if (fixedItems.Count > 0)
+            foreach (FixedPriceProduct? p in fixedItems)
             {
-                foreach (FixedPriceProduct p in fixedItems)
-                {
-                    Products.Add(p);
-                }
+                ProductViewModel vm = new ProductViewModel(p);
+
+                // Subscribe Product_IsSelectedChanged to the IsSelectedChanged event of the vm object
+                vm.IsSelectedChanged += Product_IsSelectedChanged;
+                
+                Products.Add(vm);
             }
 
-            if (variableItems.Count > 0)
+            foreach (VariablePriceProduct? p in variableItems)
             {
-                foreach (VariablePriceProduct p in variableItems)
-                {
-                    Products.Add(p);
-                }
+                ProductViewModel vm = new ProductViewModel(p);
 
+                // Subscribe Product_IsSelectedChanged to the IsSelectedChanged event of the vm object
+                vm.IsSelectedChanged += Product_IsSelectedChanged;
+
+                Products.Add(vm);
+            }
+        }
+
+        private void Product_IsSelectedChanged(object? sender, EventArgs e)
+        {
+            if (sender is ProductViewModel vm)
+            {
+                if (vm.IsSelected && !SelectedProducts.Contains(vm))
+                {
+                    // Add in the order they are checked
+                    SelectedProducts.Add(vm);
+                }
+                else if (!vm.IsSelected && SelectedProducts.Contains(vm))
+                {
+                    SelectedProducts.Remove(vm);
+                }
             }
         }
 
