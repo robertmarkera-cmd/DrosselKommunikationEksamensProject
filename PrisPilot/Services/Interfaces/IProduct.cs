@@ -16,5 +16,6 @@ namespace PrisPilot.Services.Interfaces
         string Name { get; }
         string Description { get; }
         ProductKind Kind { get; }
+        double ProductPrice { get; }
     }
 }

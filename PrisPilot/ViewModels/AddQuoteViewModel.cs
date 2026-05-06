@@ -181,7 +181,7 @@ namespace PrisPilot.ViewModels
                     product.Id);
             }
 
-            var finalPath =
+            string finalPath =
                 $@"C:\Tilbud\Tilbud_{quote.QuoteID}.pdf";
 
             _quotePdfService.GenerateFinal(finalPath, Draft, quote);
