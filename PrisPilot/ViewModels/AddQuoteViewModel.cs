@@ -1,5 +1,6 @@
 ﻿using PrisPilot.Models;
 using PrisPilot.Services;
+using PrisPilot.Services.Interfaces;
 using PrisPilot.Services.Peristence;
 using System;
 using System.Collections.ObjectModel;
@@ -13,8 +14,13 @@ namespace PrisPilot.ViewModels
         private readonly CustomerRepository _customerRepository;
         private readonly QuoteRepository _quoteRepository;
         private readonly TemplateRepository _templateRepository;
+        private readonly FixedPriceProductRepository _fixedRepo;
+        private readonly VariablePriceProductRepository _variableRepo;
 
         public ObservableCollection<CustomerViewModel> CustomerVMCollection { get; set; }
+
+        public ObservableCollection<IProduct> Products { get; }
+        public ObservableCollection<IProduct> SelectedProducts { get; set; }
 
         public QuoteDraft Draft { get; } = new();
 
@@ -71,6 +77,8 @@ namespace PrisPilot.ViewModels
             _customerRepository = new CustomerRepository();
             _quoteRepository = new QuoteRepository();
             _templateRepository = new TemplateRepository();
+            _fixedRepo = new FixedPriceProductRepository();
+            _variableRepo = new VariablePriceProductRepository();
 
             // Initialize CurrentQuote and CurrentTemplate
             CurrentQuote = new(new Quote());
@@ -79,6 +87,11 @@ namespace PrisPilot.ViewModels
             // Initialize the ObservableCollection CustomerVMCollection
             CustomerVMCollection = new ObservableCollection<CustomerViewModel>();
             InitializeCustomerCollection();
+
+            // Initialize the product vm
+            Products = new ObservableCollection<IProduct>();
+            SelectedProducts = new ObservableCollection<IProduct>();
+            LoadProductCollections();
         }
 
         private void InitializeCustomerCollection()
@@ -87,6 +100,29 @@ namespace PrisPilot.ViewModels
             {
                 CustomerViewModel cw = new(customer);
                 CustomerVMCollection.Add(cw);
+            }
+        }
+
+        private void LoadProductCollections()
+        {
+            List<FixedPriceProduct> fixedItems = _fixedRepo.GetAll();
+            List<VariablePriceProduct> variableItems = _variableRepo.GetAll();
+
+            if (fixedItems.Count > 0)
+            {
+                foreach (FixedPriceProduct p in fixedItems)
+                {
+                    Products.Add(p);
+                }
+            }
+
+            if (variableItems.Count > 0)
+            {
+                foreach (VariablePriceProduct p in variableItems)
+                {
+                    Products.Add(p);
+                }
+
             }
         }
 
