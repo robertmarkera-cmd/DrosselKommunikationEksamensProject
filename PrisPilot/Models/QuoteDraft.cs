@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PrisPilot.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +9,7 @@ namespace PrisPilot.Models
     {
         public Customer? Customer { get; set; }
 
-        public List<FixedPriceProduct> FixedPriceProducts { get; } = [];
+        public List<IProduct> Products { get; } = [];
 
         public double Subtotal { get; set; }
         public double Discount { get; set; }

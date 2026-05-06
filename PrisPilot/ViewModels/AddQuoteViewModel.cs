@@ -1,7 +1,7 @@
 ﻿using PrisPilot.Models;
 using PrisPilot.Services;
+using PrisPilot.Services.Interfaces;
 using PrisPilot.Services.Peristence;
-using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -10,11 +10,21 @@ namespace PrisPilot.ViewModels
 {
     public class AddQuoteViewModel : SuperClassViewModel
     {
+
+
         private readonly CustomerRepository _customerRepository;
         private readonly QuoteRepository _quoteRepository;
         private readonly TemplateRepository _templateRepository;
+        private readonly FixedPriceProductRepository _fixedRepo;
+        private readonly VariablePriceProductRepository _variableRepo;
+        private readonly TimeSpentRepository _timeSpentRepo;
+
+        private readonly QuotePdfService _quotePdfService;
 
         public ObservableCollection<CustomerViewModel> CustomerVMCollection { get; set; }
+
+        public ObservableCollection<IProduct> Products { get; }
+        public ObservableCollection<IProduct> SelectedProducts { get; set; }
 
         public QuoteDraft Draft { get; } = new();
 
@@ -71,6 +81,11 @@ namespace PrisPilot.ViewModels
             _customerRepository = new CustomerRepository();
             _quoteRepository = new QuoteRepository();
             _templateRepository = new TemplateRepository();
+            _fixedRepo = new FixedPriceProductRepository();
+            _variableRepo = new VariablePriceProductRepository();
+            _timeSpentRepo = new TimeSpentRepository();
+
+            _quotePdfService = new QuotePdfService();
 
             // Initialize CurrentQuote and CurrentTemplate
             CurrentQuote = new(new Quote());
@@ -79,6 +94,11 @@ namespace PrisPilot.ViewModels
             // Initialize the ObservableCollection CustomerVMCollection
             CustomerVMCollection = new ObservableCollection<CustomerViewModel>();
             InitializeCustomerCollection();
+
+            // Initialize the product vm
+            Products = new ObservableCollection<IProduct>();
+            SelectedProducts = new ObservableCollection<IProduct>();
+            LoadProductCollections();
         }
 
         private void InitializeCustomerCollection()
@@ -90,22 +110,41 @@ namespace PrisPilot.ViewModels
             }
         }
 
+        private void LoadProductCollections()
+        {
+            List<FixedPriceProduct> fixedItems = _fixedRepo.GetAll();
+            List<VariablePriceProduct> variableItems = _variableRepo.GetAll();
+
+            if (fixedItems.Count > 0)
+            {
+                foreach (FixedPriceProduct p in fixedItems)
+                {
+                    Products.Add(p);
+                }
+            }
+
+            if (variableItems.Count > 0)
+            {
+                foreach (VariablePriceProduct p in variableItems)
+                {
+                    Products.Add(p);
+                }
+
+            }
+        }
+
         private void RegeneratePreview()
         {
+            // Debug
             Debug.WriteLine("REGENERATE PREVIEW CALLED " + DateTime.Now);
-            Draft.Subtotal = Draft.FixedPriceProducts.Sum(p => p.Price);
 
-            string path = Path.Combine(
-                Path.GetTempPath(),
-                "quote_preview.pdf");
-
-            QuotePdfGenerator.GeneratePreview(path, Draft);
-            PdfPreviewUri = new Uri(path);
+            //Draft.Subtotal = Draft.Products.Sum(p => p.Price);
+            PdfPreviewUri = _quotePdfService.GeneratePreview(Draft);
         }
 
         public void SaveQuote()
         {
-            var quote = new Quote
+            Quote? quote = new Quote
             {
                 Date = DateTime.Now,
                 TotalPrice = Draft.Total
@@ -113,17 +152,17 @@ namespace PrisPilot.ViewModels
 
             quote = _quoteRepository.Add(quote);
 
-            foreach (var product in Draft.FixedPriceProducts)
+            foreach (IProduct product in Draft.Products)
             {
                 _quoteRepository.AddFixedPriceProductToQuote(
                     quote.QuoteID,
-                    product.FixedPriceProductID);
+                    product.Id);
             }
 
             var finalPath =
                 $@"C:\Tilbud\Tilbud_{quote.QuoteID}.pdf";
 
-            QuotePdfGenerator.GenerateFinal(finalPath, Draft, quote);
+            _quotePdfService.GenerateFinal(finalPath, Draft, quote);
         }
     }
 }

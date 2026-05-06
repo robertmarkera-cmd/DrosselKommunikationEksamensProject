@@ -21,7 +21,7 @@ namespace PrisPilot.Services.Peristence
                 con.Open();
 
                 using SqlCommand cmd = new SqlCommand(@"
-                            INSERT INTO CUSTOMER (Name, Description, Price, Frequency)
+                            INSERT INTO FixedPriceProduct (Name, Description, Price, Frequency)
                             VALUES (@Name, @Description, @Price, @Frequency)" + "SELECT @@IDENTITY", con);
 
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 80).Value = fixedPriceProduct.Name;

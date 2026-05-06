@@ -20,7 +20,7 @@ namespace PrisPilot.Services.Peristence
                 con.Open();
 
                 using SqlCommand cmd = new SqlCommand(@"
-                            INSERT INTO CUSTOMER (Name, Description)
+                            INSERT INTO FixedPriceProduct (Name, Description)
                             VALUES (@Name, @Description)" + "SELECT @@IDENTITY", con);
 
                 cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 80).Value = variablePriceProduct.Name;
@@ -36,7 +36,7 @@ namespace PrisPilot.Services.Peristence
             using (SqlConnection con = CreateConnection())
             {
                 con.Open();
-                using SqlCommand cmd = new SqlCommand("SELECT VariablePriceProduct, Name, Description FROM VariablePriceProduct", con);
+                using SqlCommand cmd = new SqlCommand("SELECT VariablePriceProductID, Name, Description FROM VariablePriceProduct", con);
                 using SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {

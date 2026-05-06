@@ -57,6 +57,36 @@
                         SelectedItem="{Binding SelectedCustomer}" />
                 </StackPanel>
 
+                <StackPanel Grid.Row="1" Margin="0,0,12,16">
+                    <TextBlock
+                        Margin="0,0,0,4"
+                        FontWeight="SemiBold"
+                        Text="Vælg produkttyper" />
+
+                    <ComboBox
+                        x:Name="ProductTypesComboBox"
+                        Height="32"
+                        HorizontalContentAlignment="Stretch"
+                        Background="{StaticResource WarmBackgroundBrush}"
+                        BorderBrush="{StaticResource AccentBrush}"
+                        DisplayMemberPath="Name"
+                        Foreground="Black"
+                        IsEditable="False"
+                        IsReadOnly="True"
+                        IsTextSearchEnabled="False"
+                        ItemsSource="{Binding Path=Products}"
+                        SelectedValue="{Binding Path=SelectedProducts}"
+                        SelectedValuePath="Name"
+                        StaysOpenOnEdit="True">
+
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="ComboBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>
+                </StackPanel>
+
                 <GroupBox
                     Grid.Row="2"
                     Margin="0,0,12,16"
@@ -68,6 +98,7 @@
                         AcceptsReturn="True"
                         BorderBrush="{StaticResource AccentBrush}"
                         FontWeight="Regular"
+                        Text="{Binding CurrentTemplate.Introduction, UpdateSourceTrigger=PropertyChanged}"
                         TextWrapping="Wrap"
                         VerticalScrollBarVisibility="Auto" />
                 </GroupBox>
