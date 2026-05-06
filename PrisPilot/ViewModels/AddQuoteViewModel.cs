@@ -3,6 +3,7 @@ using PrisPilot.Services;
 using PrisPilot.Services.Interfaces;
 using PrisPilot.Services.Peristence;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 
@@ -23,8 +24,6 @@ namespace PrisPilot.ViewModels
 
         public ObservableCollection<ProductViewModel> Products { get; }
         public ObservableCollection<ProductViewModel> SelectedProducts { get; set; }
-
-        public QuoteDraft Draft { get; } = new();
 
         private Uri? _pdfPreviewUri;
         public Uri? PdfPreviewUri
@@ -68,7 +67,7 @@ namespace PrisPilot.ViewModels
                 if (_selectedCustomer == value) return;
                 _selectedCustomer = value;
                 _currentQuote.Cvr = _selectedCustomer.Cvr;
-                Draft.Customer = value?.ToModel();
+                
                 // Update recent cost
                 _currentQuote.RecentCost = _quoteRepository.GetRecentHourlyCostForCustomer(_selectedCustomer.Cvr);
 
@@ -133,6 +132,7 @@ namespace PrisPilot.ViewModels
             List<FixedPriceProduct> fixedItems = _fixedRepo.GetAll();
             List<VariablePriceProduct> variableItems = _variableRepo.GetAll();
 
+            // Didn't manage to find a good solution to merge these two lists, so we just run them one at a time
             foreach (FixedPriceProduct? p in fixedItems)
             {
                 ProductViewModel vm = new ProductViewModel(p);
@@ -162,11 +162,34 @@ namespace PrisPilot.ViewModels
                 {
                     // Add in the order they are checked
                     SelectedProducts.Add(vm);
+                    
+                    // Subscribe to listen for HoursUsed changes
+                    vm.PropertyChanged += Product_PropertyChanged;
+                    
+                    // Optionally regenerate preview when a new product is added
+                    RegeneratePreview(); 
                 }
                 else if (!vm.IsSelected && SelectedProducts.Contains(vm))
                 {
                     SelectedProducts.Remove(vm);
+                    
+                    // Unsubscribe to prevent unwanted triggers
+                    vm.PropertyChanged -= Product_PropertyChanged;
+                    
+                    // Optionally regenerate preview when a product is removed
+                    RegeneratePreview();
                 }
+            }
+        }
+
+        // Method for 
+
+        private void Product_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            // Only trigger the regeneration when the specific property changes
+            if (e.PropertyName == nameof(ProductViewModel.HoursUsed))
+            {
+                RegeneratePreview();
             }
         }
 
@@ -175,31 +198,44 @@ namespace PrisPilot.ViewModels
             // Debug
             Debug.WriteLine("REGENERATE PREVIEW CALLED " + DateTime.Now);
 
-            //Draft.Subtotal = Draft.Products.Sum(p => p.Price);
-            PdfPreviewUri = _quotePdfService.GeneratePreview(Draft);
+            QuoteDraft draft = CreateCurrentDraft();
+            PdfPreviewUri = _quotePdfService.GeneratePreview(draft);
+        }
+
+        private QuoteDraft CreateCurrentDraft()
+        {
+            return new QuoteDraft
+            {
+                Customer = SelectedCustomer?.ToModel(),
+                Products = SelectedProducts, // This is possible as Products is an IEnumerable, so we don't need to create a copy
+            };
         }
 
         public void SaveQuote()
         {
-            Quote? quote = new Quote
-            {
-                Date = DateTime.Now,
-                TotalPrice = Draft.Total
-            };
+            QuoteDraft draft = CreateCurrentDraft();
 
+            CurrentQuote.TotalPrice = draft.Total;
+            CurrentQuote.Date = DateTime.Now;
+
+            // This gets the Quote model from our CurrentQuote ViewModel
+            Quote quote = CurrentQuote.ToModel();
+
+            // Here we are saving to the repository and retrieving the assigned QuoteID
             quote = _quoteRepository.Add(quote);
 
-            foreach (IProduct product in Draft.Products)
+            // Here we are updating the CurrentQuote with our freshly generated ID
+            CurrentQuote.QuoteID = quote.QuoteID;
+
+            foreach (IProduct product in draft.Products)
             {
                 _quoteRepository.AddFixedPriceProductToQuote(
                     quote.QuoteID,
                     product.Id);
             }
 
-            string finalPath =
-                $@"C:\Tilbud\Tilbud_{quote.QuoteID}.pdf";
-
-            _quotePdfService.GenerateFinal(finalPath, Draft, quote);
+            string finalPath = $@"C:\Tilbud\Tilbud_{quote.QuoteID}.pdf";
+            _quotePdfService.GenerateFinal(finalPath, draft, quote);
         }
     }
 }

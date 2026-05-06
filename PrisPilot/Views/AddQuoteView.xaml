@@ -80,7 +80,22 @@
                     </StackPanel>
                 </GroupBox>
 
-                <StackPanel Grid.Row="2" Margin="0,0,12,16">
+                <GroupBox
+                    Grid.Row="2"
+                    Margin="0,0,12,16"
+                    FontWeight="SemiBold"
+                    Header="Indledning"
+                    Style="{StaticResource CardGroupBoxStyle}">
+                    <TextBox
+                        MinHeight="160"
+                        AcceptsReturn="True"
+                        BorderBrush="{StaticResource AccentBrush}"
+                        FontWeight="Regular"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
+                </GroupBox>
+
+                <StackPanel Grid.Row="3" Margin="0,0,12,16">
                     <TextBlock
                         Margin="0,0,0,4"
                         FontWeight="SemiBold"
@@ -120,7 +135,7 @@
 
                 <!--  This ItemsControl shows different templates based on chosen Product  -->
                 <ItemsControl
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Margin="0,0,12,16"
                     ItemsSource="{Binding SelectedProducts}">
                     <ItemsControl.ItemTemplate>
@@ -241,11 +256,11 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <GroupBox
+                <!--<GroupBox
                     Grid.Row="4"
                     Margin="0,0,12,16"
                     FontWeight="SemiBold"
-                    Header="Fastvaretagelse af kommunikation"
+                    Header="Fast varetagelse af kommunikation"
                     Style="{StaticResource CardGroupBoxStyle}">
                     <StackPanel>
                         <Grid Margin="0,4">
@@ -367,7 +382,7 @@
                         </StackPanel>
                     </StackPanel>
 
-                </GroupBox>
+                </GroupBox>-->
                 <GroupBox
                     Grid.Row="5"
                     Margin="0,0,12,16"

@@ -1,7 +1,6 @@
 ﻿using PrisPilot.Services.Interfaces;
-using System;
+using PrisPilot.ViewModels;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PrisPilot.Models
 {
@@ -9,10 +8,13 @@ namespace PrisPilot.Models
     {
         public Customer? Customer { get; set; }
 
-        public List<IProduct> Products { get; } = [];
+        // This is an IEnumerable so we can just pass our observablecollection to it
+        public IEnumerable<ProductViewModel> Products { get; set; } = [];
 
         public double Subtotal { get; set; }
         public double Discount { get; set; }
         public double Total => Subtotal - Discount;
+        
+        public int HourlyCost { get; set; }
     }
 }

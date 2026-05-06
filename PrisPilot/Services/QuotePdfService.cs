@@ -1,5 +1,6 @@
 ﻿using PrisPilot.Models;
 using PrisPilot.Services.Interfaces;
+using PrisPilot.ViewModels;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -103,9 +104,10 @@ namespace PrisPilot.Services
                                 h.Cell().AlignRight().Text("Pris").Bold();
                             });
 
-                            foreach (IProduct p in draft.Products)
+                            foreach (ProductViewModel pvm in draft.Products)
                             {
-                                table.Cell().Text(p.Name);
+                                IProduct p = pvm.Product;
+                                table.Cell().Text(p.Name);  
                                 table.Cell().AlignRight()
                                     .Text($"{p.ProductPrice:n0} kr.");
                             }
