@@ -63,6 +63,9 @@ namespace PrisPilot.Services
             QuoteDraft draft,
             Quote? quote)
         {
+            // Get a temp filename from Path - super simple btw
+            string tempDocPath = Path.GetTempFileName();
+
             Document.Create(container =>
             {
                 container.Page(page =>
@@ -70,6 +73,7 @@ namespace PrisPilot.Services
                     page.Size(PageSizes.A4);
                     page.Margin(30);
                     page.DefaultTextStyle(x => x.FontSize(11));
+                    page.PageColor("#fbf8f4");
 
                     page.Header().Row(row =>
                     {
@@ -125,7 +129,30 @@ namespace PrisPilot.Services
                         .Text("Gyldigt i 30 dage");
                 });
             })
-            .GeneratePdf(path);
+            .GeneratePdf(tempDocPath);
+
+            if (draft.IncludeAboutUs)
+            {
+                // Get path of the about us page
+                string aboutPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "drossel_about_us_page.pdf");
+
+                if (File.Exists(aboutPath))
+                {
+                    // Using QuestPDF's DocumentOperation to merge the files
+                    // This is straight from their documentation at https://www.questpdf.com/concepts/document-operations.html
+                    DocumentOperation
+                        .LoadFile(tempDocPath)
+                        .MergeFile(aboutPath)
+                        .Save(path);
+
+                    // Delete the temp file
+                    File.Delete(tempDocPath);
+                    return;
+                }
+            }
+
+            // If we didn't merge we just move the temp base file to the final destination
+            File.Move(tempDocPath, path, true);
         }
     }
 }

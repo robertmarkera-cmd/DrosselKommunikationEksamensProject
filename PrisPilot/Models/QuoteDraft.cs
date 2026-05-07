@@ -16,5 +16,6 @@ namespace PrisPilot.Models
         public double Total => Subtotal - Discount;
         
         public int HourlyCost { get; set; }
+        public bool IncludeAboutUs { get; set; }
     }
 }

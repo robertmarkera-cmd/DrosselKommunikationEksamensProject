@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\drossel_about_us_page.pdf" />
     <None Remove="Assets\Logo\Drossel_Logo.png" />
   </ItemGroup>
 
@@ -22,6 +23,12 @@
   <ItemGroup>
     <Resource Include="Assets\Logo\Drossel_Logo.png" />
     <Resource Include="Assets\Fonts\**\*.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\drossel_about_us_page.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

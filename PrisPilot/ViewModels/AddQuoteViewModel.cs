@@ -107,7 +107,9 @@ namespace PrisPilot.ViewModels
             // Initialize CurrentQuote and CurrentTemplate
             CurrentQuote = new(new Quote());
             CurrentQuote.PropertyChanged += OnRelevantPropertyChanged; // Subscribe to changes
+
             CurrentTemplate = new(new Template());
+            CurrentTemplate.PropertyChanged += OnRelevantPropertyChanged; // Subscribe to changes
 
             // Initialize the ObservableCollection CustomerVMCollection
             CustomerVMCollection = new ObservableCollection<CustomerViewModel>();
@@ -194,7 +196,8 @@ namespace PrisPilot.ViewModels
         {
             // List of properties that should trigger a preview generation
             if (e.PropertyName == nameof(QuoteViewModel.HourlyCost) ||
-                e.PropertyName == nameof(ProductViewModel.HoursUsed))
+                e.PropertyName == nameof(ProductViewModel.HoursUsed) ||
+                e.PropertyName == nameof(TemplateViewModel.AboutUs))
             {
                 RegeneratePreview();
             }
@@ -229,7 +232,8 @@ namespace PrisPilot.ViewModels
                 Customer = SelectedCustomer?.ToModel(),
                 Products = SelectedProducts, // This is possible as Products is an IEnumerable, so we don't need to create a copy
                 HourlyCost = CurrentQuote.HourlyCost,
-                Subtotal = subtotal
+                Subtotal = subtotal,
+                IncludeAboutUs = CurrentTemplate.AboutUs
             };
         }
 
