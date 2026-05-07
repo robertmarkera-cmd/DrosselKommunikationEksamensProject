@@ -165,8 +165,11 @@ namespace PrisPilot.ViewModels
                     
                     // Subscribe to listen for HoursUsed changes
                     vm.PropertyChanged += Product_PropertyChanged;
-                    
-                    // Optionally regenerate preview when a new product is added
+
+                    // Notify UI that the text has changed
+                    OnPropertyChanged(nameof(SelectedProductTypesText));
+
+                    // Regenerate preview when a new product is added
                     RegeneratePreview(); 
                 }
                 else if (!vm.IsSelected && SelectedProducts.Contains(vm))
@@ -175,8 +178,12 @@ namespace PrisPilot.ViewModels
                     
                     // Unsubscribe to prevent unwanted triggers
                     vm.PropertyChanged -= Product_PropertyChanged;
-                    
-                    // Optionally regenerate preview when a product is removed
+
+                    // Notify UI that the text has changed
+                    // Making the UI update as our selections have changed
+                    OnPropertyChanged(nameof(SelectedProductTypesText));
+
+                    // Regenerate preview when a product is removed
                     RegeneratePreview();
                 }
             }

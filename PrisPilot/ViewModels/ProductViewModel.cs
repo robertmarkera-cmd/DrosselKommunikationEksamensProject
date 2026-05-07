@@ -18,7 +18,7 @@ namespace PrisPilot.ViewModels
         public int HoursUsed
         {
             // returns HoursUsed if it's not null, else it returns 0
-            get => TimeSpentModel?.HoursUsed ?? 0;
+            get => TimeSpentModel?.HoursUsed ?? 0; // null-coalescing operator
             set
             {
                 // checks if timespentmodel exists and if the new value is the same as the old value

@@ -109,7 +109,7 @@
                         Background="{StaticResource WarmBackgroundBrush}"
                         BorderBrush="{StaticResource AccentBrush}"
                         Foreground="Black"
-                        IsEditable="False"
+                        IsEditable="True"
                         IsReadOnly="True"
                         IsTextSearchEnabled="False"
                         ItemsSource="{Binding Path=Products}"
