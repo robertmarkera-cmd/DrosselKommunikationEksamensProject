@@ -106,6 +106,7 @@ namespace PrisPilot.ViewModels
 
             // Initialize CurrentQuote and CurrentTemplate
             CurrentQuote = new(new Quote());
+            CurrentQuote.PropertyChanged += OnRelevantPropertyChanged; // Subscribe to changes
             CurrentTemplate = new(new Template());
 
             // Initialize the ObservableCollection CustomerVMCollection
@@ -162,9 +163,9 @@ namespace PrisPilot.ViewModels
                 {
                     // Add in the order they are checked
                     SelectedProducts.Add(vm);
-                    
+
                     // Subscribe to listen for HoursUsed changes
-                    vm.PropertyChanged += Product_PropertyChanged;
+                    vm.PropertyChanged += OnRelevantPropertyChanged;
 
                     // Notify UI that the text has changed
                     OnPropertyChanged(nameof(SelectedProductTypesText));
@@ -175,9 +176,9 @@ namespace PrisPilot.ViewModels
                 else if (!vm.IsSelected && SelectedProducts.Contains(vm))
                 {
                     SelectedProducts.Remove(vm);
-                    
+
                     // Unsubscribe to prevent unwanted triggers
-                    vm.PropertyChanged -= Product_PropertyChanged;
+                    vm.PropertyChanged -= OnRelevantPropertyChanged;
 
                     // Notify UI that the text has changed
                     // Making the UI update as our selections have changed
@@ -189,12 +190,11 @@ namespace PrisPilot.ViewModels
             }
         }
 
-        // Method for 
-
-        private void Product_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnRelevantPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            // Only trigger the regeneration when the specific property changes
-            if (e.PropertyName == nameof(ProductViewModel.HoursUsed))
+            // List of properties that should trigger a preview generation
+            if (e.PropertyName == nameof(QuoteViewModel.HourlyCost) ||
+                e.PropertyName == nameof(ProductViewModel.HoursUsed))
             {
                 RegeneratePreview();
             }
@@ -211,10 +211,25 @@ namespace PrisPilot.ViewModels
 
         private QuoteDraft CreateCurrentDraft()
         {
+            double subtotal = 0;
+
+            foreach (ProductViewModel pvm in SelectedProducts)
+            {
+                // If the product is variable price, calculate its price based on the HoursUsed and the quote's HourlyCost
+                if (pvm.Product is VariablePriceProduct vp)
+                {
+                    vp.ProductPrice = pvm.HoursUsed * CurrentQuote.HourlyCost;
+                }
+
+                subtotal += pvm.Product.ProductPrice;
+            }
+
             return new QuoteDraft
             {
                 Customer = SelectedCustomer?.ToModel(),
                 Products = SelectedProducts, // This is possible as Products is an IEnumerable, so we don't need to create a copy
+                HourlyCost = CurrentQuote.HourlyCost,
+                Subtotal = subtotal
             };
         }
 

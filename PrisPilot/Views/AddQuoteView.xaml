@@ -114,7 +114,7 @@
 
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <!-- We have to give the checkbox an x:Name so our trigger can target it -->
+                                    <!--  We have to give the checkbox an x:Name so our trigger can target it  -->
                                     <CheckBox
                                         x:Name="ItemCheckBox"
                                         Content="{Binding Name}"
@@ -122,14 +122,15 @@
                                         IsChecked="{Binding IsSelected}" />
 
                                     <DataTemplate.Triggers>
-                                        <!-- If the Ancestor is NOT a ComboBoxItem (meaning it's drawn in the closed box), completely hide it -->
+                                        <!--  If this CheckBox is NOT inside the dropdown menu, don't show it at all.  -->
+                                        <!--  We check this by checking if the ancestor is a "ComboBoxItem". We hide it if it isn't  -->
                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ComboBoxItem}}" Value="{x:Null}">
                                             <Setter TargetName="ItemCheckBox" Property="Visibility" Value="Collapsed" />
                                         </DataTrigger>
                                     </DataTemplate.Triggers>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
-                            
+
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -140,7 +141,7 @@
                             </ComboBox.ItemContainerStyle>
                         </ComboBox>
 
-                        <!--  Text overlay displaying the selected items  -->
+                        <!--  Text overlay displaying amount of selected items  -->
                         <!--  This isn't a part of the combobox, but is just shown directly ontop of it  -->
                         <!--  IsHitTestVisible enables this, as our clicks go straight through the textblock  -->
                         <TextBlock
