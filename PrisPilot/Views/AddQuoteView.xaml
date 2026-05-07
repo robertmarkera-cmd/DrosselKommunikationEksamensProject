@@ -102,35 +102,55 @@
                         Text="Vælg produkttyper" />
 
                     <!--  Our custom dropdown made by using a combobox with checkboxes  -->
-                    <ComboBox
-                        x:Name="ProductTypesComboBox"
-                        Height="32"
-                        HorizontalContentAlignment="Stretch"
-                        Background="{StaticResource WarmBackgroundBrush}"
-                        BorderBrush="{StaticResource AccentBrush}"
-                        Foreground="Black"
-                        IsEditable="True"
-                        IsReadOnly="True"
-                        IsTextSearchEnabled="False"
-                        ItemsSource="{Binding Path=Products}"
-                        StaysOpenOnEdit="True"
-                        Text="{Binding SelectedProductTypesText, Mode=OneWay}">
+                    <Grid Height="32">
+                        <ComboBox
+                            x:Name="ProductTypesComboBox"
+                            HorizontalContentAlignment="Stretch"
+                            Background="{StaticResource WarmBackgroundBrush}"
+                            BorderBrush="{StaticResource AccentBrush}"
+                            Foreground="Transparent"
+                            IsEditable="False"
+                            ItemsSource="{Binding Path=Products}">
 
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <!--  IsSelected is bound to the checkbox here  -->
-                                <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                        <ComboBox.ItemContainerStyle>
-                            <Style TargetType="ComboBoxItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <Setter Property="Padding" Value="5" />
-                                <!--  Keep combobox open while clicking checkbox  -->
-                                <Setter Property="Focusable" Value="False" />
-                            </Style>
-                        </ComboBox.ItemContainerStyle>
-                    </ComboBox>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <!-- We have to give the checkbox an x:Name so our trigger can target it -->
+                                    <CheckBox
+                                        x:Name="ItemCheckBox"
+                                        Content="{Binding Name}"
+                                        Foreground="Black"
+                                        IsChecked="{Binding IsSelected}" />
+
+                                    <DataTemplate.Triggers>
+                                        <!-- If the Ancestor is NOT a ComboBoxItem (meaning it's drawn in the closed box), completely hide it -->
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ComboBoxItem}}" Value="{x:Null}">
+                                            <Setter TargetName="ItemCheckBox" Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                            
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="Padding" Value="5" />
+                                    <!--  Keep combobox open while clicking checkbox  -->
+                                    <Setter Property="Focusable" Value="False" />
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                        </ComboBox>
+
+                        <!--  Text overlay displaying the selected items  -->
+                        <!--  This isn't a part of the combobox, but is just shown directly ontop of it  -->
+                        <!--  IsHitTestVisible enables this, as our clicks go straight through the textblock  -->
+                        <TextBlock
+                            Margin="10,0,30,0"
+                            VerticalAlignment="Center"
+                            Foreground="Black"
+                            IsHitTestVisible="False"
+                            Text="{Binding SelectedProductTypesText}"
+                            TextTrimming="CharacterEllipsis" />
+                    </Grid>
                 </StackPanel>
 
                 <!--  This ItemsControl shows different templates based on chosen Product  -->

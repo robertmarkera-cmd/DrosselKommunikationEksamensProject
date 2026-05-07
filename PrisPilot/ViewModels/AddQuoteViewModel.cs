@@ -87,7 +87,7 @@ namespace PrisPilot.ViewModels
                     selected.Add(p.Name);
                 }
 
-                return selected.Count == 0 ? "Vælg produkttyper..." : string.Join(", ", selected);
+                return selected.Count == 0 ? "Vælg produkttyper..." : $"{selected.Count} produkter valgt";
             }
         }
 
