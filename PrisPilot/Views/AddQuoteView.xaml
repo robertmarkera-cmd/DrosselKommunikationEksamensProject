@@ -490,14 +490,11 @@
                                 <ColumnDefinition Width="170" />
                                 <ColumnDefinition Width="130" />
                             </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" Content="Inkluder tidsplan" />
                             <CheckBox
-                                Margin="4,0,24,0"
-                                Content="Tidsplan"
-                                FontWeight="Regular" />
-                            <CheckBox
-                                Margin="164,0,34,0"
-                                Content="Om Drossel Kommunikation"
-                                FontWeight="Regular" />
+                                Grid.Column="1"
+                                Content="Inkluder 'Om Os' side"
+                                IsChecked="{Binding CurrentTemplate.AboutUs, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </StackPanel>
                 </GroupBox>
