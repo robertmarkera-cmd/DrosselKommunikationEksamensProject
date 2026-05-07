@@ -404,7 +404,7 @@
                     </StackPanel>
 
                 </GroupBox>-->
-                <GroupBox
+                <!--<GroupBox
                     Grid.Row="5"
                     Margin="0,0,12,16"
                     FontWeight="SemiBold"
@@ -475,9 +475,9 @@
                         </Grid>
 
                     </StackPanel>
-                </GroupBox>
+                </GroupBox>-->
                 <GroupBox
-                    Grid.Row="6"
+                    Grid.Row="4"
                     Grid.ColumnSpan="1"
                     Margin="0,0,12,16"
                     FontWeight="SemiBold"
@@ -498,7 +498,7 @@
                         </Grid>
                     </StackPanel>
                 </GroupBox>
-                <Border
+                <!--<Border
                     Grid.Row="7"
                     Margin="0,0,12,16"
                     Padding="16"
@@ -567,7 +567,7 @@
                                 FontWeight="SemiBold" />
                         </Grid>
                     </StackPanel>
-                </Border>
+                </Border>-->
 
 
             </Grid>
