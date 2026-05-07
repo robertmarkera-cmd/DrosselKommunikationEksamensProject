@@ -14,8 +14,9 @@ namespace PrisPilot.Models
         public int Frequency { get; set; }
 
         // Stuff for interface
-        public int Id { get {return FixedPriceProductID;}}
+        public int Id { get { return FixedPriceProductID; } }
         ProductKind IProduct.Kind { get { return ProductKind.FixedPrice; } }
+        public double ProductPrice { get { return Price; } }
 
     }
 }

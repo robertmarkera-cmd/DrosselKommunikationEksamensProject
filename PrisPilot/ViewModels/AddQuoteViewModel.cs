@@ -3,6 +3,7 @@ using PrisPilot.Services;
 using PrisPilot.Services.Interfaces;
 using PrisPilot.Services.Peristence;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 
@@ -10,8 +11,6 @@ namespace PrisPilot.ViewModels
 {
     public class AddQuoteViewModel : SuperClassViewModel
     {
-
-
         private readonly CustomerRepository _customerRepository;
         private readonly QuoteRepository _quoteRepository;
         private readonly TemplateRepository _templateRepository;
@@ -23,10 +22,8 @@ namespace PrisPilot.ViewModels
 
         public ObservableCollection<CustomerViewModel> CustomerVMCollection { get; set; }
 
-        public ObservableCollection<IProduct> Products { get; }
-        public ObservableCollection<IProduct> SelectedProducts { get; set; }
-
-        public QuoteDraft Draft { get; } = new();
+        public ObservableCollection<ProductViewModel> Products { get; }
+        public ObservableCollection<ProductViewModel> SelectedProducts { get; set; }
 
         private Uri? _pdfPreviewUri;
         public Uri? PdfPreviewUri
@@ -70,14 +67,33 @@ namespace PrisPilot.ViewModels
                 if (_selectedCustomer == value) return;
                 _selectedCustomer = value;
                 _currentQuote.Cvr = _selectedCustomer.Cvr;
-                Draft.Customer = value?.ToModel();
+                
+                // Update recent cost
+                _currentQuote.RecentCost = _quoteRepository.GetRecentHourlyCostForCustomer(_selectedCustomer.Cvr);
+
                 OnPropertyChanged();
                 RegeneratePreview();
             }
         }
 
+        public string SelectedProductTypesText
+        {
+            get
+            {
+                List<string> selected = new List<string>();
+
+                foreach (ProductViewModel p in SelectedProducts)
+                {
+                    selected.Add(p.Name);
+                }
+
+                return selected.Count == 0 ? "Vælg produkttyper..." : $"{selected.Count} produkter valgt";
+            }
+        }
+
         public AddQuoteViewModel()
         {
+            // Initialize repositories
             _customerRepository = new CustomerRepository();
             _quoteRepository = new QuoteRepository();
             _templateRepository = new TemplateRepository();
@@ -85,10 +101,12 @@ namespace PrisPilot.ViewModels
             _variableRepo = new VariablePriceProductRepository();
             _timeSpentRepo = new TimeSpentRepository();
 
+            // Initialize the pdf service
             _quotePdfService = new QuotePdfService();
 
             // Initialize CurrentQuote and CurrentTemplate
             CurrentQuote = new(new Quote());
+            CurrentQuote.PropertyChanged += OnRelevantPropertyChanged; // Subscribe to changes
             CurrentTemplate = new(new Template());
 
             // Initialize the ObservableCollection CustomerVMCollection
@@ -96,8 +114,8 @@ namespace PrisPilot.ViewModels
             InitializeCustomerCollection();
 
             // Initialize the product vm
-            Products = new ObservableCollection<IProduct>();
-            SelectedProducts = new ObservableCollection<IProduct>();
+            Products = new ObservableCollection<ProductViewModel>();
+            SelectedProducts = new ObservableCollection<ProductViewModel>();
             LoadProductCollections();
         }
 
@@ -115,21 +133,70 @@ namespace PrisPilot.ViewModels
             List<FixedPriceProduct> fixedItems = _fixedRepo.GetAll();
             List<VariablePriceProduct> variableItems = _variableRepo.GetAll();
 
-            if (fixedItems.Count > 0)
+            // Didn't manage to find a good solution to merge these two lists, so we just run them one at a time
+            foreach (FixedPriceProduct? p in fixedItems)
             {
-                foreach (FixedPriceProduct p in fixedItems)
-                {
-                    Products.Add(p);
-                }
+                ProductViewModel vm = new ProductViewModel(p);
+
+                // Subscribe Product_IsSelectedChanged to the IsSelectedChanged event of the vm object
+                vm.IsSelectedChanged += Product_IsSelectedChanged;
+                
+                Products.Add(vm);
             }
 
-            if (variableItems.Count > 0)
+            foreach (VariablePriceProduct? p in variableItems)
             {
-                foreach (VariablePriceProduct p in variableItems)
-                {
-                    Products.Add(p);
-                }
+                ProductViewModel vm = new ProductViewModel(p);
 
+                // Subscribe Product_IsSelectedChanged to the IsSelectedChanged event of the vm object
+                vm.IsSelectedChanged += Product_IsSelectedChanged;
+
+                Products.Add(vm);
+            }
+        }
+
+        private void Product_IsSelectedChanged(object? sender, EventArgs e)
+        {
+            if (sender is ProductViewModel vm)
+            {
+                if (vm.IsSelected && !SelectedProducts.Contains(vm))
+                {
+                    // Add in the order they are checked
+                    SelectedProducts.Add(vm);
+
+                    // Subscribe to listen for HoursUsed changes
+                    vm.PropertyChanged += OnRelevantPropertyChanged;
+
+                    // Notify UI that the text has changed
+                    OnPropertyChanged(nameof(SelectedProductTypesText));
+
+                    // Regenerate preview when a new product is added
+                    RegeneratePreview(); 
+                }
+                else if (!vm.IsSelected && SelectedProducts.Contains(vm))
+                {
+                    SelectedProducts.Remove(vm);
+
+                    // Unsubscribe to prevent unwanted triggers
+                    vm.PropertyChanged -= OnRelevantPropertyChanged;
+
+                    // Notify UI that the text has changed
+                    // Making the UI update as our selections have changed
+                    OnPropertyChanged(nameof(SelectedProductTypesText));
+
+                    // Regenerate preview when a product is removed
+                    RegeneratePreview();
+                }
+            }
+        }
+
+        private void OnRelevantPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            // List of properties that should trigger a preview generation
+            if (e.PropertyName == nameof(QuoteViewModel.HourlyCost) ||
+                e.PropertyName == nameof(ProductViewModel.HoursUsed))
+            {
+                RegeneratePreview();
             }
         }
 
@@ -138,31 +205,59 @@ namespace PrisPilot.ViewModels
             // Debug
             Debug.WriteLine("REGENERATE PREVIEW CALLED " + DateTime.Now);
 
-            //Draft.Subtotal = Draft.Products.Sum(p => p.Price);
-            PdfPreviewUri = _quotePdfService.GeneratePreview(Draft);
+            QuoteDraft draft = CreateCurrentDraft();
+            PdfPreviewUri = _quotePdfService.GeneratePreview(draft);
+        }
+
+        private QuoteDraft CreateCurrentDraft()
+        {
+            double subtotal = 0;
+
+            foreach (ProductViewModel pvm in SelectedProducts)
+            {
+                // If the product is variable price, calculate its price based on the HoursUsed and the quote's HourlyCost
+                if (pvm.Product is VariablePriceProduct vp)
+                {
+                    vp.ProductPrice = pvm.HoursUsed * CurrentQuote.HourlyCost;
+                }
+
+                subtotal += pvm.Product.ProductPrice;
+            }
+
+            return new QuoteDraft
+            {
+                Customer = SelectedCustomer?.ToModel(),
+                Products = SelectedProducts, // This is possible as Products is an IEnumerable, so we don't need to create a copy
+                HourlyCost = CurrentQuote.HourlyCost,
+                Subtotal = subtotal
+            };
         }
 
         public void SaveQuote()
         {
-            Quote? quote = new Quote
-            {
-                Date = DateTime.Now,
-                TotalPrice = Draft.Total
-            };
+            QuoteDraft draft = CreateCurrentDraft();
 
+            CurrentQuote.TotalPrice = draft.Total;
+            CurrentQuote.Date = DateTime.Now;
+
+            // This gets the Quote model from our CurrentQuote ViewModel
+            Quote quote = CurrentQuote.ToModel();
+
+            // Here we are saving to the repository and retrieving the assigned QuoteID
             quote = _quoteRepository.Add(quote);
 
-            foreach (IProduct product in Draft.Products)
+            // Here we are updating the CurrentQuote with our freshly generated ID
+            CurrentQuote.QuoteID = quote.QuoteID;
+
+            foreach (IProduct product in draft.Products)
             {
                 _quoteRepository.AddFixedPriceProductToQuote(
                     quote.QuoteID,
                     product.Id);
             }
 
-            var finalPath =
-                $@"C:\Tilbud\Tilbud_{quote.QuoteID}.pdf";
-
-            _quotePdfService.GenerateFinal(finalPath, Draft, quote);
+            string finalPath = $@"C:\Tilbud\Tilbud_{quote.QuoteID}.pdf";
+            _quotePdfService.GenerateFinal(finalPath, draft, quote);
         }
     }
 }
