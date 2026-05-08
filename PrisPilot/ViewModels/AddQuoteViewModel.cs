@@ -9,7 +9,7 @@ using System.IO;
 
 namespace PrisPilot.ViewModels
 {
-    public class AddQuoteViewModel : SuperClassViewModel
+    public class AddQuoteViewModel : BaseViewModel<Quote>
     {
         private readonly CustomerRepository _customerRepository;
         private readonly QuoteRepository _quoteRepository;
@@ -91,7 +91,7 @@ namespace PrisPilot.ViewModels
             }
         }
 
-        public AddQuoteViewModel()
+        public AddQuoteViewModel() : base(new Quote())
         {
             // Initialize repositories
             _customerRepository = new CustomerRepository();
@@ -105,7 +105,7 @@ namespace PrisPilot.ViewModels
             _quotePdfService = new QuotePdfService();
 
             // Initialize CurrentQuote and CurrentTemplate
-            CurrentQuote = new(new Quote());
+            CurrentQuote = new(Entity);
             CurrentQuote.PropertyChanged += OnRelevantPropertyChanged; // Subscribe to changes
 
             CurrentTemplate = new(new Template());

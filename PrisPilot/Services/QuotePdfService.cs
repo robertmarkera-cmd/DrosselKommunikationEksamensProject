@@ -6,6 +6,7 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using System.Diagnostics;
 using System.IO;
+using System.Windows;
 
 namespace PrisPilot.Services
 {
@@ -148,6 +149,10 @@ namespace PrisPilot.Services
                     // Delete the temp file
                     File.Delete(tempDocPath);
                     return;
+                }
+                else
+                {
+                    MessageBox.Show($"{aboutPath} blev ikke fundet");
                 }
             }
 
