@@ -21,14 +21,12 @@ namespace PrisPilot.Views
     /// </summary>
     public partial class AddCustomerView : UserControl
     {
-        private readonly IFileDialogService _fileDialogService;
         private readonly AddCustomerViewModel ACM;
 
         public AddCustomerView()
         {
             InitializeComponent();
-            _fileDialogService = new FileDialogService();
-            ACM = new AddCustomerViewModel(_fileDialogService);
+            ACM = new AddCustomerViewModel();
             DataContext = ACM;
         }
     }

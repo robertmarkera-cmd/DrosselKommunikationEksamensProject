@@ -45,9 +45,9 @@ namespace PrisPilot.ViewModels
         public ICommand OpenFileForAddCustomerCommand { get; }
         public ICommand AddCustomerCommand { get; }
 
-        public AddCustomerViewModel(IFileDialogService fileDialogService) : base(new Customer())
+        public AddCustomerViewModel() : base(new Customer())
         {
-            OpenFileForAddCustomerCommand = new OpenFileForAddCustomerCommand(fileDialogService);
+            OpenFileForAddCustomerCommand = new OpenFileForAddCustomerCommand();
             AddCustomerCommand = new AddCustomerCommand();
             CurrentCustomer = new CustomerViewModel(Entity);
         }

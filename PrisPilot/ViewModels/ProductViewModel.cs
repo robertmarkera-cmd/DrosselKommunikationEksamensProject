@@ -10,7 +10,6 @@ namespace PrisPilot.ViewModels
 
         public IProduct Product => _product;
         public string Name => _product.Name;
-        public ProductKind Kind => _product.Kind;
 
         //This is our TimeModel property. It gives us something to bind the UI to.
         public TimeSpent TimeSpentModel { get; private set; }
@@ -52,11 +51,12 @@ namespace PrisPilot.ViewModels
             _product = product;
 
             // Automatically setup a TimeSpent model if applicable
-            if (_product.Kind == ProductKind.VariablePrice)
+            //if (_product.Kind == ProductKind.VariablePrice)
+            if (_product is VariablePriceProduct)
             {
                 TimeSpentModel = new TimeSpent 
                 { 
-                    VariablePriceProductID = _product.Id 
+                    VariablePriceProductID = _product.ProductID 
                 };
             }
         }
