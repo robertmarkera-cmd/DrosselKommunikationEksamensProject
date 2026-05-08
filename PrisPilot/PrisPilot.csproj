@@ -21,11 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Logo\Drossel_Logo.png" />
     <Resource Include="Assets\Fonts\**\*.ttf" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Assets\Logo\Drossel_Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\drossel_about_us_page.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -4,6 +4,8 @@ using PrisPilot.ViewModels;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System;
+using System.IO;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -47,15 +49,13 @@ namespace PrisPilot.Services
                     }
                     catch
                     {
-                        // File may still be locked by WebView2, in that case we just ignore.
-                        Debug.WriteLine("File is still locked; failed cleaning up file at " + DateTime.Now);
+                        Debug.WriteLine("File is still locked");
                     }
                 }
             }
             catch
             {
-                // In this case we ignore any cleanup failures.
-                Debug.WriteLine("Failed cleaning up file at " + DateTime.Now);
+                Debug.WriteLine("Cleanup failed");
             }
         }
 
@@ -64,7 +64,6 @@ namespace PrisPilot.Services
             QuoteDraft draft,
             Quote? quote)
         {
-            // Get a temp filename from Path - super simple btw
             string tempDocPath = Path.GetTempFileName();
 
             Document.Create(container =>
@@ -72,82 +71,41 @@ namespace PrisPilot.Services
                 container.Page(page =>
                 {
                     page.Size(PageSizes.A4);
-                    page.Margin(30);
-                    page.DefaultTextStyle(x => x.FontSize(11));
-                    page.PageColor("#fbf8f4");
 
-                    page.Header().Row(row =>
-                    {
-                        row.RelativeItem().Text("Drossel Kommunikation")
-                            .FontSize(20).Bold();
+                    page.Margin(40);
 
-                        row.ConstantItem(200).AlignRight().Column(col =>
-                        {
-                            col.Item().Text("Tilbud").FontSize(16).Bold();
-                            if (quote != null)
-                                col.Item().Text($"Nr.: {quote.QuoteID}");
-                            col.Item().Text(DateTime.Now.ToShortDateString());
-                        });
-                    });
+                    page.PageColor("#fbf8f2");
 
-                    page.Content().PaddingTop(20).Column(col =>
-                    {
-                        col.Item().Text("Til:").Bold();
-                        col.Item().Text(draft.Customer?.CompanyName ?? "");
+                    page.DefaultTextStyle(x =>
+                        x.FontSize(11)
+                         .FontColor("#172e79"));
 
-                        col.Item().PaddingTop(20).Table(table =>
-                        {
-                            table.ColumnsDefinition(c =>
-                            {
-                                c.RelativeColumn();
-                                c.ConstantColumn(100);
-                            });
+                    // FOOTER
+                    BuildFooter(page);
 
-                            table.Header(h =>
-                            {
-                                h.Cell().Text("Ydelse").Bold();
-                                h.Cell().AlignRight().Text("Pris").Bold();
-                            });
-
-                            foreach (ProductViewModel pvm in draft.Products)
-                            {
-                                IProduct p = pvm.Product;
-                                table.Cell().Text(p.Name);  
-                                table.Cell().AlignRight()
-                                    .Text($"{p.ProductPrice:n0} kr.");
-                            }
-                        });
-
-                        col.Item().PaddingTop(20).AlignRight().Column(price =>
-                        {
-                            price.Item().Text($"Subtotal: {draft.Subtotal:n0} kr.");
-                            price.Item().Text($"Samlet pris: {draft.Total:n0} kr.")
-                                       .Bold().FontSize(14);
-                        });
-                    });
-
-                    page.Footer().AlignCenter()
-                        .Text("Gyldigt i 30 dage");
+                    // FRONT PAGE
+                    BuildFrontPage(page, draft, quote);
                 });
             })
             .GeneratePdf(tempDocPath);
 
+            // ABOUT US PAGE MERGE
             if (draft.IncludeAboutUs)
             {
-                // Get path of the about us page
-                string aboutPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "drossel_about_us_page.pdf");
+                string aboutPath = Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    "Assets",
+                    "drossel_about_us_page.pdf");
 
                 if (File.Exists(aboutPath))
                 {
-                    // Using QuestPDF's DocumentOperation to merge the files
-                    // This is straight from their documentation at https://www.questpdf.com/concepts/document-operations.html
                     DocumentOperation
                         .LoadFile(tempDocPath)
                         .MergeFile(aboutPath)
                         .Save(path);
 
-                    // Delete the temp file
                     File.Delete(tempDocPath);
+
                     return;
                 }
                 else
@@ -156,8 +114,208 @@ namespace PrisPilot.Services
                 }
             }
 
-            // If we didn't merge we just move the temp base file to the final destination
             File.Move(tempDocPath, path, true);
+        }
+
+        // =========================================================
+        // FRONT PAGE
+        // =========================================================
+
+        private void BuildFrontPage(
+            PageDescriptor page,
+            QuoteDraft draft,
+            Quote? quote)
+        {
+            page.Content().Column(col =>
+            {
+                // TOP SPACING
+                col.Item().Height(50);
+
+                // LOGO / COMPANY NAME
+                col.Item()
+                .Width(320)
+                .Image(Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    "Assets",
+                    "Logo",
+                    "Drossel_Logo.png"));
+
+                // TITLE
+                col.Item().PaddingTop(40)
+                    .Text("TILBUD PÅ")
+                    .FontSize(32)
+                    .FontColor("#172e79")
+                    .SemiBold();
+
+      //          col.Item().PaddingTop(5)
+      //.Text(string.Join(", ", draft.Products.Select(p => p.Product.Name)))
+      //.FontSize(18);
+
+                // DATE
+                col.Item().PaddingTop(20)
+                    .Text(DateTime.Now.ToShortDateString());
+
+                // BIG SPACING
+                col.Item().Height(80);
+
+                // CONTACT + CUSTOMER LOGO
+                col.Item().Row(row =>
+                {
+                    // LEFT SIDE
+                    row.RelativeItem().Column(left =>
+                    {
+                        left.Item().Text("Kontaktoplysninger")
+                            .Bold();
+
+                        left.Item().PaddingTop(10)
+                            .Text("Drossel Kommunikation");
+
+                        left.Item().Text("info@drosselkommunikation.dk");
+
+                        left.Item().Text("Tlf. 28 45 14 48");
+                    });
+
+                    // RIGHT SIDE
+                    row.ConstantItem(180)
+                    .Height(120)
+                         .AlignCenter()
+                        .AlignMiddle()
+                        .Text("Kundelogo");
+                });
+
+                // SPACE
+                col.Item().Height(120);
+
+                // CUSTOMER
+                BuildCustomerSection(col, draft);
+
+                // SPACE
+                col.Item().Height(90); 
+
+                // PRICE TABLE
+                BuildPriceTable(col, draft);
+
+                // TOTAL PRICE
+                BuildTotalSection(col, draft);
+            });
+        }
+
+        // =========================================================
+        // CUSTOMER SECTION
+        // =========================================================
+
+        private void BuildCustomerSection(
+            ColumnDescriptor col,
+            QuoteDraft draft)
+        {
+            col.Item().Text("Til:")
+                .FontSize(16)
+                .Bold();
+
+            col.Item().PaddingTop(10)
+                .Text(draft.Customer?.CompanyName ?? "");
+        }
+
+        // =========================================================
+        // PRICE TABLE
+        // =========================================================
+
+        private void BuildPriceTable(
+            ColumnDescriptor col,
+            QuoteDraft draft)
+        {
+            col.Item().Text("Pris")
+                .FontSize(18)
+                .Bold();
+
+            col.Item().PaddingTop(15).Table(table =>
+            {
+                table.ColumnsDefinition(columns =>
+                {
+                    columns.RelativeColumn();
+                    columns.ConstantColumn(120);
+                });
+
+                // HEADER
+                table.Header(header =>
+                {
+                    header.Cell().PaddingBottom(15)
+                    .Text("Ydelse")
+                        .Bold();
+
+                    header.Cell()
+                        .PaddingBottom(10)
+                        .AlignRight()
+                        .Text("Pris")
+                        .Bold();
+                });
+
+                // PRODUCTS
+                foreach (ProductViewModel pvm in draft.Products)
+                {
+                    IProduct product = pvm.Product;
+
+                    table.Cell()
+                        .PaddingVertical(14)
+                        .Text(product.Name);
+
+                    table.Cell()
+                        .PaddingVertical(8)
+                        .AlignRight()
+                        .Text($"{product.ProductPrice:n0} kr.");
+                }
+            });
+        }
+
+        // =========================================================
+        // TOTAL SECTION
+        // =========================================================
+
+        private void BuildTotalSection(
+            ColumnDescriptor col,
+            QuoteDraft draft)
+        {
+            col.Item()
+                .PaddingTop(30)
+                .AlignRight()
+                .Column(price =>
+                {
+                    price.Item()
+                        .Text($"Subtotal: {draft.Subtotal:n0} kr.");
+
+                    price.Item()
+                        .PaddingTop(10)
+                        .Text($"Samlet pris: {draft.Total:n0} kr.")
+                        .FontSize(24)
+                        .FontColor("#172e79")
+                        .Bold();
+                });
+        }
+
+        // =========================================================
+        // FOOTER
+        // =========================================================
+
+        private void BuildFooter(PageDescriptor page)
+        {
+            page.Footer()
+                .PaddingBottom(10)
+                .AlignCenter()
+                .Text(text =>
+                {
+                    text.DefaultTextStyle(x =>
+                        x.FontSize(10)
+                         .FontColor("#172e79"));
+
+                    text.Span("info@drosselkommunikation.dk");
+                    text.Span("  •  ");
+                    text.Span("Tlf. 28 45 14 48");
+                    text.Span("  •  ");
+                    text.Span("www.drosselkommunikation.dk");
+                });
         }
     }
 }
+
+
+
