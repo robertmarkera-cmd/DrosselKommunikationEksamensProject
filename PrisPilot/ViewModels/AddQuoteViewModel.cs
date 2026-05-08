@@ -67,7 +67,7 @@ namespace PrisPilot.ViewModels
                 if (_selectedCustomer == value) return;
                 _selectedCustomer = value;
                 _currentQuote.Cvr = _selectedCustomer.Cvr;
-                
+
                 // Update recent cost
                 _currentQuote.RecentCost = _quoteRepository.GetRecentHourlyCostForCustomer(_selectedCustomer.Cvr);
 
@@ -142,7 +142,7 @@ namespace PrisPilot.ViewModels
 
                 // Subscribe Product_IsSelectedChanged to the IsSelectedChanged event of the vm object
                 vm.IsSelectedChanged += Product_IsSelectedChanged;
-                
+
                 Products.Add(vm);
             }
 
@@ -173,7 +173,7 @@ namespace PrisPilot.ViewModels
                     OnPropertyChanged(nameof(SelectedProductTypesText));
 
                     // Regenerate preview when a new product is added
-                    RegeneratePreview(); 
+                    RegeneratePreview();
                 }
                 else if (!vm.IsSelected && SelectedProducts.Contains(vm))
                 {
@@ -197,7 +197,9 @@ namespace PrisPilot.ViewModels
             // List of properties that should trigger a preview generation
             if (e.PropertyName == nameof(QuoteViewModel.HourlyCost) ||
                 e.PropertyName == nameof(ProductViewModel.HoursUsed) ||
-                e.PropertyName == nameof(TemplateViewModel.AboutUs))
+                e.PropertyName == nameof(TemplateViewModel.AboutUs)||
+                 e.PropertyName == nameof(TemplateViewModel.Introduction))
+             
             {
                 RegeneratePreview();
             }
@@ -230,6 +232,7 @@ namespace PrisPilot.ViewModels
             return new QuoteDraft
             {
                 Customer = SelectedCustomer?.ToModel(),
+                Introduction = CurrentTemplate.Introduction,
                 Products = SelectedProducts, // This is possible as Products is an IEnumerable, so we don't need to create a copy
                 HourlyCost = CurrentQuote.HourlyCost,
                 Subtotal = subtotal,
