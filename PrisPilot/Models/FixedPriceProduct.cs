@@ -15,6 +15,7 @@ namespace PrisPilot.Models
 
         // Stuff for interface
         public int ProductID { get { return FixedPriceProductID; } }
+
         public double ProductPrice { get { return Price; } }
 
     }

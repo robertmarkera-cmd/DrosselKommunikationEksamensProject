@@ -50,8 +50,7 @@ namespace PrisPilot.ViewModels
         {
             _product = product;
 
-            // Automatically setup a TimeSpent model if applicable
-            //if (_product.Kind == ProductKind.VariablePrice)
+            // Automatically setup a TimeSpent model if possible
             if (_product is VariablePriceProduct)
             {
                 TimeSpentModel = new TimeSpent 
