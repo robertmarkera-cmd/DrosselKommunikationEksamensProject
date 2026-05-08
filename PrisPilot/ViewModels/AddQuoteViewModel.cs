@@ -212,7 +212,7 @@ namespace PrisPilot.ViewModels
             PdfPreviewUri = _quotePdfService.GeneratePreview(draft);
         }
 
-        private QuoteDraft CreateCurrentDraft()
+        public QuoteDraft CreateCurrentDraft() // This method was originally private. We made it public in order to unit-test it we made it
         {
             double subtotal = 0;
 
