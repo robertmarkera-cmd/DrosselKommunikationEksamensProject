@@ -8,6 +8,8 @@ namespace PrisPilot.Models
     {
         public Customer? Customer { get; set; }
 
+        public string Introduction { get; set; } = string.Empty;
+
         // This is an IEnumerable so we can just pass our observablecollection to it
         public IEnumerable<ProductViewModel> Products { get; set; } = [];
 

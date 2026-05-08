@@ -7,7 +7,7 @@ using QuestPDF.Infrastructure;
 using System;
 using System.IO;
 using System.Diagnostics;
-using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace PrisPilot.Services
@@ -142,14 +142,14 @@ namespace PrisPilot.Services
 
                 // TITLE
                 col.Item().PaddingTop(40)
-                    .Text("TILBUD PÅ")
+                    .Text("Tilbud På")
                     .FontSize(32)
                     .FontColor("#172e79")
                     .SemiBold();
 
-      //          col.Item().PaddingTop(5)
-      //.Text(string.Join(", ", draft.Products.Select(p => p.Product.Name)))
-      //.FontSize(18);
+                //col.Item().PaddingTop(5)
+                //    .Text(string.Join(", ", draft.Products.Select(p => p.Product.Name)))
+                //    .FontSize(18);
 
                 // DATE
                 col.Item().PaddingTop(20)
@@ -190,16 +190,48 @@ namespace PrisPilot.Services
                 BuildCustomerSection(col, draft);
 
                 // SPACE
-                col.Item().Height(90); 
+                col.Item().Height(40);
 
+                // INTRODUCTION
+                BuildIntroduktionSection(col, draft);
+
+                // SPACE
+                col.Item().Height(90);
+
+
+                IEnumerable<ProductViewModel> services = draft.Products.Where(p => p.IsSelected);
+
+                foreach (ProductViewModel service in services)
+                {
+                    col.Item().PageBreak();
+                    col.Item().Text(service.Product.Name).FontSize(20).Bold();
+                    col.Item().PaddingTop(10).Text(service.Product.Description);
+                }
+
+                //if (services.Any())
+                //{
+                //    col.Item().PageBreak();
+                //}
                 // PRICE TABLE
                 BuildPriceTable(col, draft);
 
-                // TOTAL PRICE
-                BuildTotalSection(col, draft);
+               
+                
             });
         }
+        // =========================================================
+        // INTRODUKTION SECTION 
+        // =========================================================
+        private void BuildIntroduktionSection(ColumnDescriptor col, QuoteDraft draft)
+        {
+            col.Item().PageBreak();
+            col.Item().Text("Indledning")
+                .FontSize(18)
+                .Bold();
 
+            col.Item().PaddingTop(10)
+                .Text(draft.Introduction ?? string.Empty);
+        }
         // =========================================================
         // CUSTOMER SECTION
         // =========================================================
@@ -224,6 +256,7 @@ namespace PrisPilot.Services
             ColumnDescriptor col,
             QuoteDraft draft)
         {
+            col.Item().PageBreak();
             col.Item().Text("Pris")
                 .FontSize(18)
                 .Bold();
@@ -250,6 +283,21 @@ namespace PrisPilot.Services
                         .Bold();
                 });
 
+                col.Item()
+                    .PaddingTop(30)
+                    .AlignRight()
+                    .Column(price =>
+                    {
+                        price.Item()
+                            .Text($"Subtotal: {draft.Subtotal:n0} kr.");
+
+                        price.Item()
+                            .PaddingTop(10)
+                            .Text($"Samlet pris: {draft.Total:n0} kr.")
+                            .FontSize(24)
+                            .FontColor("#172e79")
+                            .Bold();
+                    });
                 // PRODUCTS
                 foreach (ProductViewModel pvm in draft.Products)
                 {
@@ -267,30 +315,7 @@ namespace PrisPilot.Services
             });
         }
 
-        // =========================================================
-        // TOTAL SECTION
-        // =========================================================
 
-        private void BuildTotalSection(
-            ColumnDescriptor col,
-            QuoteDraft draft)
-        {
-            col.Item()
-                .PaddingTop(30)
-                .AlignRight()
-                .Column(price =>
-                {
-                    price.Item()
-                        .Text($"Subtotal: {draft.Subtotal:n0} kr.");
-
-                    price.Item()
-                        .PaddingTop(10)
-                        .Text($"Samlet pris: {draft.Total:n0} kr.")
-                        .FontSize(24)
-                        .FontColor("#172e79")
-                        .Bold();
-                });
-        }
 
         // =========================================================
         // FOOTER
