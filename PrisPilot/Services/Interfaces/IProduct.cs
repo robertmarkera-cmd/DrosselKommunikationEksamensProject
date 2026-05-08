@@ -4,18 +4,11 @@ using System.Text;
 
 namespace PrisPilot.Services.Interfaces
 {
-    public enum ProductKind
-    {
-        FixedPrice,
-        VariablePrice
-    }
-
     public interface IProduct
     {
-        int Id { get; }
+        int ProductID { get; }
         string Name { get; }
         string Description { get; }
-        ProductKind Kind { get; }
         double ProductPrice { get; }
     }
 }

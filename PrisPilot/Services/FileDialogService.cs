@@ -12,7 +12,7 @@ namespace PrisPilot.Services
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             // Filters for the dialog
-            openFileDialog.Filter = "Image files (*.png;*.jpeg)|*.png;*.jpeg|All files (*.*)|*.*";
+            openFileDialog.Filter = "Billedfiler (*.png;*.jpeg)|*.png;*.jpeg|Alle filer (*.*)|*.*";
 
             bool? result = openFileDialog.ShowDialog();
 
@@ -21,7 +21,7 @@ namespace PrisPilot.Services
                 return openFileDialog.FileName;
             }
 
-            //If the user closes the dialog, return an empty string
+            // If the user closes the dialog, return an empty string
             return string.Empty;
         }
     }

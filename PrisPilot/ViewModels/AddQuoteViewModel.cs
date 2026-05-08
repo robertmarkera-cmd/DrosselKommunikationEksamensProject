@@ -257,7 +257,7 @@ namespace PrisPilot.ViewModels
             {
                 _quoteRepository.AddFixedPriceProductToQuote(
                     quote.QuoteID,
-                    product.Id);
+                    product.ProductID);
             }
 
             string finalPath = $@"C:\Tilbud\Tilbud_{quote.QuoteID}.pdf";

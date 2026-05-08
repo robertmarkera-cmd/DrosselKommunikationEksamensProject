@@ -12,8 +12,7 @@ namespace PrisPilot.Models
         public string Description { get; set; }
 
         // Stuff for interface
-        public int Id { get { return VariablePriceProductID; } }
-        ProductKind IProduct.Kind { get { return ProductKind.VariablePrice; } }
+        public int ProductID { get { return VariablePriceProductID; } }
         public double ProductPrice { get; set; }
     }
 }

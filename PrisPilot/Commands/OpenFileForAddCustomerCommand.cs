@@ -12,9 +12,9 @@ namespace PrisPilot.Commands
     {
         private readonly IFileDialogService _fileDialogService;
 
-        public OpenFileForAddCustomerCommand(IFileDialogService fileDialogService)
+        public OpenFileForAddCustomerCommand()
         {
-            _fileDialogService = fileDialogService;
+            _fileDialogService = new FileDialogService();
         }
 
         public event EventHandler? CanExecuteChanged
