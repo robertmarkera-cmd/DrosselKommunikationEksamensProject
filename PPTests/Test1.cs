@@ -64,5 +64,40 @@ namespace PPTests
             // Assert
             Assert.AreEqual(3500, draft.Subtotal);
         }
+
+        [TestMethod]
+        public void CreateCurrentDraft_WithVariableProduct_CalculatesPriceBasedOnHourlyCost()
+        {
+            // Arrange
+
+            // Clearing the selectedproducts to make the math easier
+            addQuoteViewModel.SelectedProducts.Clear();
+
+            // Creating new product
+            ProductViewModel variableProductVm = new ProductViewModel(new VariablePriceProduct());
+            variableProductVm.HoursUsed = 3;
+
+            addQuoteViewModel.SelectedProducts.Add(variableProductVm);
+
+            // Act
+            QuoteDraft draft = addQuoteViewModel.CreateCurrentDraft();
+
+            // Assert
+            Assert.AreEqual(2250, draft.Subtotal); // 3 hours * 750 hourly cost = 2250
+        }
+
+        [TestMethod]
+        public void CreateCurrentDraft_WithNoSelectedProducts_SubtotalIsZero()
+        {
+            // Arrange
+            addQuoteViewModel.SelectedProducts.Clear();
+            addQuoteViewModel.CurrentQuote.HourlyCost = 10000;
+
+            // Act
+            QuoteDraft draft = addQuoteViewModel.CreateCurrentDraft();
+
+            // Assert
+            Assert.AreEqual(0, draft.Subtotal);
+        }
     }
 }
