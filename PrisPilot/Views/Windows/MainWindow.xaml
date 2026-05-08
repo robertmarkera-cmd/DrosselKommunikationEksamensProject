@@ -58,18 +58,6 @@
                 Click="New_Quote_Button_Click"
                 Content="Nyt tilbud" />
             <Button
-                x:Name="Preview_Button"
-                Grid.Row="0"
-                Grid.Column="1"
-                MaxHeight="30"
-                Margin="0,0,30,0"
-                Padding="20,2"
-                Background="{StaticResource WarmBackgroundBrush}"
-                BorderBrush="{StaticResource AccentBrush}"
-                BorderThickness="1.5"
-                Command="{Binding NavigateToSecondViewCommand}"
-                Content="Forhåndsvisning" />
-            <Button
                 x:Name="Customer_Overview_Button"
                 Grid.Row="0"
                 Grid.Column="1"
