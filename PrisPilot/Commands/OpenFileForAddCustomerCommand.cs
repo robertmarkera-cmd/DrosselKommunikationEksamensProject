@@ -12,9 +12,16 @@ namespace PrisPilot.Commands
     {
         private readonly IFileDialogService _fileDialogService;
 
+        // Default constructor that an actual FileDialogService
         public OpenFileForAddCustomerCommand()
         {
             _fileDialogService = new FileDialogService();
+        }
+
+        // Overloaded constructor that allows us to create a fake FileDialogService in unit-tests
+        public OpenFileForAddCustomerCommand(IFileDialogService fileDialogService)
+        {
+            _fileDialogService = fileDialogService;
         }
 
         public event EventHandler? CanExecuteChanged

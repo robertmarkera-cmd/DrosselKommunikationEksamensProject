@@ -1,5 +1,7 @@
 ﻿using PrisPilot;
+using PrisPilot.Commands;
 using PrisPilot.Models;
+using PrisPilot.Services.Interfaces;
 using PrisPilot.ViewModels;
 
 namespace PPTests
@@ -98,6 +100,42 @@ namespace PPTests
 
             // Assert
             Assert.AreEqual(0, draft.Subtotal);
+        }
+
+        [TestMethod]
+        public void Execute_WhenDialogReturnsValidPath_SetsSelectedFilePath()
+        {
+            // Arrange
+
+            // Drossel logo path
+            string drosselLogoPath = Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    "Assets",
+                    "Logo",
+                    "Drossel_Logo.png");
+
+            MockFileDialogService mockDialog = new MockFileDialogService();
+            mockDialog.SimulatedFilePathToReturn = drosselLogoPath;
+
+            OpenFileForAddCustomerCommand command = new OpenFileForAddCustomerCommand(mockDialog);
+            AddCustomerViewModel vm = new AddCustomerViewModel();
+
+            // Act
+            command.Execute(vm);
+
+            // Assert
+            Assert.AreEqual(drosselLogoPath, vm.SelectedFilePath);
+        }
+    }
+
+    // A fake service that lets us control what the file picker dialog returns
+    public class MockFileDialogService : IFileDialogService
+    {
+        public string? SimulatedFilePathToReturn { get; set; }
+
+        public string? OpenFileDialog()
+        {
+            return SimulatedFilePathToReturn;
         }
     }
 }
