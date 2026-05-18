@@ -16,7 +16,7 @@ namespace PrisPilot.Services
         {
             try
             {
-                using (var ms = new MemoryStream(array))
+                using (MemoryStream ms = new MemoryStream(array))
                 {
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.BeginInit();

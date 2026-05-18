@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace PrisPilot.Views
 {
     /// <summary>
-    /// Interaction logic for HomeView.xaml
+    /// Interaction logic for PreviewView.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class PreviewView : UserControl
     {
-        public HomeView()
+        public PreviewView()
         {
             InitializeComponent();
         }

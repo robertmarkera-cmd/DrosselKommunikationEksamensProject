@@ -11,6 +11,12 @@
             <views:AddCustomerView />
         </DataTemplate>
 
+        <!--  Global still til Brushes  -->
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#172E79" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#EF8802" />
+        <SolidColorBrush x:Key="WarmBackgroundBrush" Color="#FBF8F4" />
+        <SolidColorBrush x:Key="SoftBorderBrush" Color="#D1D5DB" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <!--  Global stil til alle Buttons  -->
         <Style TargetType="{x:Type Button}">
             <Setter Property="FontFamily" Value="pack://application:,,,/Assets/Fonts/Libre_Baskerville/#LibreBaskerville" />
@@ -20,7 +26,10 @@
                 </Style>
             </Style.Resources>
         </Style>
-
+        <!--  Global stil til alle Borders  -->
+        <Style TargetType="{x:Type Border}">
+            <Setter Property="CornerRadius" Value="5" />
+        </Style>
         <!--  Global stil til alle TextBlocks  -->
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="FontFamily" Value="pack://application:,,,/Assets/Fonts/Noticia_Text/#Noticia Text" />
@@ -28,8 +37,26 @@
 
         <!--  Global stil til alle TextBoxe  -->
         <Style TargetType="{x:Type TextBox}">
-            <!-- Make sure the path includes /Fonts/ so it matches where the file actually is -->
+            <!--  Make sure the path includes /Fonts/ so it matches where the file actually is  -->
             <Setter Property="FontFamily" Value="pack://application:,,,/Assets/Fonts/Noticia_Text/#Noticia Text" />
+
+        </Style>
+        <!--  Global still til TextBlock  -->
+        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+        </Style>
+        <!--  Global still til GroubBox  -->
+        <Style x:Key="CardGroupBoxStyle" TargetType="GroupBox">
+            <Setter Property="Margin" Value="0,0,16,16" />
+            <Setter Property="Padding" Value="10" />
+
+
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Background" Value="White" />
         </Style>
 
     </Application.Resources>

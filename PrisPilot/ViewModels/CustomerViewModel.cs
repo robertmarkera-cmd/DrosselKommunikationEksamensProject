@@ -2,6 +2,7 @@
 using PrisPilot.Services;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -114,18 +115,6 @@ namespace PrisPilot.ViewModels
             }
         }
 
-        private double _hourlyCost = 0;
-        public double HourlyCost
-        {
-            get => _hourlyCost;
-            set
-            {
-                if (_hourlyCost == value) return;
-                _hourlyCost = value;
-                OnPropertyChanged();
-            }
-        }
-
         public CustomerViewModel(Customer customer) : base(customer)
         {
             this._customer = customer;
@@ -136,7 +125,6 @@ namespace PrisPilot.ViewModels
             this.Address = customer.Address;
             this.Logo = customer.Logo;
             this.ContactPerson = customer.ContactPerson;
-            this.HourlyCost = customer.HourlyCost;
         }
 
 
@@ -189,6 +177,19 @@ namespace PrisPilot.ViewModels
             // Creating a BitmapImage from our bytearray
             _imageService = new();
             PreviewImage = _imageService.ReencodeToBitmap(_logo);
+        }
+
+        public Customer ToModel()
+        {
+            _customer.CompanyName = CompanyName;
+            _customer.Cvr = Cvr;
+            _customer.Email = Email;
+            _customer.TelephoneNumber = TelephoneNumber;
+            _customer.Address = Address;
+            _customer.Logo = Logo;
+            _customer.ContactPerson = ContactPerson;
+
+            return _customer;
         }
     }
 }

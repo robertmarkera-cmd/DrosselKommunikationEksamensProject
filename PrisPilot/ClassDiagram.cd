@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PrisPilot.Commands.AddCustomerCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\AddCustomerCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PrisPilot.Commands.OpenFileForAddCustomerCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQAAEAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\OpenFileForAddCustomerCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PrisPilot.Models.Customer" Collapsed="true">
+    <Position X="15" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQQAAACAAAAAgBAAAAAAAAAAAAAACAAAACAAAAAA=</HashCode>
+      <FileName>Models\Customer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.Models.FixedPriceProduct" Collapsed="true">
+    <Position X="18.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAkAAAAAAAAAAQAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\FixedPriceProduct.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.Models.Quote">
+    <Position X="20.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAQAABAAgAAAAAAAA=</HashCode>
+      <FileName>Models\Quote.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.Models.Template">
+    <Position X="15" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAACAAIAAFBAAAAAAAABAAAEAAA=</HashCode>
+      <FileName>Models\Template.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.Models.TimeSpent">
+    <Position X="16.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAQAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\TimeSpent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.Models.VariablePriceProduct">
+    <Position X="18.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\VariablePriceProduct.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.Services.Peristence.BaseRepository&lt;TEntity&gt;" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAiAAAAAAAAA=</HashCode>
+      <FileName>Services\Peristence\BaseRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.Services.Peristence.CustomerRepository">
+    <Position X="10.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\Peristence\CustomerRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.Services.Peristence.FixedPriceProductRepository">
+    <Position X="12.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\Peristence\FixedPriceProductRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.Services.Peristence.QuoteRepository">
+    <Position X="1.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAEQAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\Peristence\QuoteRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.Services.Peristence.TemplateRepository">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\Peristence\TemplateRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.Services.Peristence.TimeSpentRepository">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAABAAAAAAEACAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\Peristence\TimeSpentRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.Services.Peristence.VariablePriceProductRepository">
+    <Position X="8" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\Peristence\VariablePriceProductRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.Services.FileDialogService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\FileDialogService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PrisPilot.Services.ImageService" Collapsed="true">
+    <Position X="20.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Services\ImageService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.ViewModels.AddCustomerViewModel">
+    <Position X="3.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAgAAAAAAAACAAAAEABAAIBAAAAgAgAAAAAE=</HashCode>
+      <FileName>ViewModels\AddCustomerViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.ViewModels.AddQuoteViewModel">
+    <Position X="1" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAEAAAAAAAAAAAAAAAAAAAAAAAEAAAAAABAAAAAk=</HashCode>
+      <FileName>ViewModels\AddQuoteViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.ViewModels.BaseViewModel&lt;TEntity&gt;" Collapsed="true">
+    <Position X="4.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\BaseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.ViewModels.CustomerViewModel">
+    <Position X="5.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAASQAAgCgEAIAoBAAAAAAAAAwEAAADAAAACEIABAE=</HashCode>
+      <FileName>ViewModels\CustomerViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PrisPilot.ViewModels.SuperClassViewModel" Collapsed="true">
+    <Position X="3.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\SuperClassViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PrisPilot.Views.Windows.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Views\Windows\MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.242" />
+  </Class>
+  <Class Name="PrisPilot.Views.AddCustomerView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\AddCustomerView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PrisPilot.Views.AddQuoteView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Views\AddQuoteView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PrisPilot.Views.PreviewView" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\PreviewView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PrisPilot.App" Collapsed="true">
+    <Position X="20.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="PrisPilot.Services.Interfaces.IFileDialogService" Collapsed="true">
+    <Position X="15" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IFileDialogService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

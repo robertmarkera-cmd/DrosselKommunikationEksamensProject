@@ -1,4 +1,7 @@
-﻿using System;
+﻿using PrisPilot.Services;
+using PrisPilot.ViewModels;
+using PrisPilot.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -14,13 +17,19 @@ using System.Windows.Shapes;
 namespace PrisPilot.Views
 {
     /// <summary>
-    /// Interaction logic for SecondView.xaml
+    /// Interaction logic for AddCustomerView.xaml
     /// </summary>
-    public partial class SecondView : UserControl
+    public partial class AddQuoteView : UserControl
     {
-        public SecondView()
+
+        private readonly AddQuoteViewModel AQM;
+
+        public AddQuoteView()
         {
             InitializeComponent();
+            AQM = new AddQuoteViewModel();
+            DataContext = AQM;
         }
+
     }
 }

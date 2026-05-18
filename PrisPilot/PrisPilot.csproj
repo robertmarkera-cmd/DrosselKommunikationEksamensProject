@@ -9,17 +9,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\drossel_about_us_page.pdf" />
     <None Remove="Assets\Logo\Drossel_Logo.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.7" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3912.50" />
+    <PackageReference Include="QuestPDF" Version="2026.2.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Logo\Drossel_Logo.png" />
     <Resource Include="Assets\Fonts\**\*.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Logo\Drossel_Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\drossel_about_us_page.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

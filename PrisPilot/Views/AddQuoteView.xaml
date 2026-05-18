@@ -1,0 +1,593 @@
+﻿<UserControl
+    x:Class="PrisPilot.Views.AddQuoteView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:PrisPilot.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="clr-namespace:PrisPilot.Views"
+    d:DesignHeight="1080"
+    d:DesignWidth="1920"
+    Background="{StaticResource WarmBackgroundBrush}"
+    mc:Ignorable="d">
+
+
+    <!--#region Grid-->
+
+    <Grid Margin="24,0,24,24">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="4" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <ScrollViewer
+            Grid.Column="0"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Hidden">
+            <!--#region Left Column Content-->
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+
+                <StackPanel Grid.Row="0" Margin="0,0,12,16">
+                    <TextBlock
+                        Margin="0,10,0,4"
+                        FontWeight="SemiBold"
+                        Text="Vælg Kunde" />
+                    <ComboBox
+                        Height="32"
+                        Background="{StaticResource WarmBackgroundBrush}"
+                        BorderBrush="{StaticResource AccentBrush}"
+                        DisplayMemberPath="CompanyName"
+                        Foreground="Black"
+                        ItemsSource="{Binding CustomerVMCollection}"
+                        SelectedItem="{Binding SelectedCustomer}" />
+                </StackPanel>
+                <GroupBox
+                    Grid.Row="1"
+                    Header="Timepris"
+                    Style="{StaticResource CardGroupBoxStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            Margin="0,0,10,0"
+                            FontWeight="SemiBold"
+                            Text="Timepris på tilbud" />
+                        <TextBox
+                            Width="100"
+                            HorizontalAlignment="Left"
+                            Text="{Binding CurrentQuote.HourlyCost, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock
+                            Margin="20,0,10,0"
+                            FontWeight="SemiBold"
+                            Text="Timepris fra sidste tilbud" />
+                        <TextBlock
+                            Width="100"
+                            HorizontalAlignment="Left"
+                            Text="{Binding CurrentQuote.RecentCost, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox
+                    Grid.Row="2"
+                    Margin="0,0,12,16"
+                    FontWeight="SemiBold"
+                    Header="Indledning"
+                    Style="{StaticResource CardGroupBoxStyle}">
+                    <TextBox
+                        MinHeight="160"
+                        AcceptsReturn="True"
+                        BorderBrush="{StaticResource AccentBrush}"
+                        FontWeight="Regular"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto"
+                        Text="{Binding CurrentTemplate.Introduction, UpdateSourceTrigger=PropertyChanged}" />
+                </GroupBox>
+
+                <StackPanel Grid.Row="3" Margin="0,0,12,16">
+                    <TextBlock
+                        Margin="0,0,0,4"
+                        FontWeight="SemiBold"
+                        Text="Vælg produkttyper" />
+
+                    <!--  Our custom dropdown made by using a combobox with checkboxes  -->
+                    <Grid Height="32">
+                        <ComboBox
+                            x:Name="ProductTypesComboBox"
+                            HorizontalContentAlignment="Stretch"
+                            Background="{StaticResource WarmBackgroundBrush}"
+                            BorderBrush="{StaticResource AccentBrush}"
+                            Foreground="Transparent"
+                            IsEditable="False"
+                            ItemsSource="{Binding Path=Products}">
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <!--  We have to give the checkbox an x:Name so our trigger can target it  -->
+                                    <CheckBox
+                                        x:Name="ItemCheckBox"
+                                        Content="{Binding Name}"
+                                        Foreground="Black"
+                                        IsChecked="{Binding IsSelected}" />
+
+                                    <DataTemplate.Triggers>
+                                        <!--  If this CheckBox is NOT inside the dropdown menu, don't show it at all.  -->
+                                        <!--  We check this by checking if the ancestor is a "ComboBoxItem". We hide it if it isn't  -->
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ComboBoxItem}}" Value="{x:Null}">
+                                            <Setter TargetName="ItemCheckBox" Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="Padding" Value="5" />
+                                    <!--  Keep combobox open while clicking checkbox  -->
+                                    <Setter Property="Focusable" Value="False" />
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                        </ComboBox>
+
+                        <!--  Text overlay displaying amount of selected items  -->
+                        <!--  This isn't a part of the combobox, but is just shown directly ontop of it  -->
+                        <!--  IsHitTestVisible enables this, as our clicks go straight through the textblock  -->
+                        <TextBlock
+                            Margin="10,0,30,0"
+                            VerticalAlignment="Center"
+                            Foreground="Black"
+                            IsHitTestVisible="False"
+                            Text="{Binding SelectedProductTypesText}"
+                            TextTrimming="CharacterEllipsis" />
+                    </Grid>
+                </StackPanel>
+
+                <!--  This ItemsControl shows different templates based on chosen Product  -->
+                <ItemsControl
+                    Grid.Row="4"
+                    Margin="0,0,12,16"
+                    ItemsSource="{Binding SelectedProducts}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ContentControl Content="{Binding}">
+                                <ContentControl.Style>
+                                    <Style TargetType="ContentControl">
+                                        <!--  Default template for VariablePrice  -->
+                                        <Setter Property="ContentTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <GroupBox
+                                                        Margin="0,0,0,16"
+                                                        FontWeight="SemiBold"
+                                                        Header="{Binding Name}"
+                                                        Style="{StaticResource CardGroupBoxStyle}">
+                                                        <Grid Margin="0,4">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="130" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock VerticalAlignment="Center" Text="Indtast forventede timer:" />
+                                                            <TextBox
+                                                                Grid.Column="1"
+                                                                Height="26"
+                                                                Margin="8,0,0,0"
+                                                                FontWeight="Regular"
+                                                                Text="{Binding HoursUsed, UpdateSourceTrigger=PropertyChanged}" />
+                                                            <!--  Bound to ProductViewModel  -->
+                                                        </Grid>
+                                                    </GroupBox>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <!--  Triggers for specific FixedPriceProduct names  -->
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Name}" Value="Kernefortælling">
+                                                <Setter Property="ContentTemplate">
+                                                    <Setter.Value>
+                                                        <DataTemplate>
+                                                            <!--  We still need to customize the "Kernefortælling" GroupBox XAML  -->
+                                                            <GroupBox
+                                                                Margin="0,0,0,16"
+                                                                Header="Kernefortælling"
+                                                                Style="{StaticResource CardGroupBoxStyle}">
+                                                                <TextBlock Text="Kernefortælling placeholder.." />
+                                                            </GroupBox>
+                                                        </DataTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Name}" Value="Håndtering af LinkedIn">
+                                                <Setter Property="ContentTemplate">
+                                                    <Setter.Value>
+                                                        <DataTemplate>
+                                                            <GroupBox
+                                                                Grid.Row="3"
+                                                                Margin="0,0,12,16"
+                                                                FontWeight="SemiBold"
+                                                                Header="LinkedIn - Fast varetagelse"
+                                                                Style="{StaticResource CardGroupBoxStyle}">
+                                                                <StackPanel>
+                                                                    <Grid Margin="0,4">
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="*" />
+                                                                            <ColumnDefinition Width="170" />
+                                                                            <ColumnDefinition Width="130" />
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <CheckBox
+                                                                            Grid.Column="0"
+                                                                            Content="1 opslag om ugen"
+                                                                            FontWeight="Regular" />
+                                                                        <TextBlock
+                                                                            Grid.Column="1"
+                                                                            Margin="8,0"
+                                                                            HorizontalAlignment="Right"
+                                                                            FontWeight="Regular"
+                                                                            Text="7.500 kr./md" />
+                                                                        <TextBox
+                                                                            Grid.Column="2"
+                                                                            Height="26"
+                                                                            Margin="8,0,0,0" />
+
+                                                                    </Grid>
+                                                                    <Grid Margin="0,4">
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="*" />
+                                                                            <ColumnDefinition Width="170" />
+                                                                            <ColumnDefinition Width="130" />
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <CheckBox
+                                                                            Grid.Column="0"
+                                                                            Content="2 opslag om ugen"
+                                                                            FontWeight="Regular" />
+                                                                        <TextBlock
+                                                                            Grid.Column="1"
+                                                                            Margin="8,0"
+                                                                            HorizontalAlignment="Right"
+                                                                            FontWeight="Regular"
+                                                                            Text="10.500 kr./md" />
+                                                                        <TextBox
+                                                                            Grid.Column="2"
+                                                                            Height="26"
+                                                                            Margin="8,0,0,0" />
+                                                                    </Grid>
+                                                                </StackPanel>
+                                                            </GroupBox>
+                                                        </DataTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+
+                                        </Style.Triggers>
+                                    </Style>
+                                </ContentControl.Style>
+                            </ContentControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!--<GroupBox
+                    Grid.Row="4"
+                    Margin="0,0,12,16"
+                    FontWeight="SemiBold"
+                    Header="Fast varetagelse af kommunikation"
+                    Style="{StaticResource CardGroupBoxStyle}">
+                    <StackPanel>
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="130" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox
+                                Grid.Column="0"
+                                Content="10 timer om ugen"
+                                FontWeight="Regular" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="8,0"
+                                HorizontalAlignment="Right"
+                                FontWeight="Regular"
+                                Text="8.500 kr./md" />
+                            <TextBox
+                                Grid.Column="2"
+                                Height="26"
+                                Margin="8,0,0,0"
+                                FontWeight="Regular" />
+
+                        </Grid>
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="130" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox
+                                Grid.Column="0"
+                                Content="15 timer om ugen"
+                                FontWeight="Regular" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="8,0"
+                                HorizontalAlignment="Right"
+                                FontWeight="Regular"
+                                Text="12.500 kr./md" />
+                            <TextBox
+                                Grid.Column="2"
+                                Height="26"
+                                Margin="8,0,0,0"
+                                FontWeight="Regular" />
+
+                        </Grid>
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="130" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox
+                                Grid.Column="0"
+                                Content="20 timer om ugen"
+                                FontWeight="Regular" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="8,0"
+                                HorizontalAlignment="Right"
+                                FontWeight="Regular"
+                                Text="16.500 kr./md" />
+                            <TextBox
+                                Grid.Column="2"
+                                Height="26"
+                                Margin="8,0,0,0"
+                                FontWeight="Regular" />
+
+                        </Grid>
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="130" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox
+                                Grid.Column="0"
+                                Content="25 timer om ugen"
+                                FontWeight="Regular" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="8,0"
+                                HorizontalAlignment="Right"
+                                FontWeight="Regular"
+                                Text="20.500 kr./md" />
+                            <TextBox
+                                Grid.Column="2"
+                                Height="26"
+                                Margin="8,0,0,0"
+                                FontWeight="Regular" />
+
+                        </Grid>
+                        <StackPanel Orientation="Vertical">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="170" />
+                                    <ColumnDefinition Width="130" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox
+                                    Grid.Column="0"
+                                    Content="30 timer om ugen"
+                                    FontWeight="Regular" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="8,0"
+                                    HorizontalAlignment="Right"
+                                    FontWeight="Regular"
+                                    Text="24.500 kr./md" />
+                                <TextBox
+                                    Grid.Column="2"
+                                    Height="26"
+                                    Margin="8,0,0,0"
+                                    FontWeight="Regular" />
+
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+
+                </GroupBox>-->
+                <!--<GroupBox
+                    Grid.Row="5"
+                    Margin="0,0,12,16"
+                    FontWeight="SemiBold"
+                    Header="Salgs- og præsentationmateriale"
+                    Style="{StaticResource CardGroupBoxStyle}">
+                    <StackPanel>
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="130" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox
+                                Grid.Column="0"
+                                Content="Brochure"
+                                FontWeight="Regular" />
+                            <CheckBox
+                                Grid.Column="1"
+                                Content="Roll up"
+                                FontWeight="Regular" />
+                        </Grid>
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="130" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox
+                                Grid.Column="0"
+                                Content="Præsentation"
+                                FontWeight="Regular" />
+                            <CheckBox
+                                Grid.Column="1"
+                                Content="Pressemeddelelse"
+                                FontWeight="Regular" />
+
+                        </Grid>
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="130" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox
+                                Grid.Column="0"
+                                Content="Pressemeddelelse"
+                                FontWeight="Regular" />
+                            <CheckBox
+                                Grid.Column="1"
+                                Content="Pressemeddelelse"
+                                FontWeight="Regular" />
+                        </Grid>
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="130" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox
+                                Grid.Column="1"
+                                Content="2 Case til hjemmeside"
+                                FontWeight="Regular" />
+                            <CheckBox
+                                Grid.Column="0"
+                                Content="1 Case til hjemmeside"
+                                FontWeight="Regular" />
+
+                        </Grid>
+
+                    </StackPanel>
+                </GroupBox>-->
+                <GroupBox
+                    Grid.Row="5"
+                    Grid.ColumnSpan="1"
+                    Margin="0,0,12,16"
+                    FontWeight="SemiBold"
+                    Header="Yderligere tilføjelser"
+                    Style="{StaticResource CardGroupBoxStyle}">
+                    <StackPanel>
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="170" />
+                                <ColumnDefinition Width="130" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" Content="Inkluder tidsplan" />
+                            <CheckBox
+                                Grid.Column="1"
+                                Content="Inkluder 'Om Os' side"
+                                IsChecked="{Binding CurrentTemplate.AboutUs, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+                <!--<Border
+                    Grid.Row="7"
+                    Margin="0,0,12,16"
+                    Padding="16"
+                    Background="White"
+                    BorderBrush="{StaticResource AccentBrush}"
+                    BorderThickness="2">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource HeaderTextStyle}" Text="Løbende prisoversigt" />
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="140" />
+                                <ColumnDefinition Width="140" />
+                                <ColumnDefinition Width="180" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="8,0"
+                                HorizontalAlignment="Right" />
+                            <TextBlock
+                                Grid.Column="2"
+                                Margin="8,0"
+                                HorizontalAlignment="Right" />
+                            <TextBlock
+                                Grid.Column="3"
+                                HorizontalAlignment="Right"
+                                FontWeight="SemiBold" />
+                        </Grid>
+
+
+                        <Border
+                            Height="2"
+                            Margin="0,12,0,12"
+                            Background="{StaticResource PrimaryBrush}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="220" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="0,0,0,6"
+                                Text="Subtotal før rabatter:" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="0,0,0,6"
+                                HorizontalAlignment="Right" />
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="0,24,0,6"
+                                Text="Samlet rabat:" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="0,24,0,6"
+                                HorizontalAlignment="Right" />
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="0,48,0,0"
+                                FontWeight="SemiBold"
+                                Text="Samlet pris:" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="0,48,0,0"
+                                HorizontalAlignment="Right"
+                                FontWeight="SemiBold" />
+                        </Grid>
+                    </StackPanel>
+                </Border>-->
+
+
+            </Grid>
+            <!--#endregion-->
+        </ScrollViewer>
+
+        <!--  Separator between columns  -->
+        <Border
+            Grid.Column="1"
+            Width="2"
+            HorizontalAlignment="Center"
+            Background="{StaticResource AccentBrush}" />
+
+        <!--  Right column preview  -->
+        <views:PreviewView Grid.Column="2" />
+    </Grid>
+
+
+
+
+    <!--#endregion Grid-->
+</UserControl>

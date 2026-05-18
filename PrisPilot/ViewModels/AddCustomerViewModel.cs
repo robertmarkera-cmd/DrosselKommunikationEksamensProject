@@ -3,7 +3,6 @@ using PrisPilot.Models;
 using PrisPilot.Services;
 using PrisPilot.Services.Interfaces;
 using PrisPilot.Services.Peristence;
-using PrisPilot.Stores;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -46,9 +45,9 @@ namespace PrisPilot.ViewModels
         public ICommand OpenFileForAddCustomerCommand { get; }
         public ICommand AddCustomerCommand { get; }
 
-        public AddCustomerViewModel(IFileDialogService fileDialogService) : base(new Customer())
+        public AddCustomerViewModel() : base(new Customer())
         {
-            OpenFileForAddCustomerCommand = new OpenFileForAddCustomerCommand(fileDialogService);
+            OpenFileForAddCustomerCommand = new OpenFileForAddCustomerCommand();
             AddCustomerCommand = new AddCustomerCommand();
             CurrentCustomer = new CustomerViewModel(Entity);
         }
@@ -64,16 +63,7 @@ namespace PrisPilot.ViewModels
 
         public void AddToRepo()
         {
-            _customerRepo.Add(
-                 CurrentCustomer.Cvr,
-                 CurrentCustomer.CompanyName,
-                 CurrentCustomer.Email,
-                 CurrentCustomer.TelephoneNumber,
-                 CurrentCustomer.Address,
-                 CurrentCustomer.Logo,
-                 CurrentCustomer.ContactPerson,
-                 CurrentCustomer.HourlyCost
-             );
+            _customerRepo.Add(CurrentCustomer.ToModel());
         }
 
     }
